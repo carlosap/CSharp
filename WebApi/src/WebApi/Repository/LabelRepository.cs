@@ -51,11 +51,24 @@ namespace WebApi.Repository
                     if (commaIndex == line.Length - 1) continue;
                     var name = line.Substring(0, commaIndex);
                     var value = line.Substring(commaIndex + 1, line.Length - commaIndex - 1);
-                    if (name.Equals(keyword,StringComparison.CurrentCultureIgnoreCase))
+                    if (keyword.Contains("*"))
                     {
-                        definitionList.Add(new DictionaryItem(name, value));
-                        break;
-                    }                        
+                        string tempKeyword = keyword.Replace("*", "");
+                        if (name.Contains(tempKeyword))
+                        {
+                            definitionList.Add(new DictionaryItem(name, value));
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (name.Equals(keyword, StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            definitionList.Add(new DictionaryItem(name, value));
+                            break;
+                        }
+                    }
+                      
                 }
                 return definitionList;
             });

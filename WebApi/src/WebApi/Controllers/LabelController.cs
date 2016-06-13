@@ -10,6 +10,7 @@ namespace WebApi.Controllers
 {
     /// api/label?name=Account.SignIn.HeaderBig&lang=eng
     /// api/label?name=Account.SignIn.HeaderBig,Account.SignIn.Title&lang=eng
+    /// api/label?name=Account.SignIn*
     [Route("api/[controller]")]
     public class LabelController : Controller
     {
