@@ -1,0 +1,149 @@
+﻿//////////////////////////////
+// Login form labels
+//////////////////////////////
+Account.SignIn.HeaderBig: "Sign in" 
+Account.SignIn.HeaderSmall: "log into your account"
+Account.SignIn.Title: Already a member? Sign in:
+Account.SignIn.Email: Email
+Account.SignIn.Password: Password
+Account.SignIn.RememberMe : Remember Me
+Account.SignIn.SignIn: Sign In  
+Account.SignIn.NeedsAnAccount: Needs an account?
+Account.SignIn.ForgotPassword: Forgot your password?
+
+Account.ActivateAccount.Title: Account Activation
+Account.ActivateAccount.AlreadyHave: Already have an account?
+
+Account.SignIn.SocialNetMember: "Already a socical network member?  Sign in with"
+Account.SignIn.HaveOpenID: "Do you have OpenID now ?" 
+Account.SignIn.EnterLJ: "Enter your Livejournal username"
+Account.SignIn.EnterBlogger: "Enter Your Blogger account"
+Account.SignIn.EnterOpenId: "Enter your OpenID"
+Account.SignIn.EnterMyOpenId: "Enter your MyOpenID username"
+Account.SignIn.InvalidID: "Invalid identifier."
+Account.SignIn.CanceledProvider: "Canceled at provider."
+
+//////////////////////////////
+// Change password form labels
+//////////////////////////////
+
+Account.ChangeAccountPassword.Title: "Change Account Password"
+Account.ChangeAccountPassword.Member: "Member"
+Account.ChangeAccountPassword.Password: Password
+Account.ChangeAccountPassword.PasswordConfirmation: Password Confirmation
+Account.ChangeAccountPassword.Change: Change Password
+Account.ChangeAccountPassword.SignIn: Sign in!
+Account.ChangeAccountPassword.ForgotPassword: Forgot your password?
+
+//////////////////////////////
+// Create an account form labels
+//////////////////////////////
+
+Account.CreateAccount.HeaderBig: "Sign up" 
+Account.CreateAccount.HeaderSmall: "create an account"
+Account.CreateAccount.NeedsAnAccount: Needs an account?
+Account.CreateAccount.YourName: "Short name: Account ID"
+Account.CreateAccount.Email:Email
+Account.CreateAccount.Password: Password
+Account.CreateAccount.PasswordConfirmation: Password Confirmation
+Account.CreateAccount.CreateAccount: Create your account
+Account.CreateAccount.SignIn: Sign in!
+Account.CreateAccountForgotPassword: Forgot your password?
+Account.CreateAccount.Comment1: May contain letters, digits, dashes and underscores, and should be between 2 and 30 characters long.
+Account.CreateAccount.Comment2: Type carefully. You will be sent a confirmation email.
+Account.CreateAccount.Comment3: The longer the better. Include numbers for good protection.
+Account.CreateAccount.Comment4: Confirm you password to remember
+Account.CreateAccount.Comment5: By clicking on the "Create your account" button below, you certify that you have read and agree to our 
+Account.CreateAccount.Comment6: Terms of use
+Account.CreateAccount.Comment7: terms of use
+Account.CreateAccount.Comment8: and
+Account.CreateAccount.Comment9: Privacy policy
+Account.CreateAccount.Comment10: privacy policy
+Account.CreateAccount.NameIsEmpty : Name is empty. Please, enter member name.
+Account.CreateAccount.EmailIsEmpty : Email is empty. Please, enter member email.
+Account.CreateAccount.PasswordIsEmty: Password is empty. Please, enter member password.
+Account.CreateAccount.EmailWrongFromat : Email has wrong format. Please, check it.
+Account.CreateAccount.PasswordNoMatch :"The password and confirmation password do not match. Please, check it.
+Account.CreateAccount.PasswordLength: "The password length must be at least {0} characters long."
+Account.CreateAccount.Mandatory: "{0} field is mandatory, please fill it."
+Account.CreateAccount.Required:  "- Required field"
+Account.CreateAccount.YourTimeZone: "Your Time Zone"
+Account.CreateAccount.YourTimeZoneComment: "Will be applied to datetime fields"
+Account.CreateAccount.YourTimeZoneEmty: "Please, select your time zone"
+Account.CreateAccount.NameLooksLikeEmail: "The member's name looks like an e-mail address. Please change it."
+Account.CreateAccount.NameNonAlfaNum: "The name contains non-alpha numeric characters (#@!$ etc...). Please change it."
+
+//////////////////////////////
+// Activate an account form labels
+//////////////////////////////
+Account.Activate.HeaderBig: Activate your account 
+Account.Activate.HeaderSmall: and get sign in
+
+//////////////////////////////
+// Forgot form labels
+//////////////////////////////
+
+Account.ForgotPassword.HeaderBig: "Forgotten your password ? " 
+Account.ForgotPassword.HeaderSmall: "get email message to change it"
+Account.ForgotPassword.Title: Forgot your password?
+Account.ForgotPassword.Instruction: We can email instructions on how to reset your password to the email address we have on file.
+Account.ForgotPassword.Name: Name
+Account.ForgotPassword.Email: Email
+Account.ForgotPassword.Send: Send
+Account.ForgotPassword.AlreadyHave: Already have an account?
+
+//////////////////////////////
+// Account controller labels
+//////////////////////////////
+
+Account.Controller.Warning: Warning 
+Account.Controller.NotActivated: Your account was not activated.
+Account.Controller.AccountBlocked: Your account was blocked.
+Account.Controller.WrongUser: Wrong user name or password.
+Account.Controller.WrongEmail: Wrong e-mail address format.
+Account.Controller.DomainNotAllowed: The mail domain is not allowed. Please use another e-mail address.
+Account.Controller.AccountExists: The account already exists.
+Account.Controller.Congrat: Congratulation
+Account.Controller.ActivationMailSent: Activation email has been send. Please check your mail box.
+Account.Controller.WrongActiveLink: Wrong activation link or activation has been expared.
+Account.Controller.Activated: Your account {{name}} has been activated successfuly.
+Account.Controller.AccountDoesntExist: The account doesn't exist.
+Account.Controller.ResetPassMail: Reset password email has been send. Please check your mail box.
+Account.Controller.WrongResetPassLink: Wrong reset passowrd link or the link has been expared.
+Account.Controller.PassChanged: Your account password has been changed.
+Account.Controller.CantSendNotification: "Something went wrong with e-mail notification. Site administration has been notified about that. Please try to do that later."
+
+//////////////////////////////
+// Member controller labels
+//////////////////////////////
+Member.Controler.WrongEmail:  Wrong e-mail address format.
+Member.Controler.Warning: Warning
+Member.Controler.AccountNotExists: The account doesn't exists.
+Member.Controler.Congrat: Congratulation
+Member.Controler.RandomPassSent: Random password has been generated and sent to the member.
+Member.Controler.RandomPassDidNotSend: Somthing went wrong. Random password has been generated but DID NOT send to the member.
+Member.Controler.MemberTokenCreated: The token has been created.
+Member.Controler.MemberTokenRemoved: The token has been removed.
+
+
+//////////////////////////////
+// Member profile
+//////////////////////////////
+Profile.AvatarPanel.Comment: You can upload a JPG, GIF or PNG file. File size limit is about 4 MB.
+Profile.AvatarPanel.Upload: Upload Photo
+Profile.AvatarPanel.Reset: Reset Photo
+Profile.AvatarPanel.ResetConfirm: Are yo sure to reset avatar image?
+Profile.AvatarPanel.OnlyImage: Only images are allowed.
+Profile.HideEncrypted: This field contains confidential information. Please, click here to edit.
+
+
+//////////////////////////////
+// Error pages
+//////////////////////////////
+ErrorPages.Forbidden403Title: Forbidden
+ErrorPages.Forbidden403Message: The server understood the request, but is refusing to fulfill it. You are not authorized to execute it.
+ErrorPages.GeneralException500Title: Server general error
+ErrorPages.GeneralException500Message: The server encountered an unexpected condition which prevented it from fulfilling the request, because something went wrong. Please, contact site administrator.
+ErrorPages.PageNotFound404Title: File not found
+ErrorPages.PageNotFound404Message: We're sorry, but the call you are trying to make cannot be completed as dialed. That is to say, something went wrong and the page you're looking for is, sadly, not here.
+ErrorPages.Sign: Resource administration
