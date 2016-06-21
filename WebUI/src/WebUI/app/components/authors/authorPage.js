@@ -6,6 +6,7 @@ var Link = require('react-router').Link;
 var AuthorApi = require('../../api/authorApi');
 var AuthorList = require('./authorList');
 
+
 var AuthorPage = React.createClass({
 	getInitialState: function() {
 		return {
@@ -16,6 +17,7 @@ var AuthorPage = React.createClass({
 	componentDidMount: function() {
 		if (this.isMounted()) {
 			this.setState({ authors: AuthorApi.getAllAuthors() });
+			
 		}
 	},
 

@@ -7,7 +7,7 @@ var reactify = require('reactify');  // Transforms React JSX to JS
 var source = require('vinyl-source-stream'); // Use conventional text streams with Gulp
 var concat = require('gulp-concat'); //Concatenates files
 var config = {
-	port: 9005,
+	port: 9000,
 	devBaseUrl: 'http://localhost',
 	paths: {
 		html: './app/*.html',
