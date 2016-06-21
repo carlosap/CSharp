@@ -16,7 +16,7 @@ namespace WebApi.Controllers
     {
         public ILabel Labels { get; set; }
         public LabelController(ILabel labels){Labels = labels;}
-        public async Task<object> Get([FromQuery]string name, string lang)
+        public async Task<object> Get([FromQuery]string name, string lang, string cache)
         {
             return await Task.Run(async () => {
                 try
@@ -25,6 +25,8 @@ namespace WebApi.Controllers
                     var language = (string.IsNullOrWhiteSpace(lang)) ? "eng" : lang;
                     var cacheKey = $"{name}:{language}";
                     await AddCorOptions();
+                    var isCache = (string.IsNullOrWhiteSpace(cache)) ? "yes" : "no";
+                    if (isCache == "no") await CacheMemory.Remove(cacheKey);
                     var jsonResults = await CacheMemory.Get<List<DictionaryItem>>(cacheKey);
                     if (jsonResults != null) return jsonResults;
                     List<DictionaryItem> labels = await Labels.Get(keyword, language);

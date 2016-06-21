@@ -14,11 +14,13 @@ namespace WebApi.Controllers
     {
         public IForm Form { get; set; }
         public FormController(IForm forms){Form = forms;}      
-        public async Task<object> Get([FromQuery]string name)
+        public async Task<object> Get([FromQuery]string name, string cache)
         {
             return await Task.Run(async () => {
                 try
                 {
+                    var isCache = (string.IsNullOrWhiteSpace(cache)) ? "yes" : "no";
+                    if (isCache == "no") await CacheMemory.Remove(name);
                     var jsonResults = await CacheMemory.Get<IList<Form>>(name);
                     if (jsonResults != null) return jsonResults;
                     var form = await Form.Get(name);

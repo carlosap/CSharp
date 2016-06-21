@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using WebApi.TraceInfo;
+
 namespace WebApi.DataServer
 {
     public class SqlServer : IDatabase
@@ -18,19 +20,28 @@ namespace WebApi.DataServer
         {
             return await Task.Run(() => {
                 string results = string.Empty;
-                string strEnv = Startup.AppSettings.HostingEnvironment.Value;
-                switch (strEnv)
+                try
                 {
-                    case "Development":
-                        results = Startup.AppSettings.DatabaseSettings.SqlServerConnection.DevConnectionString;
-                        break;
-                    case "Staging":
-                        results = Startup.AppSettings.DatabaseSettings.SqlServerConnection.StagingConnectionString;
-                        break;
-                    default:
-                        results = Startup.AppSettings.DatabaseSettings.SqlServerConnection.ConnectionString;
-                        break;
+                    string strEnv = Startup.AppSettings.HostingEnvironment.Value;
+                    switch (strEnv)
+                    {
+                        case "Development":
+                            results = Startup.AppSettings.DatabaseSettings.SqlServerConnection.DevConnectionString;
+                            break;
+                        case "Staging":
+                            results = Startup.AppSettings.DatabaseSettings.SqlServerConnection.StagingConnectionString;
+                            break;
+                        default:
+                            results = Startup.AppSettings.DatabaseSettings.SqlServerConnection.ConnectionString;
+                            break;
+                    }
                 }
+                catch (Exception ex)
+                {
+
+                    Trace.TraceError(ex.ToString());
+                }
+                Tracer.Msg($"GetConnectionString:SqlServer.cs:line 44", results);
                 return results;
             });
         }
@@ -45,7 +56,7 @@ namespace WebApi.DataServer
                 {
                     using (var con = new SqlConnection(await GetConnectionString()))
                     {
-                        con.Open();
+                        await con.OpenAsync();
                         using (var command = new SqlCommand(storeProc, con))
                         {
                             command.CommandType = CommandType.StoredProcedure;
@@ -54,7 +65,7 @@ namespace WebApi.DataServer
                             if (parameters.Count > 0)
                                 foreach (var param in parameters)
                                     command.Parameters.AddWithValue(param.Key, param.Value);
-                            command.ExecuteReader();
+                            await command.ExecuteReaderAsync();
                         }
                     }
                 }
@@ -78,7 +89,7 @@ namespace WebApi.DataServer
                 {
                     using (var con = new SqlConnection(await GetConnectionString()))
                     {
-                        con.Open();
+                        await con.OpenAsync();
                         using (var command = new SqlCommand(storeProc, con))
                         {
                             command.CommandType = CommandType.StoredProcedure;
@@ -87,14 +98,14 @@ namespace WebApi.DataServer
                             if (parameters?.Count > 0)
                                 foreach (var param in parameters)
                                     command.Parameters.AddWithValue(param.Key, param.Value);
-                            using (var reader = command.ExecuteReader())
-                                while (reader.Read())
-                                    results =
-                                        reader["json"]?.ToString()
-                                            .Trim()
-                                            .Replace("\r", "")
-                                            .Replace("\n", "")
-                                            .Replace("\t", "");
+                            using (var reader = await command.ExecuteReaderAsync())
+                                while (await reader.ReadAsync())
+                                {
+                                    //TODO: Figure out why when deployed database is empty
+                                    await Tracer.Msg($"usp_GetJsonValueAsync:SqlServer.cs:line 104", reader["json"].ToString());
+                                    results = reader["json"]?.ToString().Trim().Replace("\r", "").Replace("\n", "").Replace("\t", "");
+                                }
+
                         }
                     }
                 }
@@ -106,6 +117,7 @@ namespace WebApi.DataServer
                 {
                     SqlCommand.Dispose();
                 }
+                await Tracer.Msg($"usp_GetJsonValueAsync:SqlServer.cs:line 120", results);
                 return results;
             });
         }

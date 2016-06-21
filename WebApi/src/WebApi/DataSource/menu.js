@@ -2,23 +2,23 @@
     {
         "Id": "1",
         "Text": "Home",
+        "LinkTo": "app",
         "ImageUrl": null,
-        "Class": "menu-item-parent",
-        "Sprite": "fa fa-lg fa-fw fa-home",
+        "Class": "",
+        "Sprite": "",
         "Href": null,
-        "LinkTo": "home",
         "Action": null,
         "BadgeText": null,
         "BadgeClass": null,
         "Items": []
     }, {
         "Id": "2",
-        "Text": "Speed Test",
+        "Text": "Authors",
+        "LinkTo": "authors",
         "ImageUrl": null,
-        "Class": "menu-item-parent",
-        "Sprite": "fa fa-lg fa-fw fa-list-alt",
+        "Class": "",
+        "Sprite": "",
         "Href": null,
-        "LinkTo": "speedtest",
         "Action": null,
         "BadgeText": null,
         "BadgeClass": null,
@@ -26,16 +26,28 @@
 
     }, {
         "Id": "3",
-        "Text": "View Sites",
+        "Text": "About",
+        "LinkTo": "about",
         "ImageUrl": null,
-        "Class": "menu-item-parent",
-        "Sprite": "fa fa-lg fa-fw fa-list-alt",
+        "Class": "",
+        "Sprite": "",
         "Href": null,
-        "LinkTo": "sitelist",
         "Action": null,
         "BadgeText": null,
         "BadgeClass": null,
         "Items": []
 
+    }, {
+        "Id": "4",
+        "Text": "Contact",
+        "LinkTo": "contact",
+        "ImageUrl": null,
+        "Class": "",
+        "Sprite": "",
+        "Href": null,
+        "Action": null,
+        "BadgeText": null,
+        "BadgeClass": null,
+        "Items": []
     }
 ]

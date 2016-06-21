@@ -14,13 +14,16 @@ namespace WebApi.Controllers
     {
         public IMenu Menu { get; set; }
         public MenuController(IMenu menus){Menu = menus;}     
-        public async Task<object> Get()
+        public async Task<object> Get([FromQuery]string cache)
         {
             return await Task.Run(async () =>
             {
                 try
                 {
                     await AddCorOptions();
+                    var isCache = (string.IsNullOrWhiteSpace(cache)) ? "yes" : "no";
+                    if (isCache == "no")await CacheMemory.Remove("menu");
+
                     var jsonResults = await CacheMemory.Get<IList<Menu>>("menu");
                     if (jsonResults != null) return jsonResults;
                     var menu = await Menu.Get();

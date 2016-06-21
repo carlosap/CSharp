@@ -13,13 +13,16 @@ namespace WebApi.Controllers
     {
         public IPage Page { get; set; }
         public PageController(IPage page){Page = page;} 
-        public async Task<object> Get([FromQuery]string name)
+        public async Task<object> Get([FromQuery]string name, string cache)
         {
             return await Task.Run(async () =>
             {
                 try
                 {
                     await AddCorOptions();
+                    var isCache = (string.IsNullOrWhiteSpace(cache)) ? "yes" : "no";
+                    if (isCache == "no") await CacheMemory.Remove(name);
+
                     var jsonResults = await CacheMemory.Get<Page>(name);
                     if (jsonResults != null) return jsonResults;
                     var page = await Page.Get(name);

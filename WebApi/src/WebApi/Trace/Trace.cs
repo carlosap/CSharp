@@ -68,6 +68,8 @@ namespace WebApi.TraceInfo
             {
                 string traceExtension = await GetFileExtension(traceType);
                 var directoryPath = Path.Combine(Startup._appEnvironment.ApplicationBasePath, "Logs", traceType.ToString());
+                if (!Directory.Exists(directoryPath))
+                    Directory.CreateDirectory(directoryPath);
                 traceName = traceName.ReplaceInvalidCharsForUnderscore();
                 traceName = await AddDatemeStringValues(traceName);
                 traceName = $"{traceName}{traceExtension}";

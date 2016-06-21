@@ -14,12 +14,15 @@ namespace WebApi.Controllers
     {
         public IMedia Medias { get; set; }
         public MediaController(IMedia media){ Medias = media;}
-        public async Task<object> Get([FromQuery]string name)
+        public async Task<object> Get([FromQuery]string name, string cache)
         {
             return await Task.Run(async () => {
                 try
                 {
                     await AddCorOptions();
+                    var isCache = (string.IsNullOrWhiteSpace(cache)) ? "yes" : "no";
+                    if (isCache == "no") await CacheMemory.Remove(name);
+
                     var jsonResults = await CacheMemory.Get<List<Media>>(name);
                     if (jsonResults != null) return jsonResults;
                     var media = await Medias.Get(name);

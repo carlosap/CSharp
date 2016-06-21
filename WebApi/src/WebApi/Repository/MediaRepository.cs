@@ -20,6 +20,7 @@ namespace WebApi.Repository
                 var medias = new List<Media>();
                 var jsonResults = await GetMediasByName(mediaName);
                 if (string.IsNullOrWhiteSpace(jsonResults)) return medias;
+                await Tracer.Msg($"GetMediasByName:{mediaName}", jsonResults);
                 var jsMedia = jsonResults.DeserializeObject<List<Media>>();
                 if (!jsMedia.Any()) return medias;
                 medias.AddRange(jsMedia.Select(media => new Media
@@ -53,6 +54,7 @@ namespace WebApi.Repository
                     _parameters.Add("Name", mediaName);
                     _parameters.Add("TableName", "medias");
                     jsonResults = await _sqlDb.usp_GetJsonValueAsync("usp_GetComponentByName", _parameters);
+                    await Tracer.Msg($"GetMediasByName:{mediaName}", jsonResults);
                     return jsonResults;
                 }
                 catch (Exception ex)

@@ -12,13 +12,15 @@ namespace WebApi.Controllers
     {
         public DataSourceController(IDataSource datasource) { DataSource = datasource;}
         public IDataSource DataSource { get; set; }
-        public async Task<object> Get([FromQuery]string name)
+        public async Task<object> Get([FromQuery]string name, string cache)
         {
            return await Task.Run(async () => {
                  try
                  {
                      await AddCorOptions();
-                     var jsonResults = await CacheMemory.Get<object>(name);
+                   var isCache = (string.IsNullOrWhiteSpace(cache)) ? "yes" : "no";
+                   if (isCache == "no") await CacheMemory.Remove(name);
+                   var jsonResults = await CacheMemory.Get<object>(name);
                      if (jsonResults != null) return jsonResults;
                      var datasource = await DataSource.Get(name);
                      await CacheMemory.SetAndExpiresDays(name, datasource, 1);
