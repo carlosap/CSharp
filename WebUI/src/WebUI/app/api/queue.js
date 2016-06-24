@@ -30,12 +30,11 @@ module.exports = {
 
 				return queryData;
 			};
-			this.timeout = 5000,
+			this.timeout = 2000,
 			this.baseURL = 'http://webapidev.me',
 			this.alwaysSend = null,
 			this.dataType = 'json',
 			this.cache = false,
-			this.loaderClass = 'loader',
 			this.type = 'POST';
 		this.on = function (e, callback) {
 			if (!callbacks[e]) {
@@ -78,33 +77,16 @@ module.exports = {
 			return this;
 		}
 		this.remove = function (index) {
-			if (index >= 0 && index > processed && index < ajaxQueue.length) {
+			if (index >= 0 && index > processed && index < ajaxQueue.length)
 				ajaxQueue.splice((index - 1), 1);
-			}
 
 			return this;
 		}
-		this.showLoader = function (elem, opacity) {
-			elem = jQuery(elem) || jQuery(document.body);
-			opacity = opacity || 0.65;
 
-			if (elem.css('position') === 'static') {
-				elem.css('position', 'relative');
-			}
-			jQuery('<div class="' + self.loaderClass + '"/>').prependTo(elem).fadeTo('slow', opacity);
-			return this;
-		}
-		this.hideLoader = function (elem) {
-			elem = (null != elem) ? jQuery(elem).find('.' + self.loaderClass) : jQuery('.' + self.loaderClass);
-			elem.fadeOut('slow', 'linear', function () {
-				jQuery(this).remove();
-			});
-			return this;
-		}
 		this.request = function (reqData, success, error, always) {
-				if (typeof reqData === 'string') {
+				if (typeof reqData === 'string') 
 					reqData = { url: reqData, success: success, error: error, always: always };
-				}
+				
 				loading = true;
 				if (null != self.alwaysSend) {
 					var needle = jQuery.param(self.alwaysSend);
@@ -134,23 +116,10 @@ module.exports = {
 					timeout: reqData.timeout || self.timeout,
 					error: function (jqXHR, textStatus, errorThrown) {
 						xhr = null;
-
 						loading = false;
 						processed += 1;
-
-						if (textStatus === 'cancel') {
-							textStatus = 'abort';
-							errorThrown = 'Request Canceled';
-						}
-						else if (textStatus === 'stop') {
-							textStatus = 'abort';
-							errorThrown = 'Request Stopped';
-						}
 						if (typeof reqData.error === 'function') {
 							reqData.error(processed, getURL(reqData.url), getQueryData(reqData.url), textStatus, errorThrown, ajaxQueue.length, nested);
-						}
-						if (typeof reqData.always === 'function') {
-							reqData.always(processed, ajaxQueue.length, false, nested);
 						}
 
 						nested = false;
@@ -159,7 +128,6 @@ module.exports = {
 						xhr = null;
 						var temp = nested;
 						nested = loading = (typeof reqData.success === 'function') ? (reqData.success(data, (processed + 1), getURL(reqData.url), getQueryData(reqData.url), ajaxQueue.length, nested) || false) : false;
-
 						if (!loading) {
 							processed += 1;
 						}
@@ -172,39 +140,7 @@ module.exports = {
 
 			return this;
 		}
-		this.cancel = function (reqNum, isNested) {
-			reqNum = reqNum - 1;
-			isNested = (typeof isNested !== 'boolean') ? false : isNested;
 
-			if (reqNum < ajaxQueue.length) {
-				var waitToCancel = setInterval(function () {
-					if (processed <= reqNum) {
-						if (null != xhr && processed === reqNum) {
-							if (isNested && !nested) { return; }
-							xhr.abort('cancel');
-							clearInterval(waitToCancel);
-							waitToCancel = null;
-						}
-						else {
-							if (cancelNum === -1 || cancelNum < processed) {
-								if (isNested && !nested) { return; }
-								cancelNum = reqNum;
-							}
-						}
-					}
-					else {
-						clearInterval(waitToCancel);
-						waitToCancel = null;
-					}
-				}, 50);
-				setTimeout(function () {
-					if (null != waitToCancel) {
-						clearInterval(waitToCancel);
-					}
-				}, 25000);
-			}
-			return this;
-		}
 		this.stop = function () {
 			if (null != checkAjax) {
 				clearInterval(checkAjax);
@@ -213,16 +149,15 @@ module.exports = {
 				}
 				var temp = nested;
 				for (var i = processed; i < ajaxQueue.length; i++) {
-					if (typeof ajaxQueue[i].error === 'function') {
+					if (typeof ajaxQueue[i].error === 'function') 
 						ajaxQueue[i].error(i + 1, getURL(ajaxQueue[i].url), getQueryData(ajaxQueue[i].url), 'abort', 'Request Stopped', ajaxQueue.length, temp);
-					}
-
+					
 					temp = false;
 				}
 				for (var i = processed; i < ajaxQueue.length; i++) {
-					if (typeof ajaxQueue[i].always === 'function') {
+					if (typeof ajaxQueue[i].always === 'function') 
 						ajaxQueue[i].always(i + 1, ajaxQueue.length, false, nested);
-					}
+					
 
 					nested = false;
 				}
@@ -266,7 +201,7 @@ module.exports = {
 						trigger('complete');
 					}
 				
-			}, 100);
+			}, 20);
 
 			return this;
 		}
@@ -284,9 +219,7 @@ module.exports = {
 				return (ajaxQueue[reqNum - 1][property] || self[property]);
 			}
 		}
-		this.isDone = function (reqNum) {
-			return (processed >= reqNum);
-		}
+
 		this.isWorking = function () {
 			return (processed >= 0 && processed < ajaxQueue.length);
 		}

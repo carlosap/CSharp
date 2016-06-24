@@ -9,7 +9,7 @@
   "author": "Cory House",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^3.3.5",
+    "bootstrap": "^3.3.6",
     "browserify": "^11.0.1",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
