@@ -29,8 +29,7 @@
       },
       "frameworkAssemblies": {
         "System.configuration": "4.0.0.0",
-        "System.Data": "4.0.0.0",
-        "System.Messaging": "4.0.0.0"
+        "System.Data": "4.0.0.0"
 
       }
 

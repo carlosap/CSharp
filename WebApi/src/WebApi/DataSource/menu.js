@@ -14,7 +14,7 @@
     }, {
         "Id": "2",
         "Text": "Authors",
-        "LinkTo": "authors",
+        "LinkTo": "app",
         "ImageUrl": null,
         "Class": "",
         "Sprite": "",
@@ -22,10 +22,24 @@
         "Action": null,
         "BadgeText": null,
         "BadgeClass": null,
-        "Items": []
+        "Items": [
+                {
+                    "Id": "3",
+                    "Text": "Add",
+                    "LinkTo": "addAuthor",
+                    "ImageUrl": null,
+                    "Class": "",
+                    "Sprite": "",
+                    "Href": null,
+                    "Action": null,
+                    "BadgeText": null,
+                    "BadgeClass": null,
+                    "Items": []
+                }
+        ]
 
     }, {
-        "Id": "3",
+        "Id": "4",
         "Text": "About",
         "LinkTo": "about",
         "ImageUrl": null,
@@ -38,7 +52,7 @@
         "Items": []
 
     }, {
-        "Id": "4",
+        "Id": "5",
         "Text": "Contact",
         "LinkTo": "contact",
         "ImageUrl": null,
@@ -49,5 +63,18 @@
         "BadgeText": null,
         "BadgeClass": null,
         "Items": []
+    }, {
+        "Id": "6",
+        "Text": "Settings",
+        "LinkTo": "settings",
+        "ImageUrl": null,
+        "Class": "",
+        "Sprite": "",
+        "Href": null,
+        "Action": null,
+        "BadgeText": null,
+        "BadgeClass": null,
+        "Items": []
     }
+
 ]

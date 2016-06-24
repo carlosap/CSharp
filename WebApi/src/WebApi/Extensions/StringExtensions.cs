@@ -3,10 +3,18 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using WebApi.DataServer;
+using WebApi.TraceInfo;
+using WebApi.Model;
+
 namespace WebApi.Extensions.Strings
 {
     public static class StringExtensions
     {
+        private static SqlServer _sqlDb;
+        private static Dictionary<string, object> _parameters;
         public static void EncryptFile(string filePath, byte[] encryptedBytes) => File.WriteAllBytes(filePath, encryptedBytes);
         public static string ReplaceInvalidCharsForUnderscore(this string strvalue) => Path.GetInvalidFileNameChars().Aggregate(ClearInvalidHttpChars(strvalue), (current, c) => current.Replace(c, '_'));
         public static string ClearInvalidHttpChars(this string strvalue) => strvalue.Replace("http", "").Replace("https", "").Replace(":", "").Replace("//", "").Replace("www.", "");
@@ -59,6 +67,122 @@ namespace WebApi.Extensions.Strings
                 : source.Substring(at1, at2 - at1 + endDelim.Length);
         }
 
+        public static IEnumerable<string> GetFileNames(this string path, string pattern, SearchOption options = SearchOption.AllDirectories)
+        {
+            foreach (var fileName in Directory.EnumerateFiles(path, pattern))
+            {
+                yield return fileName;
+            }
+        }
+        public static IEnumerable<string> LoadLines(this string filepath)
+        {
+                using (FileStream stream = File.OpenRead(filepath))
+                {
+                    var reader = new StreamReader(stream);
+                    string line = null;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+
+                        yield return line;
+                    }
+                }
+            
+        }
+        public static async Task<T> LoadAsTypeAsync<T>(this string filePath)
+        {
+            return await Task.Run(() =>
+            {
+                var json = File.ReadAllText(filePath);
+                var obj = json.DeserializeObject<dynamic>();
+                return obj;
+
+            });
+
+        }
+        public static async Task<List<T>> LoadAsListTypeAsync<T>(this string filePath)
+        {
+            return await Task.Run(() =>
+            {
+                var json = File.ReadAllText(filePath);
+                var obj = JsonConvert.DeserializeObject<List<T>>(json);
+                return obj;
+            });
+        }
+        public static async Task<string> GetMediasByNameAsync(this string mediaName)
+        {
+            return await Task.Run(async () =>
+            {
+                _sqlDb = new SqlServer();
+                _parameters = new Dictionary<string, object>();
+                string jsonResults;
+                try
+                {
+                    _parameters.Add("Name", mediaName);
+                    _parameters.Add("TableName", "medias");
+                    jsonResults = await _sqlDb.usp_GetJsonValueAsync("usp_GetComponentByName", _parameters);
+                    return jsonResults;
+                }
+                catch (Exception ex)
+                {
+                    await Tracer.Error("GetMediasByName", ex.ToString());
+                    return string.Empty;
+                }
+            });
+        }
+        public static async Task<string> GetPageByNameAsync(this string pageName)
+        {
+            _sqlDb = new SqlServer();
+            _parameters = new Dictionary<string, object>();
+            string jsonResults;
+            try
+            {
+                _parameters.Add("Name", pageName);
+                _parameters.Add("TableName", "documents");
+                jsonResults = await _sqlDb.usp_GetJsonValueAsync("usp_GetComponentByName", _parameters);
+            }
+            catch (Exception ex)
+            {
+                await Tracer.Error("PageRepository:GetPageByName", ex.ToString());
+                jsonResults = string.Empty;
+            }
+            return jsonResults;
+        }
+
+        public static async Task<List<DictionaryItem>> GetLabelsByNameAsync(this string filePath, string keyword)
+        {
+            return await Task.Run(() => {
+                List<DictionaryItem> definitionList = new List<DictionaryItem>();
+                var lines = filePath.LoadLines();
+                foreach (string line in lines)
+                {
+                    if (!string.IsNullOrEmpty(line) && (line[0] == '\'')) continue;
+                    var commaIndex = line.IndexOf(':');
+                    if (commaIndex <= 0) continue;
+                    if (commaIndex == line.Length - 1) continue;
+                    var name = line.Substring(0, commaIndex);
+                    var value = line.Substring(commaIndex + 1, line.Length - commaIndex - 1);
+                    if (keyword.Contains("*"))
+                    {
+                        string tempKeyword = keyword.Replace("*", "");
+                        if (name.Contains(tempKeyword))
+                        {
+                            definitionList.Add(new DictionaryItem(name, value));
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (name.Equals(keyword, StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            definitionList.Add(new DictionaryItem(name, value));
+                            break;
+                        }
+                    }
+
+                }
+                return definitionList;
+            });
+        }
         public static object ReadFromJson(this string json, string messageType)
         {
             var type = Type.GetType(messageType);

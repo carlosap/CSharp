@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using WebApi.Interfaces;
 using WebApi.Model;
 using System.Threading.Tasks;
@@ -16,23 +15,10 @@ namespace WebApi.Repository
                 var results = new List<Menu>();
                 var directoryPath = Path.Combine(Startup._appEnvironment.ApplicationBasePath, "DataSource");
                 var filePath = Path.Combine(directoryPath, "menu.js");
-                var fileNames = Directory.GetFiles(directoryPath, "*.js", SearchOption.AllDirectories);
-                if (fileNames.Any(fileName =>
-                {
-                    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-                    return fileNameWithoutExtension != null && fileNameWithoutExtension.Equals("menu");
-                }))
-                    results = await LoadAsList<Menu>(filePath);
-                return results;
-            });
+                if (File.Exists(filePath))
+                    results = await filePath.LoadAsListTypeAsync<Menu>();
 
-        }
-        public Task<List<T>> LoadAsList<T>(string filePath)
-        {
-            return Task.Run(() => {
-                var json = File.ReadAllText(filePath);
-                var obj = json.DeserializeObject<List<T>>();
-                return obj;
+                return results;
             });
         }
     }

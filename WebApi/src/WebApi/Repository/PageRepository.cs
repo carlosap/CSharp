@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using WebApi.DataServer;
-using WebApi.Interfaces;
+﻿using WebApi.Interfaces;
 using WebApi.Model;
-using WebApi.TraceInfo;
 using WebApi.Extensions.Strings;
 using System.Threading.Tasks;
 namespace WebApi.Repository
 {
     public class PageRepository : IPage
     {
-        private static SqlServer _sqlDb;
-        private static Dictionary<string, object> _parameters;
+
         public async Task<Page> Get(string pageName)
         {
             return await Task.Run(async () =>
             {
                 var pageResults = new Page();
-                var jsonResults = await GetPageByName(pageName);
+                var jsonResults = await pageName.GetPageByNameAsync();
                 if (string.IsNullOrWhiteSpace(jsonResults)) return pageResults;
                 var jsPage = jsonResults.DeserializeObject<dynamic>();
                 foreach (var props in jsPage)
@@ -58,26 +53,6 @@ namespace WebApi.Repository
                 }
                 return pageResults;
             });
-
-        }
-
-        private static async Task<string> GetPageByName(string pageName)
-        {
-            _sqlDb = new SqlServer();
-            _parameters = new Dictionary<string, object>();
-            string jsonResults;
-            try
-            {
-                _parameters.Add("Name", pageName);
-                _parameters.Add("TableName", "documents");
-                jsonResults = await _sqlDb.usp_GetJsonValueAsync("usp_GetComponentByName", _parameters);
-            }
-            catch (Exception ex)
-            {
-                await Tracer.Error("PageRepository:GetPageByName",ex.ToString());
-                jsonResults = string.Empty;
-            }
-            return jsonResults;
         }
     }
 }

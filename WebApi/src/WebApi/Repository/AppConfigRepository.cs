@@ -7,7 +7,6 @@ namespace WebApi.Repository
     {
         public dynamic Get()
         {
-
             var filePath = Path.Combine(Startup._appEnvironment.ApplicationBasePath, "appsettings.json");
             dynamic results = ObjectExtensions.LoadFileAsType(filePath);
             return results;
