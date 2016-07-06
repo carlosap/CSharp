@@ -1,4 +1,13 @@
 ﻿//////////////////////////////
+// Menu labels
+//////////////////////////////
+Menu.Home: "Hogar"
+Menu.Authors: "Autores"
+Menu.Authors.Add: "Añadir Autores"
+Menu.About: "Sobre Nosotros"
+Menu.Contact: "Contacto"
+Menu.Settings: "Ajustes"
+//////////////////////////////
 // Header labels
 //////////////////////////////
 Header.Text: "Bienvenidos ASP.NET 5 Core 1" 

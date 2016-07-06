@@ -37,6 +37,8 @@ namespace WebApi
             services.AddSingleton<IMedia, MediaRepository>();
             services.AddSingleton<IAppConfig, AppConfigRepository>();
             services.AddSingleton<IPage, PageRepository>();
+            services.AddSingleton<IStatic, StaticRepository>();
+            services.AddSingleton<IImage, ImageRepository>();
         }
 
         public void Configure(

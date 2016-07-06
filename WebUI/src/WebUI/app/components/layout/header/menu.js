@@ -22,6 +22,7 @@ var Menu = React.createClass({
             var menuItems = _this.props.Items.map(function (menuItem, index) {
                 var listItem = null;
                 var styleCss = ((_this.state.focused == index)) ? styleCss = 'active' : '';
+                var menuText = (app.label.get(menuItem.Label) || menuItem.Text || '');
                 if (menuItem.Items.length > 0) {
                     listItem = (
                         <li key={menuItem.Id}
@@ -30,7 +31,7 @@ var Menu = React.createClass({
                             <Link   className="dropdown-toggle"
                                 data-toggle="dropdown"
                                 to={menuItem.LinkTo}>
-                                {menuItem.Text}
+                                {menuText}
                                 <span className="caret"></span>
                             </Link>
                             <SubMenu Items={menuItem.Items} />
@@ -41,7 +42,7 @@ var Menu = React.createClass({
                         <li key={menuItem.Id}
                             className={styleCss}
                             onClick={_this.clicked.bind(self, index) }>
-                            <Link to={menuItem.LinkTo}>{menuItem.Text}</Link>
+                            <Link to={menuItem.LinkTo}>{menuText}</Link>
                         </li>
                     )
                 }

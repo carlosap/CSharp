@@ -13,6 +13,7 @@ var config = {
 		html: './app/*.html',
 		js: './app/**/*.js',
 		images: './app/images/*',
+		libs: './app/libs/*',
 		css: [
       		'node_modules/bootstrap/dist/css/bootstrap.min.css',
       		'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
@@ -71,11 +72,16 @@ gulp.task('images', function () {
     gulp.src('./wwwroot/favicon.ico')
         .pipe(gulp.dest(config.paths.dist));
 });
+gulp.task('libs', function () {
+    gulp.src(config.paths.libs)
+        .pipe(gulp.dest(config.paths.dist + '/scripts'))
+        .pipe(connect.reload());
 
+});
 gulp.task('watch', function() {
 	gulp.watch(config.paths.html, ['html']);
 	gulp.watch(config.paths.js, ['js']);
 });
 
 //gulp.task('default', ['html', 'js', 'css', 'images', 'lint', 'open', 'watch']);
-gulp.task('default', ['html', 'js', 'css', 'images', 'open','watch']);
+gulp.task('default', ['html', 'js', 'css', 'images','libs', 'open','watch']);

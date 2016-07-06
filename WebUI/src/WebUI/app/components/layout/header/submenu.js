@@ -10,10 +10,11 @@ var SubMenu = React.createClass({
         var _this = this;
         if (_this.props.Items) {
             var subItems = _this.props.Items.map(function (menuItem) {
+                var menuText = (app.label.get(menuItem.Label) || menuItem.Text || '');
                 return (
                     <li key={menuItem.Id}>
                         <Link to={menuItem.LinkTo}>
-                            {menuItem.Text}
+                            {menuText}
                         </Link>
                         <SubMenu Items={menuItem.Items} />
                     </li>

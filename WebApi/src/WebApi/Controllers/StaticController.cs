@@ -8,15 +8,13 @@ using System;
 using WebApi.TraceInfo;
 namespace WebApi.Controllers
 {
-    /// api/label?name=Account.SignIn.HeaderBig&lang=eng
-    /// api/label?name=Account.SignIn.HeaderBig,Account.SignIn.Title&lang=eng
-    /// api/label?name=Menu*
-    /// api/label?name=*
+    /// api/static?name=*
+    /// /api/static?name=contact
     [Route("api/[controller]")]
-    public class LabelController : Controller
+    public class StaticController : Controller
     {
-        public ILabel Labels { get; set; }
-        public LabelController(ILabel labels){Labels = labels;}
+        public IStatic Pages { get; set; }
+        public StaticController(IStatic pages){Pages = pages;}
         public async Task<object> Get([FromQuery]string name, string lang, string cache)
         {
             return await Task.Run(async () => {
@@ -24,19 +22,19 @@ namespace WebApi.Controllers
                 {
                     var keyword = name;
                     var language = (string.IsNullOrWhiteSpace(lang)) ? "eng" : lang;
-                    var cacheKey = $"label:{name}:{language}";
+                    var cacheKey = $"static:{name}:{language}";
                     await AddCorOptions();
                     var isCache = (string.IsNullOrWhiteSpace(cache)) ? "yes" : "no";
                     if (isCache == "no") await CacheMemory.Remove(cacheKey);
                     var jsonResults = await CacheMemory.Get<List<DictionaryItem>>(cacheKey);
                     if (jsonResults != null) return jsonResults;
-                    List<DictionaryItem> labels = await Labels.Get(keyword, language);
-                    await CacheMemory.SetAndExpiresDays(cacheKey, labels, 1);
-                    return labels;
+                    List<DictionaryItem> pages = await Pages.Get(keyword, language);
+                    await CacheMemory.SetAndExpiresDays(cacheKey, pages, 1);
+                    return pages;
                 }
                 catch (Exception ex)
                 {
-                    await Tracer.Exception("LabelController:Get", ex);
+                    await Tracer.Exception("PageStaticController:Get", ex);
                     return null;
                 }
             });

@@ -73,6 +73,7 @@ module.exports = {
 };
 
 },{}],3:[function(require,module,exports){
+//app.service.request("/api/datasource?name=uiconfig",sucess,fail);
 module.exports = {
 	q: function (ajaxQueue) {
 		ajaxQueue = ajaxQueue || Array();
@@ -180,6 +181,22 @@ module.exports = {
 				}
 				trigger('processStart', [processed + 1, getURL(reqData.url), getQueryData(reqData.url), ajaxQueue.length, (processed === lastProcessed)]);
 				lastProcessed = processed;
+
+				
+				if(reqData.url.indexOf('label?')!== -1 || reqData.url.indexOf('static?')!== -1 || reqData.url.indexOf('image?')!== -1){
+					var queryString = '';
+					var language = (app.cache.localGet("language")||app.localization.language||'eng');
+					var indexLang = reqData.url.indexOf('&lang=');
+					if(indexLang !== -1){
+						queryString = reqData.url.substring(indexLang, reqData.url.length);
+						reqData.url = reqData.url.replace(queryString,'');
+					}else{
+						reqData.url = reqData.url.substring(indexLang, reqData.url.length);
+					}
+									
+					reqData.url = reqData.url + '&lang=' + language;
+				}
+
 
 				xhr = jQuery.ajax({
 					url: self.baseURL + (reqData.url || ''),
@@ -310,42 +327,111 @@ module.exports = {
 var React = require('react');
 var About = React.createClass({displayName: "About",
 	render: function () {
+		var htmlServiceContent = app.staticPages.get('about');
 		return (
 			React.createElement("div", null, 
-				React.createElement("h1", null, "About"), 
-				React.createElement("p", null, "Use this area to provide additional information.")
+				(() => {
+					if (htmlServiceContent) {
+						return React.createElement("div", {dangerouslySetInnerHTML: { __html: htmlServiceContent}})
+					} else {
+						return React.createElement("div", null, 
+							React.createElement("h1", null, "About"), 
+							React.createElement("p", null, "Use this area to provide additional information.")
+						)
+					}
+				})() 
 			)
-		); 
+		);
 	}
 });
 module.exports = About;
-
 },{"react":223}],6:[function(require,module,exports){
 /*eslint-disable strict */ //Disabling check because we can't run strict mode. Need global vars.
-
 var React = require('react');
 var Header = require('./layout/header/header');
 var RouteHandler = require('react-router').RouteHandler;
+var Service = require('../api/services').http;
 $ = jQuery = require('jquery');
-
 var App = React.createClass({displayName: "App",
+	getInitialState: function () {
+        this.isMounted = null;
+		this.bootstrapMaxRetries = 3;
+		Service.add([
+			{ name: 'labels', url: '/api/label?name=*', success: this.setStateHandler, error: this.error },
+			{ name: 'static', url: '/api/static?name=*', success: this.setStateHandler, error: this.error },
+			{ name: 'image', url: '/api/image?name=*', success: this.setStateHandler, error: this.error },
+			{ name: 'uiconfig', url: '/api/datasource?name=uiconfig', success: this.setStateHandler, error: this.error }
+			
+		]).start();
+		app.service = Service;
+        return {
+			uiconfig: {},
+            refreshrate: 100,
+			autoreload: false,
+			maxRetry: this.bootstrapMaxRetries
+        };
+    },
+	loadFromServerHandler: function () {
+        this.bootstrapMaxRetries--;
+        if (this.bootstrapMaxRetries <= 0) {
+            if (!this.state.autoreload) {
+                clearInterval(this.isMounted);
+                return;
+            }
+        }
+        else {
+			if (app.utils.isNullUndefOrEmpty(app.cache.memGet('uiconfig'))) return;
+			if (this.bootstrapMaxRetries === (this.state.maxRetry - 1)) return;
+            Service.start();
+        }
+    },
+	componentDidMount: function () {
+        this.loadFromServerHandler();
+        this.isMounted = setInterval(this.loadFromServerHandler, this.state.refreshrate);
+    },
+	setStateHandler: function (data, reqNum, url, queryData, reqTotal, isNested) {
+		this.setState({ dirty: true });
+        var responseName = Service.prop(reqNum, 'name');
+        switch (responseName) {
+			case "uiconfig":
+				this.setState({ uiconfig: data.Result });
+				break;
+			case "labels":
+				app.label.setItems(data);
+				break;
+			case "static":
+				app.staticPages.setItems(data);
+				break;
+			case "image":
+				app.image.setItems(data);
+				break;
+            default:
+                return;
+        }
+    },
+	error: function (reqNum, url, queryData, errorType, errorMsg, reqTotal) {
+        console.log(errorMsg);
+    },
 	render: function () {
+		var header = null;
+		if (!app.utils.isNullUndefOrEmpty(this.state.uiconfig.header)) {
+			header = React.createElement(Header, {header: this.state.uiconfig.header})
+		}
 		return (
 			React.createElement("div", {className: "container-fluid"}, 
-				React.createElement(Header, null), 
+				header, 
 				React.createElement("br", null), 
 				React.createElement("br", null), 
 				React.createElement("div", {className: "row"}, 
-						React.createElement(RouteHandler, null)
+					React.createElement(RouteHandler, null)
 				)
 			)
 		);
 	}
 });
-
 module.exports = App;
 
-},{"./layout/header/header":15,"jquery":25,"react":223,"react-router":51}],7:[function(require,module,exports){
+},{"../api/services":4,"./layout/header/header":15,"jquery":25,"react":223,"react-router":51}],7:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -472,9 +558,7 @@ var AuthorApi = require('../../api/authorApi');
 var toastr = require('toastr');
 
 var ManageAuthorPage = React.createClass({displayName: "ManageAuthorPage",
-	mixins: [
-		Router.Navigation
-	],
+	mixins: [Router.Navigation],
 	getInitialState: function() {
 		return {
 			author: { id: '', firstName: '', lastName: '' },
@@ -548,28 +632,38 @@ module.exports = ManageAuthorPage;
 var React = require('react');
 var RadioButtons = React.createClass({displayName: "RadioButtons",
     propTypes: {
-        name: React.PropTypes.string.isRequired,
+        groupname: React.PropTypes.string.isRequired,
+        value: React.PropTypes.string.isRequired,
         isInline: React.PropTypes.bool.isRequired,
-        Items: React.PropTypes.array.isRequired
+        Items: React.PropTypes.array.isRequired,
+        onChange: React.PropTypes.func.isRequired
     },
     render: function () {
         var _this = this;
         if (_this.props.Items) {
             var styleCss = ((_this.props.isInline)) ? styleCss = 'radio-inline' : 'radio';
-            var radioGroup = _this.props.Items.map(function (radioItem,index) {
+            var radioGroup = _this.props.Items.map(function (radioItem, index) {
                 return (
                     React.createElement("div", {key: index, className: styleCss}, 
                         React.createElement("label", null, 
                             React.createElement("input", {
                                 type: "radio", 
-                                name: _this.props.name}), 
-                                radioItem
+                                name: _this.props.groupname, 
+                                value: radioItem, 
+                                onChange: _this.props.onChange, 
+                                checked: _this.props.value === radioItem}
+                                ), 
+                            radioItem
                         )
                     )
                 );
             });
         }
-        return ({ radioGroup });
+        return (
+            React.createElement("div", null, 
+                radioGroup
+            )
+        );
     }
 });
 module.exports = RadioButtons;
@@ -618,24 +712,33 @@ module.exports = Input;
 "use strict";
 var React = require('react');
 var Contact = React.createClass({displayName: "Contact",
-	render: function () {
-		return (
-			React.createElement("div", null, 
-				React.createElement("h1", null, "Contact"), 
-                React.createElement("address", null, 
-                    "One Microsoft Way", React.createElement("br", null), 
-                    "Redmond, WA 98052-6399", React.createElement("br", null), 
-                    React.createElement("abbr", {title: "Phone"}, "P:"), 
-                    "425.555.0100"
-                ), 
+    render: function () {
+        var htmlServiceContent = app.staticPages.get("contact");
+        return (
+            React.createElement("div", {className: "page-footer"}, 
+                (() => {
+                    if (htmlServiceContent) {
+                        return React.createElement("div", {dangerouslySetInnerHTML: { __html: htmlServiceContent}})
+                    } else {
+                        return React.createElement("div", null, 
+                            React.createElement("h1", null, "Contact"), 
+                            React.createElement("address", null, 
+                                "One Microsoft Way", React.createElement("br", null), 
+                                "Redmond, WA 98052-6399", React.createElement("br", null), 
+                                React.createElement("abbr", {title: "Phone"}, "P: "), 
+                                "425.555.0100"
+                            ), 
 
-                React.createElement("address", null, 
-                    React.createElement("strong", null, "Support:"), " ", React.createElement("a", {href: "mailto:Support@example.com"}, "Support@example.com"), React.createElement("br", null), 
-                    React.createElement("strong", null, "Marketing:"), " ", React.createElement("a", {href: "mailto:Marketing@example.com"}, "Marketing@example.com")
-                )
-			)
-		); 
-	}
+                            React.createElement("address", null, 
+                                React.createElement("strong", null, "Support: "), " ", React.createElement("a", {href: "mailto:Support@example.com"}, "Support @example.com"), React.createElement("br", null), 
+                                React.createElement("strong", null, "Marketing: "), " ", React.createElement("a", {href: "mailto:Marketing@example.com"}, "Marketing @example.com")
+                            )
+                        )
+                    }
+                })() 
+            )
+        );
+    }
 });
 
 module.exports = Contact;
@@ -647,14 +750,21 @@ var Router = require('react-router');
 var Link = Router.Link;
 var Home = React.createClass({displayName: "Home",
 	render: function () {
+		var imgFlag = app.image.get("Flag.Country");
+		var imgFlagStyle = {
+			width: '32px',
+			height: '24px'
+		};
 		return (
-			
-				React.createElement("div", {ClassName: "row"}, 
-					React.createElement("h1", null, "ASP.Net 5 Core 1"), 
-					React.createElement("p", null, ".Net and React JS"), 
-					React.createElement(Link, {to: "about", ClassName: "btn btn-primary btn-lg"}, "Learn more")
-				)
-			
+
+			React.createElement("div", {ClassName: "row"}, 
+				
+				React.createElement("h1", null, "ASP.Net 5 Core 1", React.createElement("span", null, React.createElement("img", {src: imgFlag, style: imgFlagStyle}))), 			
+				React.createElement("p", null, ".Net and React JS"), 
+				React.createElement(Link, {to: "about", ClassName: "btn btn-primary btn-lg"}, "Learn more")
+				
+			)
+
 		);
 	}
 });
@@ -664,39 +774,19 @@ module.exports = Home;
 "use strict";
 var React = require('react');
 var Router = require('react-router');
-var Service = require('../../../api/services').http;
 var Logo = require('./logo');
 var Menu = require('./menu');
 var Header = React.createClass({displayName: "Header",
+  propTypes: {
+    header: React.PropTypes.object.isRequired
+  },
   getInitialState: function () {
-    Service.add([
-      { name: 'menu', url: '/api/menu', success: this.setStateHandler, error: this.error },
-      { name: 'uiconfig', url: '/api/datasource?name=uiconfig', success: this.setStateHandler, error: this.error }
-    ]).start();
     return {
-      menu: [],
-      logo: '',
-      hTextVisible: false,
-      hText: ''
+      menu: this.props.header.menu,
+      logo: this.props.header.logo,
+      hTextVisible: this.props.header.visiable,
+      hText: this.props.header.text
     };
-  },
-  setStateHandler: function (data, reqNum, url, queryData, reqTotal, isNested) {
-    var responseName = Service.prop(reqNum, 'name');
-    switch (responseName) {
-      case "menu":
-        this.setState({ menu: data });
-        break;
-      case "uiconfig":
-        this.setState({ logo: data.logo });
-        this.setState({ hTextVisible: data.header.visiable });
-        this.setState({ hText: data.header.text });
-        break;
-      default:
-        return;
-    }
-  },
-  error: function (reqNum, url, queryData, errorType, errorMsg, reqTotal) {
-    console.log(errorMsg);
   },
   render: function () {
     return (
@@ -715,7 +805,7 @@ var Header = React.createClass({displayName: "Header",
   }
 });
 module.exports = Header;
-},{"../../../api/services":4,"./logo":16,"./menu":17,"react":223,"react-router":51}],16:[function(require,module,exports){
+},{"./logo":16,"./menu":17,"react":223,"react-router":51}],16:[function(require,module,exports){
 var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
@@ -764,6 +854,7 @@ var Menu = React.createClass({displayName: "Menu",
             var menuItems = _this.props.Items.map(function (menuItem, index) {
                 var listItem = null;
                 var styleCss = ((_this.state.focused == index)) ? styleCss = 'active' : '';
+                var menuText = (app.label.get(menuItem.Label) || menuItem.Text || '');
                 if (menuItem.Items.length > 0) {
                     listItem = (
                         React.createElement("li", {key: menuItem.Id, 
@@ -772,7 +863,7 @@ var Menu = React.createClass({displayName: "Menu",
                             React.createElement(Link, {className: "dropdown-toggle", 
                                 "data-toggle": "dropdown", 
                                 to: menuItem.LinkTo}, 
-                                menuItem.Text, 
+                                menuText, 
                                 React.createElement("span", {className: "caret"})
                             ), 
                             React.createElement(SubMenu, {Items: menuItem.Items})
@@ -783,7 +874,7 @@ var Menu = React.createClass({displayName: "Menu",
                         React.createElement("li", {key: menuItem.Id, 
                             className: styleCss, 
                             onClick: _this.clicked.bind(self, index) }, 
-                            React.createElement(Link, {to: menuItem.LinkTo}, menuItem.Text)
+                            React.createElement(Link, {to: menuItem.LinkTo}, menuText)
                         )
                     )
                 }
@@ -812,10 +903,11 @@ var SubMenu = React.createClass({displayName: "SubMenu",
         var _this = this;
         if (_this.props.Items) {
             var subItems = _this.props.Items.map(function (menuItem) {
+                var menuText = (app.label.get(menuItem.Label) || menuItem.Text || '');
                 return (
                     React.createElement("li", {key: menuItem.Id}, 
                         React.createElement(Link, {to: menuItem.LinkTo}, 
-                            menuItem.Text
+                            menuText
                         ), 
                         React.createElement(SubMenu, {Items: menuItem.Items})
                     )
@@ -861,17 +953,21 @@ var SettingsForm = React.createClass({displayName: "SettingsForm",
     propTypes: {
         settings: React.PropTypes.object.isRequired,
         errors: React.PropTypes.object,
-        onSave:	React.PropTypes.func.isRequired,
+        onSave: React.PropTypes.func.isRequired,
+        onChange: React.PropTypes.func.isRequired
+        
     },
-
     render: function () {
         return (
             React.createElement("form", null, 
                 React.createElement("h1", null, "Application Settings"), 
                 React.createElement(RadioButtons, {
-                    name: this.props.settings.lang.name, 
+                    groupname: this.props.settings.lang.groupname, 
+                    value: this.props.settings.lang.value, 
                     isInline: this.props.settings.lang.isInline, 
-                    Items: this.props.settings.lang.Items}), 
+                    Items: this.props.settings.lang.Items, 
+                    onChange: this.props.onChange}
+                    ), 
 
                 React.createElement("input", {type: "submit", value: "Save", className: "btn btn-default", onClick: this.props.onSave})
             )
@@ -893,7 +989,8 @@ var SettingsPage = React.createClass({displayName: "SettingsPage",
     getInitialState: function () {
         var options = {
             lang: {
-                name: "optlanguage",
+                value: 'eng',
+                groupname: "optlang",
                 isInline: false,
                 Items: ['eng', 'es', 'rus']
             }
@@ -901,7 +998,30 @@ var SettingsPage = React.createClass({displayName: "SettingsPage",
         return {
             settings: options,
             errors: {},
+            dirty: false
         };
+    },
+    componentDidMount: function () {
+        var cachedLanguage = app.cache.localGet('language');
+        var options = this.state.settings;
+        options.lang.value = (app.utils.isNullUndefOrEmpty(cachedLanguage)) ? app.localization.language:cachedLanguage;
+        this.setState({ settings: options });
+    },
+    setSettingsState: function (event) {
+        this.setState({ dirty: true });
+        switch (event.target.name) {
+            case "optlang":
+                var options = this.state.settings;
+                options.lang.value = event.target.value;            
+                app.localization.language = event.target.value;
+                app.cache.localSet('language', event.target.value);
+                toastr.success(event.target.value);
+                this.setState({ settings: options });
+                app.service.start();
+                break;
+            default:
+                break;
+        }
     },
     saveSettings: function (event) {
         event.preventDefault();
@@ -921,7 +1041,8 @@ var SettingsPage = React.createClass({displayName: "SettingsPage",
             React.createElement(SettingsForm, {
                 settings: this.state.settings, 
                 errors: this.state.errors, 
-                onSave: this.saveSettings}
+                onSave: this.saveSettings, 
+                onChange: this.setSettingsState}
                 )
         );
     }

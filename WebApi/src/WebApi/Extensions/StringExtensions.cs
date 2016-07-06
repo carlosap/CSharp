@@ -148,6 +148,17 @@ namespace WebApi.Extensions.Strings
             return jsonResults;
         }
 
+        public static async Task<List<DictionaryItem>> ReadStaticViewTemplateAsync(this string filePath, string keyword)
+        {
+            return await Task.Run(() => {
+                List<DictionaryItem> definitionList = new List<DictionaryItem>();
+                var valueText = File.ReadAllText(filePath);
+                definitionList.Add(new DictionaryItem(keyword, valueText));             
+                return definitionList;
+            });
+        }
+
+
         public static async Task<List<DictionaryItem>> GetLabelsByNameAsync(this string filePath, string keyword)
         {
             return await Task.Run(() => {
@@ -163,12 +174,22 @@ namespace WebApi.Extensions.Strings
                     var value = line.Substring(commaIndex + 1, line.Length - commaIndex - 1);
                     if (keyword.Contains("*"))
                     {
-                        string tempKeyword = keyword.Replace("*", "");
-                        if (name.Contains(tempKeyword))
+                        if (keyword.Equals("*"))
                         {
                             definitionList.Add(new DictionaryItem(name, value));
                             continue;
                         }
+                        else
+                        {
+                            string tempKeyword = keyword.Replace("*", "");
+                            if (name.Contains(tempKeyword))
+                            {
+                                definitionList.Add(new DictionaryItem(name, value));
+                                continue;
+                            }
+
+                        }
+
                     }
                     else
                     {

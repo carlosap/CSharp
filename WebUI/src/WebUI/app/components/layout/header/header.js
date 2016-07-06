@@ -1,39 +1,19 @@
 "use strict";
 var React = require('react');
 var Router = require('react-router');
-var Service = require('../../../api/services').http;
 var Logo = require('./logo');
 var Menu = require('./menu');
 var Header = React.createClass({
+  propTypes: {
+    header: React.PropTypes.object.isRequired
+  },
   getInitialState: function () {
-    Service.add([
-      { name: 'menu', url: '/api/menu', success: this.setStateHandler, error: this.error },
-      { name: 'uiconfig', url: '/api/datasource?name=uiconfig', success: this.setStateHandler, error: this.error }
-    ]).start();
     return {
-      menu: [],
-      logo: '',
-      hTextVisible: false,
-      hText: ''
+      menu: this.props.header.menu,
+      logo: this.props.header.logo,
+      hTextVisible: this.props.header.visiable,
+      hText: this.props.header.text
     };
-  },
-  setStateHandler: function (data, reqNum, url, queryData, reqTotal, isNested) {
-    var responseName = Service.prop(reqNum, 'name');
-    switch (responseName) {
-      case "menu":
-        this.setState({ menu: data });
-        break;
-      case "uiconfig":
-        this.setState({ logo: data.logo });
-        this.setState({ hTextVisible: data.header.visiable });
-        this.setState({ hText: data.header.text });
-        break;
-      default:
-        return;
-    }
-  },
-  error: function (reqNum, url, queryData, errorType, errorMsg, reqTotal) {
-    console.log(errorMsg);
   },
   render: function () {
     return (

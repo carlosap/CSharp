@@ -1,3 +1,4 @@
+//app.service.request("/api/datasource?name=uiconfig",sucess,fail);
 module.exports = {
 	q: function (ajaxQueue) {
 		ajaxQueue = ajaxQueue || Array();
@@ -105,6 +106,22 @@ module.exports = {
 				}
 				trigger('processStart', [processed + 1, getURL(reqData.url), getQueryData(reqData.url), ajaxQueue.length, (processed === lastProcessed)]);
 				lastProcessed = processed;
+
+				
+				if(reqData.url.indexOf('label?')!== -1 || reqData.url.indexOf('static?')!== -1 || reqData.url.indexOf('image?')!== -1){
+					var queryString = '';
+					var language = (app.cache.localGet("language")||app.localization.language||'eng');
+					var indexLang = reqData.url.indexOf('&lang=');
+					if(indexLang !== -1){
+						queryString = reqData.url.substring(indexLang, reqData.url.length);
+						reqData.url = reqData.url.replace(queryString,'');
+					}else{
+						reqData.url = reqData.url.substring(indexLang, reqData.url.length);
+					}
+									
+					reqData.url = reqData.url + '&lang=' + language;
+				}
+
 
 				xhr = jQuery.ajax({
 					url: self.baseURL + (reqData.url || ''),

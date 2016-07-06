@@ -7,9 +7,7 @@ var AuthorApi = require('../../api/authorApi');
 var toastr = require('toastr');
 
 var ManageAuthorPage = React.createClass({
-	mixins: [
-		Router.Navigation
-	],
+	mixins: [Router.Navigation],
 	getInitialState: function() {
 		return {
 			author: { id: '', firstName: '', lastName: '' },
