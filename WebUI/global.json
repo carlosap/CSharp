@@ -1,5 +1,5 @@
-﻿{
-  "projects": [ "src", "test" ],
+{
+  "projects": [ "src", "test", "../../../Users/cperez/Downloads/C# 6 and Core 1/25- Network/NetworkingSamples" ],
   "sdk": {
     "version": "1.0.0-preview1-002702"
   }

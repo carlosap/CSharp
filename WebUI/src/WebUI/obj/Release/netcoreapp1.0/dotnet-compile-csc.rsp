@@ -1,14 +1,15 @@
-﻿-d:DEBUG
+﻿-d:RELEASE
 -d:TRACE
 -d:NETCOREAPP1_0
 -nowarn:CS1701
 -nowarn:CS1702
 -nowarn:CS1705
+-optimize
 -debug:full
 -nostdlib
 -nologo
-"C:\code\CSharp\WebUI\src\WebUI\obj\Debug\netcoreapp1.0\dotnet-compile.assemblyinfo.cs"
--out:"C:\code\CSharp\WebUI\src\WebUI\bin\Debug\netcoreapp1.0\WebUI.dll"
+"C:\code\CSharp\WebUI\src\WebUI\obj\Release\netcoreapp1.0\dotnet-compile.assemblyinfo.cs"
+-out:"C:\code\CSharp\WebUI\src\WebUI\bin\Release\netcoreapp1.0\WebUI.dll"
 -r:"C:\Users\cperez\.nuget\packages\Microsoft.AspNetCore.Hosting\1.0.0-rc2-final\lib\netstandard1.3\Microsoft.AspNetCore.Hosting.dll"
 -r:"C:\Users\cperez\.nuget\packages\Microsoft.AspNetCore.Hosting.Abstractions\1.0.0-rc2-final\lib\netstandard1.3\Microsoft.AspNetCore.Hosting.Abstractions.dll"
 -r:"C:\Users\cperez\.nuget\packages\Microsoft.AspNetCore.Hosting.Server.Abstractions\1.0.0-rc2-final\lib\netstandard1.3\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll"
@@ -116,7 +117,7 @@
 -r:"C:\Users\cperez\.nuget\packages\System.Threading.Timer\4.0.1-rc2-24027\ref\netstandard1.2\System.Threading.Timer.dll"
 -r:"C:\Users\cperez\.nuget\packages\System.Xml.ReaderWriter\4.0.11-rc2-24027\ref\netstandard1.3\System.Xml.ReaderWriter.dll"
 -r:"C:\Users\cperez\.nuget\packages\System.Xml.XDocument\4.0.11-rc2-24027\ref\netstandard1.3\System.Xml.XDocument.dll"
--resource:"C:\code\CSharp\WebUI\src\WebUI\obj\Debug\netcoreapp1.0\WebUIdotnet-compile.deps.json",WebUI.deps.json
+-resource:"C:\code\CSharp\WebUI\src\WebUI\obj\Release\netcoreapp1.0\WebUIdotnet-compile.deps.json",WebUI.deps.json
 "C:\code\CSharp\WebUI\src\WebUI\Program.cs"
 "C:\code\CSharp\WebUI\src\WebUI\SocketServer.cs"
 "C:\code\CSharp\WebUI\src\WebUI\Startup.cs"

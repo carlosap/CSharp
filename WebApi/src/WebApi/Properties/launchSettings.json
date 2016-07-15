@@ -21,6 +21,10 @@
       "environmentVariables": {
         "Hosting:Environment": "Development"
       }
+    },
+    "socket": {
+      "commandName": "socket",
+      "workingDirectory": "C:\\apps"
     }
   }
 }

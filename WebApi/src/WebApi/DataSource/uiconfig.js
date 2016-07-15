@@ -23,7 +23,7 @@
                         "Id": "2",
                         "Label": "Menu.Authors",
                         "Text": "Authors",
-                        "LinkTo": "app",
+                        "LinkTo": "authors",
                         "ImageUrl": null,
                         "Class": "",
                         "Sprite": "",

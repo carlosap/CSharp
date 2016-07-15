@@ -1,12 +1,12 @@
---temp-output:C:\code\CSharp\WebUI\src\WebUI\obj\Debug\netcoreapp1.0\
---out:C:\code\CSharp\WebUI\src\WebUI\bin\Debug\netcoreapp1.0\WebUI.dll
---define:DEBUG
+--temp-output:C:\code\CSharp\WebUI\src\WebUI\obj\Release\netcoreapp1.0\
+--out:C:\code\CSharp\WebUI\src\WebUI\bin\Release\netcoreapp1.0\WebUI.dll
+--define:RELEASE
 --define:TRACE
 --define:NETCOREAPP1_0
 --suppress-warning:CS1701
 --suppress-warning:CS1702
 --suppress-warning:CS1705
---optimize:False
+--optimize:True
 --emit-entry-point:True
 --output-name:WebUI
 --file-version:1.0.0.0
@@ -120,7 +120,7 @@
 --reference:C:\Users\cperez\.nuget\packages\System.Threading.Timer\4.0.1-rc2-24027\ref\netstandard1.2\System.Threading.Timer.dll
 --reference:C:\Users\cperez\.nuget\packages\System.Xml.ReaderWriter\4.0.11-rc2-24027\ref\netstandard1.3\System.Xml.ReaderWriter.dll
 --reference:C:\Users\cperez\.nuget\packages\System.Xml.XDocument\4.0.11-rc2-24027\ref\netstandard1.3\System.Xml.XDocument.dll
---resource:"C:\code\CSharp\WebUI\src\WebUI\obj\Debug\netcoreapp1.0\WebUIdotnet-compile.deps.json",WebUI.deps.json
+--resource:"C:\code\CSharp\WebUI\src\WebUI\obj\Release\netcoreapp1.0\WebUIdotnet-compile.deps.json",WebUI.deps.json
 C:\code\CSharp\WebUI\src\WebUI\Program.cs
 C:\code\CSharp\WebUI\src\WebUI\SocketServer.cs
 C:\code\CSharp\WebUI\src\WebUI\Startup.cs

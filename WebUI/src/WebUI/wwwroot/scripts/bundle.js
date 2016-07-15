@@ -329,14 +329,18 @@ var About = React.createClass({displayName: "About",
 	render: function () {
 		var htmlServiceContent = app.staticPages.get('about');
 		return (
-			React.createElement("div", null, 
+			React.createElement("div", {ClassName: "row"}, 
+				React.createElement("h1", null, "About"), 
 				(() => {
 					if (htmlServiceContent) {
 						return React.createElement("div", {dangerouslySetInnerHTML: { __html: htmlServiceContent}})
 					} else {
 						return React.createElement("div", null, 
-							React.createElement("h1", null, "About"), 
-							React.createElement("p", null, "Use this area to provide additional information.")
+							React.createElement("p", null, 
+								"The first preview release of ASP.NET came out almost 15 years ago as part of the.NET Framework." + ' ' +
+								"Since then millions of developers have used it to build and run great web apps, and over" + ' ' +
+								"the years we have added and evolved many capabilities to it."
+							)
 						)
 					}
 				})() 
@@ -750,21 +754,26 @@ var Router = require('react-router');
 var Link = Router.Link;
 var Home = React.createClass({displayName: "Home",
 	render: function () {
+		var htmlServiceContent = app.staticPages.get("home");
 		var imgFlag = app.image.get("Flag.Country");
 		var imgFlagStyle = {
 			width: '32px',
 			height: '24px'
 		};
 		return (
-
 			React.createElement("div", {ClassName: "row"}, 
-				
-				React.createElement("h1", null, "ASP.Net 5 Core 1", React.createElement("span", null, React.createElement("img", {src: imgFlag, style: imgFlagStyle}))), 			
-				React.createElement("p", null, ".Net and React JS"), 
+				React.createElement("h1", null, "ASP.Net 5 Core 1", React.createElement("span", null, React.createElement("img", {src: imgFlag, style: imgFlagStyle}))), 
+				(() => {
+                    if (htmlServiceContent) {
+                        return React.createElement("div", {dangerouslySetInnerHTML: { __html: htmlServiceContent}})
+                    } else {
+                        return React.createElement("p", null, 
+							"ASP.NET Core is a new open-source and cross-platform framework for building modern cloud based internet connected applications, such as web apps, IoT apps and mobile backends.ASP.NET Core apps can run on.NET Core or on the full.NET Framework.It was architected to provide an optimized development framework for apps that are deployed to the cloud or run on-premises.It consists of modular components with minimal overhead, so you retain flexibility while constructing your solutions.You can develop and run your ASP.NET Core apps cross-platform on Windows, Mac and Linux.ASP.NET Core is open source at GitHub."
+						)
+                    }
+                })(), 
 				React.createElement(Link, {to: "about", ClassName: "btn btn-primary btn-lg"}, "Learn more")
-				
 			)
-
 		);
 	}
 });

@@ -5,7 +5,7 @@ namespace WebApi.Interfaces
 {
     public interface ITodo
     {
-        void Add(TodoItem item);
+        void Add(string item);
         IEnumerable<TodoItem> GetAll();
         TodoItem Find(string key);
         TodoItem Remove(string key);

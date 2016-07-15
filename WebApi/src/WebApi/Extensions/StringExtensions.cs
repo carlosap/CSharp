@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 using WebApi.DataServer;
 using WebApi.TraceInfo;
 using WebApi.Model;
+using WebApi.Cache;
+
 
 namespace WebApi.Extensions.Strings
 {
     public static class StringExtensions
     {
+        
         private static SqlServer _sqlDb;
         private static Dictionary<string, object> _parameters;
         public static void EncryptFile(string filePath, byte[] encryptedBytes) => File.WriteAllBytes(filePath, encryptedBytes);
@@ -70,9 +73,7 @@ namespace WebApi.Extensions.Strings
         public static IEnumerable<string> GetFileNames(this string path, string pattern, SearchOption options = SearchOption.AllDirectories)
         {
             foreach (var fileName in Directory.EnumerateFiles(path, pattern))
-            {
                 yield return fileName;
-            }
         }
         public static IEnumerable<string> LoadLines(this string filepath)
         {
@@ -81,13 +82,21 @@ namespace WebApi.Extensions.Strings
                     var reader = new StreamReader(stream);
                     string line = null;
                     while ((line = reader.ReadLine()) != null)
-                    {
-
                         yield return line;
-                    }
-                }
-            
+
+                }         
         }
+
+//#if DNX451
+//        public static async Task SaveValueAsMemoryMapFile(this string mapname, string value)
+//        {
+//            await Task.Run(() =>
+//            {
+//                FileMapCache.Set(mapname, value);
+
+//            });
+//        }
+//#endif
         public static async Task<T> LoadAsTypeAsync<T>(this string filePath)
         {
             return await Task.Run(() =>
@@ -95,10 +104,9 @@ namespace WebApi.Extensions.Strings
                 var json = File.ReadAllText(filePath);
                 var obj = json.DeserializeObject<dynamic>();
                 return obj;
-
             });
-
         }
+
         public static async Task<List<T>> LoadAsListTypeAsync<T>(this string filePath)
         {
             return await Task.Run(() =>

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using WebApi.Interfaces;
 using WebApi.Repository;
+
 namespace WebApi
 {
     public class Startup
@@ -27,7 +28,8 @@ namespace WebApi
         public void ConfigureServices(
             IServiceCollection services)
         {
-           
+
+            
             services.AddMvc();
             services.AddSingleton<ITodo, TodoRepository>();
             services.AddSingleton<IMenu, MenuRepository>();
@@ -58,5 +60,3 @@ namespace WebApi
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }
-
-//UseGlimpse()
