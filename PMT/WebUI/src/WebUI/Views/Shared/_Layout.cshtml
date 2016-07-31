@@ -11,14 +11,14 @@
         <script src="https://fb.me/react-15.2.1.js" asp-fallback-src="~/lib/react/react.min.js" asp-append-version="true"> </script>
         <script src="https://fb.me/react-dom-15.2.1.js" asp-fallback-src="~/lib/react/react-dom.min.js" asp-append-version="true"> </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js" asp-fallback-src="~/lib/react/browser.min.js" asp-append-version="true"></script>
-        <link rel="stylesheet" href="css/components/bootstrap.css" asp-append-version="true" />
+
+        <link rel="stylesheet" href="~/css/components/bootstrap.css" asp-append-version="true" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" asp-append-version="true"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" asp-append-version="true" />
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css" asp-append-version="true" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/1.0.0/css/flag-icon.min.css" rel="stylesheet" type="text/css" asp-append-version="true"/>
-        <link rel="stylesheet" href="css/main.css" asp-append-version="true">
-
+        <link rel="stylesheet" href="~/css/main.css" asp-append-version="true">
 
     </environment>
 
@@ -122,8 +122,33 @@
 
 
     <environment names="Development">
-        <!-- global scripts -->
+        <script src="~/js/dist/jquery.min.js"></script>
+        <script src="~/js/dist/jquery.queue.js"></script>
+        <script src="~/js/dist/services.js"></script>
+        <script src="~/js/dist/tether.min.js"></script>
+        <script src="~/js/dist/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.min.js"></script>
+        <script src="~/js/dist/jquery.storageapi.min.js"></script>
+        <script src="~/js/dist/wow.min.js"></script>
+        <script src="~/js/dist/functions.js"></script>
+        <script src="~/js/dist/colors.js"></script>
+        <script src="~/js/dist/left-sidebar.js"></script>
+        <script src="~/js/dist/navbar.js"></script>
+        <script src="~/js/dist/horizontal-navigation-1.js"></script>
+        <script src="~/js/dist/main.js"></script>
+        <script src="~/js/dist/index.js"></script>       
+        <script src="~/js/dist/labels.js"></script>
+        <script src="~/js/dist/image.js"></script>
+        <script src="~/js/dist/static.js"></script>
+        <script src="~/js/dist/localization.js"></script>
+        <script src="~/js/dist/utils.js"></script>
+        <script src="~/js/dist/cache.js"></script>        
+    </environment>
+
+    <environment names="Staging,Production">
         <script src="~/js/dist/jquery.min.js" asp-append-version="true"></script>
+        <script src="~/js/dist/jquery.queue.js"></script>
+        <script src="~/js/dist/services.js"></script>
         <script src="~/js/dist/tether.min.js" asp-append-version="true"></script>
         <script src="~/js/dist/bootstrap.min.js" asp-append-version="true"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.min.js"></script>
@@ -136,34 +161,12 @@
         <script src="~/js/dist/horizontal-navigation-1.js" asp-append-version="true"></script>
         <script src="~/js/dist/main.js" asp-append-version="true"></script>
         <script src="~/js/dist/index.js" asp-append-version="true"></script>
-    </environment>
-
-    <environment names="Staging,Production">
-        <script src="lib/jquery/dist/jquery.js"></script>
-        <script src="lib/tether/dist/js/tether.js"></script>
-        <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="lib/PACE/pace.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.min.js"></script>
-        <script src="js/components/jquery-fullscreen/jquery.fullscreen-min.js"></script>
-        <script src="lib/jquery-storage-api/jquery.storageapi.min.js"></script>
-        <script src="lib/wow/dist/wow.min.js"></script>
-        <script src="js/functions.js"></script>
-        <script src="js/colors.js"></script>
-        <script src="js/left-sidebar.js"></script>
-        <script src="js/navbar.js"></script>
-        <script src="js/horizontal-navigation-1.js"></script>
-        <script src="js/horizontal-navigation-2.js"></script>
-        <script src="js/horizontal-navigation-3.js"></script>
-        <script src="js/main.js"></script>
-        <script src="lib/notifyjs/dist/notify.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
-        <script src="lib/chartist/dist/chartist.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.min.js"></script>
-        <script src="lib/d3/d3.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
-
-
-        <script src="js/index.js"></script>
+        <script src="~/js/dist/labels.js" asp-append-version="true"></script>
+        <script src="~/js/dist/image.js" asp-append-version="true"></script>
+        <script src="~/js/dist/static.js" asp-append-version="true"></script>
+        <script src="~/js/dist/localization.js" asp-append-version="true"></script>
+        <script src="~/js/dist/utils.js" asp-append-version="true"></script>
+        <script src="~/js/dist/cache.js" asp-append-version="true"></script>
     </environment>
 </body>
 </html>

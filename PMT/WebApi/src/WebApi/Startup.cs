@@ -24,15 +24,6 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            //services.AddSingleton<ITodo, TodoRepository>();
-            //services.AddSingleton<IMenu, MenuRepository>();
-            //services.AddSingleton<ILabel, LabelRepository>();
-            //services.AddSingleton<IForm, FormRepository>();
-            //services.AddSingleton<IDataSource, DataSourceRepository>();
-            //services.AddSingleton<IMedia, MediaRepository>();
-            //services.AddSingleton<IPage, PageRepository>();
-            //services.AddSingleton<IStatic, StaticRepository>();
-            //services.AddSingleton<IImage, ImageRepository>();
             services.AddSingleton<IAppConfig, AppConfigRepository>();
             services.AddSingleton<ISensor, ENS210Repository>();
         }
