@@ -68,7 +68,8 @@ var TemperatureC = React.createClass({
     }
 });
 
-var TemperatureK = React.createClass({
+var app = app || {};
+app.TemperatureK = React.createClass({
 
     render: function () {
         return (
@@ -188,7 +189,7 @@ var SensorPage = React.createClass({
                 humidity: ''
             },
             vco: '--- VOC',
-            refreshrate: 800
+            refreshrate: 1200
         };
     },
     componentDidMount: function () {
@@ -203,7 +204,7 @@ var SensorPage = React.createClass({
               <div>
                   <TemperatureF measurement={this.state.temperature.fahrenheit} />
                   <TemperatureC measurement={this.state.temperature.celcius} />
-                  <TemperatureK measurement={this.state.temperature.kelvin} />
+                  <app.TemperatureK measurement={this.state.temperature.kelvin} />
                   <TemperatureH measurement={this.state.temperature.humidity} />
                   <VOC measurement={this.state.vco} />
               </div>

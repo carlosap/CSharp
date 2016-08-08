@@ -3,7 +3,7 @@ using WebApi.Interfaces;
 using WebApi.Model;
 namespace WebApi.Repository
 {
-    public class ENS210Repository : ISensor
+    public class Ens210Repository : IEns210
     {
         public async Task<ENS210> Get(string serial, string value)
         {

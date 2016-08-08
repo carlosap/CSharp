@@ -8,10 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="favicon.ico">
     <environment names="Development">
-        <script src="https://fb.me/react-15.2.1.js" asp-fallback-src="~/lib/react/react.min.js" asp-append-version="true"> </script>
-        <script src="https://fb.me/react-dom-15.2.1.js" asp-fallback-src="~/lib/react/react-dom.min.js" asp-append-version="true"> </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js" asp-fallback-src="~/lib/react/browser.min.js" asp-append-version="true"></script>
-
         <link rel="stylesheet" href="~/css/components/bootstrap.css" asp-append-version="true" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" asp-append-version="true"/>
@@ -39,17 +35,18 @@
 
 <body data-layout="empty-layout" data-palette="palette-4" data-direction="none">
 
-    <nav class="navbar navbar-fixed-top navbar-1">
-        <img class="navbar-brand" src="~/images/logo.png" />
+<nav class="navbar navbar-fixed-top navbar-1">
+    <a class="navbar-brand" href="index.html">PMT Systems</a> 
+    @*<img class="navbar-brand" src="~/images/logo.png" />*@
 
-        <ul class="nav navbar-nav pull-right toggle-layout">
-            <li class="nav-item">
-                <a class="nav-link" data-click="toggle-layout">
-                    <i class="zmdi zmdi-menu"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <ul class="nav navbar-nav pull-right toggle-layout">
+        <li class="nav-item">
+            <a class="nav-link" data-click="toggle-layout">
+                <i class="zmdi zmdi-menu"></i>
+            </a>
+        </li>
+    </ul>
+</nav>
 
 
     <div class="container-fluid">
@@ -121,52 +118,60 @@
 
 
 
-    <environment names="Development">
-        <script src="~/js/dist/jquery.min.js"></script>
-        <script src="~/js/dist/jquery.queue.js"></script>
-        <script src="~/js/dist/services.js"></script>
-        <script src="~/js/dist/tether.min.js"></script>
-        <script src="~/js/dist/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.min.js"></script>
-        <script src="~/js/dist/jquery.storageapi.min.js"></script>
-        <script src="~/js/dist/wow.min.js"></script>
-        <script src="~/js/dist/functions.js"></script>
-        <script src="~/js/dist/colors.js"></script>
-        <script src="~/js/dist/left-sidebar.js"></script>
-        <script src="~/js/dist/navbar.js"></script>
-        <script src="~/js/dist/horizontal-navigation-1.js"></script>
-        <script src="~/js/dist/main.js"></script>
-        <script src="~/js/dist/index.js"></script>       
-        <script src="~/js/dist/labels.js"></script>
-        <script src="~/js/dist/image.js"></script>
-        <script src="~/js/dist/static.js"></script>
-        <script src="~/js/dist/localization.js"></script>
-        <script src="~/js/dist/utils.js"></script>
-        <script src="~/js/dist/cache.js"></script>        
-    </environment>
+<environment names="Development">
+    <!--3rd Party base libs-->
+    <script src="~/lib/react/react.min.js" asp-append-version="true"></script>
+    <script src="~/lib/react/react-dom.min.js" asp-append-version="true"></script>
+    <script src="~/lib/react/browser.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-queue/jquery.queue.min.js" asp-append-version="true"></script>
+    <script src="~/lib/tether/tether.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/lodash/lodash.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery.storageapi/jquery.storageapi.min.js" asp-append-version="true"></script>
+    <script src="~/lib/woo/wow.min.js" asp-append-version="true"></script>
+    <!--product base libs-->
+    <script src="~/js/dist/functions.js"></script>
+    <script src="~/js/dist/colors.js"></script>
+    <script src="~/js/dist/left-sidebar.js"></script>
+    <script src="~/js/dist/navbar.js"></script>
+    <script src="~/js/dist/horizontal-navigation-1.js"></script>
+    <script src="~/js/dist/main.js"></script>
+    <script src="~/js/dist/index.js"></script>
+    <!--App base libs-->
+    <script src="~/js/services.js"></script>
+    <script src="~/js/labels.js"></script>
+    <script src="~/js/image.js"></script>
+    <script src="~/js/static.js"></script>
+    <script src="~/js/localization.js"></script>
+    <script src="~/js/utils.js"></script>
+    <script src="~/js/cache.js"></script>
 
-    <environment names="Staging,Production">
-        <script src="~/js/dist/jquery.min.js" asp-append-version="true"></script>
-        <script src="~/js/dist/jquery.queue.js"></script>
-        <script src="~/js/dist/services.js"></script>
-        <script src="~/js/dist/tether.min.js" asp-append-version="true"></script>
-        <script src="~/js/dist/bootstrap.min.js" asp-append-version="true"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.min.js"></script>
-        <script src="~/js/dist/jquery.storageapi.min.js" asp-append-version="true"></script>
-        <script src="~/js/dist/wow.min.js" asp-append-version="true"></script>
-        <script src="~/js/dist/functions.js" asp-append-version="true"></script>
-        <script src="~/js/dist/colors.js" asp-append-version="true"></script>
-        <script src="~/js/dist/left-sidebar.js" asp-append-version="true"></script>
-        <script src="~/js/dist/navbar.js" asp-append-version="true"></script>
-        <script src="~/js/dist/horizontal-navigation-1.js" asp-append-version="true"></script>
-        <script src="~/js/dist/main.js" asp-append-version="true"></script>
-        <script src="~/js/dist/index.js" asp-append-version="true"></script>
-        <script src="~/js/dist/labels.js" asp-append-version="true"></script>
-        <script src="~/js/dist/image.js" asp-append-version="true"></script>
-        <script src="~/js/dist/static.js" asp-append-version="true"></script>
-        <script src="~/js/dist/localization.js" asp-append-version="true"></script>
-        <script src="~/js/dist/utils.js" asp-append-version="true"></script>
-        <script src="~/js/dist/cache.js" asp-append-version="true"></script>
-    </environment>
+</environment>
+
+<environment names="Staging,Production">
+    <!--3rd Party base libs-->
+    <script src="~/lib/react/react.min.js" asp-append-version="true"></script>
+    <script src="~/lib/react/react-dom.min.js" asp-append-version="true"></script>
+    <script src="~/lib/react/browser.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-queue/jquery.queue.min.js" asp-append-version="true"></script>
+    <script src="~/lib/tether/tether.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/lodash/lodash.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery.storageapi/jquery.storageapi.min.js" asp-append-version="true"></script>
+    <script src="~/lib/woo/wow.min.js" asp-append-version="true"></script>
+    <!--product base libs-->
+    <script src="~/js/dist/functions.min.js" asp-append-version="true"></script>
+    <script src="~/js/dist/colors.min.js" asp-append-version="true"></script>
+    <script src="~/js/dist/left-sidebar.min.js" asp-append-version="true"></script>
+    <script src="~/js/dist/navbar.min.js" asp-append-version="true"></script>
+    <script src="~/js/dist/horizontal-navigation-1.min.js" asp-append-version="true"></script>
+    <script src="~/js/dist/main.min.js" asp-append-version="true"></script>
+    <script src="~/js/dist/index.min.js" asp-append-version="true"></script>
+    <!--App base libs-->
+    <script src="~/js/app.min.js" asp-append-version="true"></script>
+
+</environment>
 </body>
 </html>

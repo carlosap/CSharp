@@ -1,9 +1,6 @@
-﻿// Configure bundling and minification for the project.
-// More info at https://go.microsoft.com/fwlink/?LinkId=808241
 [
   {
     "outputFileName": "wwwroot/css/site.min.css",
-    // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
       "wwwroot/css/site.css"
     ]
@@ -13,12 +10,93 @@
     "inputFiles": [
       "wwwroot/js/site.js"
     ],
-    // Optionally specify minification options
     "minify": {
       "enabled": true,
       "renameLocals": true
-    },
-    // Optinally generate .map file
-    "sourceMap": false
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/dist/utils.min.js",
+    "inputFiles": [
+      "wwwroot/js/dist/utils.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/dist/static.min.js",
+    "inputFiles": [
+      "wwwroot/js/dist/static.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/dist/services.min.js",
+    "inputFiles": [
+      "wwwroot/js/dist/services.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/dist/queue.min.js",
+    "inputFiles": [
+      "wwwroot/js/dist/queue.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/dist/navbar.min.js",
+    "inputFiles": [
+      "wwwroot/js/dist/navbar.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/dist/main.min.js",
+    "inputFiles": [
+      "wwwroot/js/dist/main.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/dist/jquery.queue.min.js",
+    "inputFiles": [
+      "wwwroot/js/dist/jquery.queue.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/app.js",
+    "inputFiles": [
+      "wwwroot/js/cache.js",
+      "wwwroot/js/image.js",
+      "wwwroot/js/labels.js",
+      "wwwroot/js/localization.js",
+      "wwwroot/js/services.js",
+      "wwwroot/js/static.js",
+      "wwwroot/js/utils.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/dist/colors.min.js",
+    "inputFiles": [
+      "wwwroot/js/dist/colors.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/dist/functions.min.js",
+    "inputFiles": [
+      "wwwroot/js/dist/functions.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/dist/horizontal-navigation-1.min.js",
+    "inputFiles": [
+      "wwwroot/js/dist/horizontal-navigation-1.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/dist/index.min.js",
+    "inputFiles": [
+      "wwwroot/js/dist/index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/dist/left-sidebar.min.js",
+    "inputFiles": [
+      "wwwroot/js/dist/left-sidebar.js"
+    ]
   }
 ]

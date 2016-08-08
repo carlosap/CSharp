@@ -14,8 +14,8 @@ namespace WebApi.Controllers
     public class ENS210Controller : Controller
     {
 
-        public ISensor Sensors { get; set; }
-        public ENS210Controller(ISensor sensor){Sensors = sensor;}
+        public IEns210 Iens210s { get; set; }
+        public ENS210Controller(IEns210 iens210){Iens210s = iens210;}
 
         public async Task<object> Get([FromQuery]string name,
             string serial, 
@@ -28,13 +28,13 @@ namespace WebApi.Controllers
             return await Task.Run(async () => {
                 try
                 {
-                    var cacheKey = $"sensor:{serial}";                  
+                    var cacheKey = $"sensor:{serial}:ENS210";                  
                     await AddCorOptions();
                     var isCache = (string.IsNullOrWhiteSpace(cache)) ? "yes" : "no";
                     if (isCache == "no") await CacheMemory.Remove(cacheKey);
                     var jsonResults = await CacheMemory.Get<ENS210>(cacheKey);
                     if (jsonResults != null) return jsonResults;
-                    var sensor = await Sensors.Get(serial, value);
+                    var sensor = await Iens210s.Get(serial, value);
                     sensor.LastRecord = DateTime.Now.ToString(CultureInfo.CurrentCulture);
                     sensor.Version = version ?? string.Empty;
                     sensor.Lic = lic ?? string.Empty;

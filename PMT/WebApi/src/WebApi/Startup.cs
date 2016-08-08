@@ -25,7 +25,9 @@ namespace WebApi
         {
             services.AddMvc();
             services.AddSingleton<IAppConfig, AppConfigRepository>();
-            services.AddSingleton<ISensor, ENS210Repository>();
+            services.AddSingleton<IEns210, Ens210Repository>();
+            services.AddSingleton<IiAQCORE, IAQCORERepository>();
+
         }
 
         public void Configure(
