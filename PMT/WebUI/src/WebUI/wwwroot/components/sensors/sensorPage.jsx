@@ -151,14 +151,17 @@ var VOC = React.createClass({
                       <div className="col-xs-8 text-left">
                           <div className="row">
                               <div className="col-xs-12">
-                                  <div className="title">Vol</div>
+                                  <div className="title">IAQCORE (VOC)</div>
                               </div>
                           </div>
                           <div className="row">
                               <div className="col-xs-12">
                                   <div className="numbers">
                                       <div>
-                                          <span className="amount">{this.props.measurement}</span>
+                                          <span className="amount">{this.props.ppm} PPM</span>
+                                      </div>
+                                      <div>
+                                          <span className="amount">{this.props.ppb} PPB</span>
                                       </div>
                                   </div>
                               </div>
@@ -178,7 +181,9 @@ var SensorPage = React.createClass({
     getInitialState: function () {
         this.isServerMounted = null;
         Service.add([
-            { name: 'ENS210', url: '/ENS210?serial=TESTBETA123', success: this.setStateHandler, error: this.error }
+            { name: 'ENS210', url: '/ENS210?serial=TESTBETA123', success: this.setStateHandler, error: this.error },
+            { name: 'IAQCORE', url: '/IAQCORE?serial=TESTBETA123', success: this.setStateHandler, error: this.error },
+
         ]);
 
         return {
@@ -188,7 +193,8 @@ var SensorPage = React.createClass({
                 kelvin: '',
                 humidity: ''
             },
-            vco: '--- VOC',
+            vco_ppb: '--- PPB',
+            vco_ppm: '--- PPM',
             refreshrate: 1200
         };
     },
@@ -206,7 +212,7 @@ var SensorPage = React.createClass({
                   <TemperatureC measurement={this.state.temperature.celcius} />
                   <app.TemperatureK measurement={this.state.temperature.kelvin} />
                   <TemperatureH measurement={this.state.temperature.humidity} />
-                  <VOC measurement={this.state.vco} />
+                  <VOC ppb={this.state.vco_ppb} ppm={this.state.vco_ppm} />
               </div>
 
 		);
@@ -220,12 +226,15 @@ var SensorPage = React.createClass({
             case "ENS210":
                 this.setState({
                     temperature: {
-                        fahrenheit: data.Fahrenheit,
+                        vco_ppb: data.Fahrenheit,
                         celcius: data.Celcius,
                         kelvin: data.Kelvin,
                         humidity: data.Humidity
                     }
                 });
+                break;
+            case "IAQCORE":
+                this.setState({ vco_ppb: data.PPB.Measurement, vco_ppm: data.PPM.Measurement });
                 break;
             default:
                 return;
