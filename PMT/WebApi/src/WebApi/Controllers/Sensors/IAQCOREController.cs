@@ -40,7 +40,7 @@ namespace WebApi.Controllers
                     sensor.Lic = lic ?? string.Empty;
                     sensor.Author = author ?? string.Empty;
                     sensor.Name = name ?? string.Empty;
-                    await CacheMemory.SetAndExpiresDays(cacheKey, sensor, 1);
+                    await CacheMemory.SetAndExpiresSeconds(cacheKey, sensor, 30);
                     return sensor;
                 }
                 catch (Exception ex)

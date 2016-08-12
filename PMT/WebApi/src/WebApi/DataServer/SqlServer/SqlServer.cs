@@ -45,9 +45,7 @@ namespace WebApi.DataServer
                 return results;
             });
         }
-        public async Task<int> GetTimeOut() => await Task.Run(() => {
-            return (int)Startup.AppSettings.DatabaseSettings.SqlServerConnection.TimeOut;
-        });
+        public async Task<int> GetTimeOut() => await Task.Run(() => (int)Startup.AppSettings.DatabaseSettings.SqlServerConnection.TimeOut);
         public Task<string> usp_Exec(string storeProc, Dictionary<string, object> parameters)
         {
             return Task.Run(async () =>  {

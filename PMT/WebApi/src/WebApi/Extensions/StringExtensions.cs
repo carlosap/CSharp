@@ -212,6 +212,17 @@ namespace WebApi.Extensions.Strings
                 return definitionList;
             });
         }
+
+        
+        public static bool IsValidEmail(this string email)
+        {
+            return Regex.IsMatch(email, UtilityRegExp.ValidEmailRegEx, RegexOptions.IgnoreCase);
+        }
+        public static bool IsNumber(this string numString)
+        {
+            long number1;
+            return long.TryParse(numString, out number1);
+        }
         public static object ReadFromJson(this string json, string messageType)
         {
             var type = Type.GetType(messageType);

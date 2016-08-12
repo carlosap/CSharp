@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using WebApi.Interfaces;
+using WebApi.Interfaces.Communications;
 using WebApi.Repository;
 
 namespace WebApi
@@ -27,6 +28,8 @@ namespace WebApi
             services.AddSingleton<IAppConfig, AppConfigRepository>();
             services.AddSingleton<IEns210, Ens210Repository>();
             services.AddSingleton<IiAQCORE, IAQCORERepository>();
+            services.AddSingleton<ISendEmail, SendEmailRepository>();
+            services.AddSingleton<ISendSms, SendSmsRepository>();
 
         }
 

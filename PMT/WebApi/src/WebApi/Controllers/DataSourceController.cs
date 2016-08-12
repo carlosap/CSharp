@@ -17,7 +17,7 @@ namespace WebApi.Controllers
            return await Task.Run(async () => {
                  try
                  {
-                     await AddCorOptions();
+                   await AddCorOptions();
                    var isCache = (string.IsNullOrWhiteSpace(cache)) ? "yes" : "no";
                    if (isCache == "no") await CacheMemory.Remove(name);
                    var jsonResults = await CacheMemory.Get<object>(name);
