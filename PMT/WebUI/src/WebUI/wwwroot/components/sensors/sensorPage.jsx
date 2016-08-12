@@ -193,9 +193,13 @@ var SensorPage = React.createClass({
                 kelvin: '',
                 humidity: ''
             },
+            temperatureLimits: {
+                low: 50,
+                max: 75
+            },
             vco_ppb: '--- PPB',
             vco_ppm: '--- PPM',
-            refreshrate: 1200
+            refreshrate: 1000
         };
     },
     componentDidMount: function () {
@@ -203,6 +207,17 @@ var SensorPage = React.createClass({
             this.loadFromServerHandler();
             this.isServerMounted = setInterval(this.loadFromServerHandler, this.state.refreshrate);
         }
+    },
+    isTempBetween: function (x) {
+        var min = this.state.temperatureLimits.low;
+        var max = this.state.temperatureLimits.max;
+        return x >= min && x <= max;
+    },
+    isBelowTemp: function(x){
+    
+    },
+    isAboveTemp: function(x){
+    
     },
     render: function () {
         return (
@@ -226,7 +241,7 @@ var SensorPage = React.createClass({
             case "ENS210":
                 this.setState({
                     temperature: {
-                        vco_ppb: data.Fahrenheit,
+                        fahrenheit: data.Fahrenheit,
                         celcius: data.Celcius,
                         kelvin: data.Kelvin,
                         humidity: data.Humidity
