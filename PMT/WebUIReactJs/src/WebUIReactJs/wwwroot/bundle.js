@@ -61,19 +61,19 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _About = __webpack_require__(/*! ./modules/About */ 224);
+	var _About = __webpack_require__(/*! ./modules/About */ 226);
 	
 	var _About2 = _interopRequireDefault(_About);
 	
-	var _Repos = __webpack_require__(/*! ./modules/Repos */ 225);
+	var _Repos = __webpack_require__(/*! ./modules/Repos */ 227);
 	
 	var _Repos2 = _interopRequireDefault(_Repos);
 	
-	var _Repo = __webpack_require__(/*! ./modules/Repo */ 226);
+	var _Repo = __webpack_require__(/*! ./modules/Repo */ 228);
 	
 	var _Repo2 = _interopRequireDefault(_Repo);
 	
-	var _Home = __webpack_require__(/*! ./modules/Home */ 227);
+	var _Home = __webpack_require__(/*! ./modules/Home */ 229);
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
@@ -292,17 +292,45 @@
 	} ())
 	function runTimeout(fun) {
 	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
 	        return setTimeout(fun, 0);
-	    } else {
-	        return cachedSetTimeout.call(null, fun, 0);
 	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch(e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch(e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+	
+	
 	}
 	function runClearTimeout(marker) {
 	    if (cachedClearTimeout === clearTimeout) {
-	        clearTimeout(marker);
-	    } else {
-	        cachedClearTimeout.call(null, marker);
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
 	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+	
+	
+	
 	}
 	var queue = [];
 	var draining = false;
@@ -26043,6 +26071,14 @@
 	
 	var _NavLink2 = _interopRequireDefault(_NavLink);
 	
+	var _Nav = __webpack_require__(/*! ./Nav */ 224);
+	
+	var _Nav2 = _interopRequireDefault(_Nav);
+	
+	var _Menu = __webpack_require__(/*! ./Menu */ 225);
+	
+	var _Menu2 = _interopRequireDefault(_Menu);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = _react2.default.createClass({
@@ -26125,6 +26161,214 @@
 
 /***/ },
 /* 224 */
+/*!************************!*\
+  !*** ./modules/Nav.js ***!
+  \************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _react2.default.createClass({
+	    displayName: "Nav",
+	    render: function render() {
+	        return _react2.default.createElement(
+	            "nav",
+	            { className: "navbar navbar-fixed-top navbar-1" },
+	            _react2.default.createElement("img", { className: "navbar-brand", src: "images/logo.png" }),
+	            _react2.default.createElement(
+	                "ul",
+	                { className: "nav navbar-nav pull-right toggle-layout" },
+	                _react2.default.createElement(
+	                    "li",
+	                    { className: "nav-item" },
+	                    _react2.default.createElement(
+	                        "a",
+	                        { className: "nav-link", "data-click": "toggle-layout" },
+	                        _react2.default.createElement("i", { className: "zmdi zmdi-menu" })
+	                    )
+	                )
+	            )
+	        );
+	    }
+	});
+
+/***/ },
+/* 225 */
+/*!*************************!*\
+  !*** ./modules/Menu.js ***!
+  \*************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _NavLink = __webpack_require__(/*! ./NavLink */ 223);
+	
+	var _NavLink2 = _interopRequireDefault(_NavLink);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _react2.default.createClass({
+	    displayName: 'Menu',
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement('div', { className: 'sidebar-placeholder' }),
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'sidebar-outer-wrapper' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'sidebar-inner-wrapper' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'sidebar-1' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'sidebar-nav' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'sidebar-section' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'section-title' },
+	                                    'About Us'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'ul',
+	                                    { className: 'l1 list-unstyled section-content' },
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            _NavLink2.default,
+	                                            { to: '/about', className: 'sideline', 'data-id': 'home' },
+	                                            'About',
+	                                            _react2.default.createElement('i', { className: 'zmdi zmdi-home md-icon pull-left' }),
+	                                            '  ',
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { 'class': 'title' },
+	                                                'PMT'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'sidebar-section' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'section-title' },
+	                                    'Our Products'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'ul',
+	                                    { className: 'l1 list-unstyled section-content' },
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'a',
+	                                            { className: 'sideline', 'data-id': 'dashboards' },
+	                                            _react2.default.createElement('i', { className: 'pull-right fa fa-caret-down icon-dashboards' }),
+	                                            '  ',
+	                                            _react2.default.createElement('i', { className: 'zmdi zmdi-view-dashboard md-icon pull-left' }),
+	                                            '  ',
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { 'class': 'title' },
+	                                                'Sensors'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'sidebar-section' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'section-title' },
+	                                    'Contact Us'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'ul',
+	                                    { className: 'l1 list-unstyled section-content' },
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'a',
+	                                            { className: 'sideline', 'data-id': 'contactus' },
+	                                            _react2.default.createElement('i', { className: 'zmdi zmdi-account-box-phone md-icon pull-left' }),
+	                                            '  ',
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { 'class': 'title' },
+	                                                'Contact'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'sidebar-section' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'section-title' },
+	                                    'Documentation'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'ul',
+	                                    { className: 'l1 list-unstyled section-content' },
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'a',
+	                                            { className: 'sideline', 'data-id': 'docs' },
+	                                            _react2.default.createElement('i', { className: 'zmdi zmdi-info-outline md-icon pull-left' }),
+	                                            '  ',
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'title' },
+	                                                'Docs'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            )
+	        );
+	    }
+	});
+
+/***/ },
+/* 226 */
 /*!**************************!*\
   !*** ./modules/About.js ***!
   \**************************/
@@ -26154,7 +26398,7 @@
 	});
 
 /***/ },
-/* 225 */
+/* 227 */
 /*!**************************!*\
   !*** ./modules/Repos.js ***!
   \**************************/
@@ -26215,7 +26459,7 @@
 	});
 
 /***/ },
-/* 226 */
+/* 228 */
 /*!*************************!*\
   !*** ./modules/Repo.js ***!
   \*************************/
@@ -26249,7 +26493,7 @@
 	});
 
 /***/ },
-/* 227 */
+/* 229 */
 /*!*************************!*\
   !*** ./modules/Home.js ***!
   \*************************/
