@@ -11,23 +11,18 @@ var config = {
 	devBaseUrl: 'http://localhost',
 	paths: {
 		html: './app/*.html',
-		js: './app/**/*.js',
+		js: './app/js/**/*',
 		images: './app/images/*',
-		libs: './app/libs/*',
-		css: [
-      		'node_modules/bootstrap/dist/css/bootstrap.min.css',
-      		'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
-      		'node_modules/toastr/toastr.css'
-    	],
+		css: './app/css/**/*',
+		lib: './app/lib/**/*',
 		dist: './wwwroot',
-		mainJs: './app/main.js'
+		mainJs: './app/*bundle*'
 	}
 }
 
-//Start a local development server
 gulp.task('connect', function() {
 	connect.server({
-		root: ['wwwroot'],
+		root: ['app'],
 		port: config.port,
 		base: config.devBaseUrl,
 		livereload: true
@@ -35,7 +30,7 @@ gulp.task('connect', function() {
 });
 
 gulp.task('open', ['connect'], function() {
-	gulp.src('wwwwroot/index.html')
+	gulp.src('app/index.html')
 		.pipe(open({ uri: config.devBaseUrl + ':' + config.port + '/'}));
 });
 
@@ -45,36 +40,31 @@ gulp.task('html', function() {
 		.pipe(connect.reload());
 });
 
-gulp.task('js', function() {
-	browserify(config.paths.mainJs)
-		.transform(reactify)
-		.bundle()
-		.on('error', console.error.bind(console))
-		.pipe(source('bundle.js'))
-		.pipe(gulp.dest(config.paths.dist + '/scripts'))
+gulp.task('bundle', function () {
+    gulp.src(config.paths.mainJs)
+		.pipe(gulp.dest(config.paths.dist))
 		.pipe(connect.reload());
 });
 
-gulp.task('css', function() {
-	gulp.src(config.paths.css)
-		.pipe(concat('bundle.css'))
-		.pipe(gulp.dest(config.paths.dist + '/css'));
+gulp.task('js', function () {
+    gulp.src(config.paths.js)
+        .pipe(gulp.dest(config.paths.dist + '/js'))
+        .pipe(connect.reload());
+});
+gulp.task('css', function () {
+    gulp.src(config.paths.css)
+        .pipe(gulp.dest(config.paths.dist + '/css'))
+        .pipe(connect.reload());
 });
 
-// Migrates images to dist folder
-// Note that I could even optimize my images here
 gulp.task('images', function () {
     gulp.src(config.paths.images)
         .pipe(gulp.dest(config.paths.dist + '/images'))
         .pipe(connect.reload());
-
-    //publish favicon
-    gulp.src('./wwwroot/favicon.ico')
-        .pipe(gulp.dest(config.paths.dist));
 });
-gulp.task('libs', function () {
-    gulp.src(config.paths.libs)
-        .pipe(gulp.dest(config.paths.dist + '/scripts'))
+gulp.task('lib', function () {
+    gulp.src(config.paths.lib)
+        .pipe(gulp.dest(config.paths.dist + '/lib'))
         .pipe(connect.reload());
 
 });
@@ -83,5 +73,5 @@ gulp.task('watch', function() {
 	gulp.watch(config.paths.js, ['js']);
 });
 
-//gulp.task('default', ['html', 'js', 'css', 'images', 'lint', 'open', 'watch']);
-gulp.task('default', ['html', 'js', 'css', 'images','libs', 'open','watch']);
+gulp.task('default', ['html', 'js', 'css', 'images', 'lib', , 'bundle', 'open', 'watch']);
+gulp.task('production', ['html', 'js', 'css', 'images', 'lib', 'bundle']);
