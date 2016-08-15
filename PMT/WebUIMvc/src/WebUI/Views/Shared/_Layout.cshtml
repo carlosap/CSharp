@@ -1,0 +1,177 @@
+﻿
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewData["Title"]</title>
+    <meta name="description" content="Marino, Admin theme, Dashboard theme, AngularJS Theme">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/components/bootstrap.css" asp-append-version="true" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" asp-append-version="true" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css" asp-append-version="true" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/1.0.0/css/flag-icon.min.css" rel="stylesheet" type="text/css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/main.css" asp-append-version="true">
+
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="https://fb.me/react-15.2.1.js" asp-fallback-src="~/lib/react/react.min.js"> </script>
+        <script src="https://fb.me/react-dom-15.2.1.js" asp-fallback-src="~/lib/react/react-dom.min.js"> </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js" asp-fallback-src="~/lib/react/browser.min.js"></script>
+        <link rel="stylesheet" href="css/components/bootstrap.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/1.0.0/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="css/main.css">
+
+    </environment>
+</head>
+
+<body data-layout="empty-layout" data-palette="palette-4" data-direction="none">
+
+<nav class="navbar navbar-fixed-top navbar-1">
+    <a class="navbar-brand" href="index.html">PMT Systems</a> 
+    @*<img class="navbar-brand" src="~/images/logo.png" />*@
+
+    <ul class="nav navbar-nav pull-right toggle-layout">
+        <li class="nav-item">
+            <a class="nav-link" data-click="toggle-layout">
+                <i class="zmdi zmdi-menu"></i>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="sidebar-placeholder">
+            </div>
+            <div class="sidebar-outer-wrapper">
+                <div class="sidebar-inner-wrapper">
+                    <div class="sidebar-1">
+                        <div class="sidebar-nav">
+
+                            <div class="sidebar-section">
+                                <div class="section-title">About Us</div>
+                                <ul class="l1 list-unstyled section-content">
+                                    <li>
+                                        <a class="sideline" data-id="home"  asp-controller="Home" asp-action="Index">
+                                            <i class="zmdi zmdi-home md-icon pull-left"></i>  <span class="title">PMT</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="sidebar-section">
+                                <div class="section-title">Our Products</div>
+                                <ul class="l1 list-unstyled section-content">
+                                    <li>
+                                        <a class="sideline" data-id="dashboards" asp-controller="Sensors" asp-action="Index">
+                                            <i class="pull-right fa fa-caret-down icon-dashboards"></i>  <i class="zmdi zmdi-view-dashboard md-icon pull-left"></i>  <span class="title">Sensors</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="sidebar-section">
+                                <div class="section-title">Contact Us</div>
+                                <ul class="l1 list-unstyled section-content">
+                                    <li>
+                                        <a class="sideline" data-id="contactus" asp-controller="Contact" asp-action="Index">
+                                            <i class="zmdi zmdi-account-box-phone md-icon pull-left"></i>  <span class="title">Contact</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="sidebar-section">
+                                <div class="section-title">Documentation</div>
+                                <ul class="l1 list-unstyled section-content">
+                                    <li>
+                                        <a class="sideline" data-id="docs" asp-controller="Documentation" asp-action="Index" >
+                                            <i class="zmdi zmdi-info-outline md-icon pull-left"></i>  <span class="title">Docs</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                      
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xs-12 main" id="main">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+
+
+<environment names="Development">
+    <!--3rd Party base libs-->
+    <script src="~/lib/react/react.min.js" asp-append-version="true"></script>
+    <script src="~/lib/react/react-dom.min.js" asp-append-version="true"></script>
+    <script src="~/lib/react/browser.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-queue/jquery.queue.min.js" asp-append-version="true"></script>
+    <script src="~/lib/tether/tether.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/lodash/lodash.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery.storageapi/jquery.storageapi.min.js" asp-append-version="true"></script>
+    <script src="~/lib/woo/wow.min.js" asp-append-version="true"></script>
+    <!--product base libs-->
+    <script src="~/js/dist/functions.js"></script>
+    <script src="~/js/dist/colors.js"></script>
+    <script src="~/js/dist/left-sidebar.js"></script>
+    <script src="~/js/dist/navbar.js"></script>
+    <script src="~/js/dist/horizontal-navigation-1.js"></script>
+    <script src="~/js/dist/main.js"></script>
+    <script src="~/js/dist/index.js"></script>
+    <!--App base libs-->
+    <script src="~/js/services.js"></script>
+    <script src="~/js/labels.js"></script>
+    <script src="~/js/image.js"></script>
+    <script src="~/js/static.js"></script>
+    <script src="~/js/localization.js"></script>
+    <script src="~/js/utils.js"></script>
+    <script src="~/js/cache.js"></script>
+
+</environment>
+
+<environment names="Staging,Production">
+    <!--3rd Party base libs-->
+    <script src="~/lib/react/react.min.js" asp-append-version="true"></script>
+    <script src="~/lib/react/react-dom.min.js" asp-append-version="true"></script>
+    <script src="~/lib/react/browser.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-queue/jquery.queue.min.js" asp-append-version="true"></script>
+    <script src="~/lib/tether/tether.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/lodash/lodash.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery.storageapi/jquery.storageapi.min.js" asp-append-version="true"></script>
+    <script src="~/lib/woo/wow.min.js" asp-append-version="true"></script>
+    <!--product base libs-->
+    <script src="~/js/dist/functions.min.js" asp-append-version="true"></script>
+    <script src="~/js/dist/colors.min.js" asp-append-version="true"></script>
+    <script src="~/js/dist/left-sidebar.min.js" asp-append-version="true"></script>
+    <script src="~/js/dist/navbar.min.js" asp-append-version="true"></script>
+    <script src="~/js/dist/horizontal-navigation-1.min.js" asp-append-version="true"></script>
+    <script src="~/js/dist/main.min.js" asp-append-version="true"></script>
+    <script src="~/js/dist/index.min.js" asp-append-version="true"></script>
+    <!--App base libs-->
+    <script src="~/js/app.min.js" asp-append-version="true"></script>
+
+</environment>
+</body>
+</html>
