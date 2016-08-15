@@ -5,7 +5,7 @@ param($publishProperties=@{}, $packOutput, $pubProfilePath)
 
 try{
     if ($publishProperties['ProjectGuid'] -eq $null){
-        $publishProperties['ProjectGuid'] = '64118865-7f3e-4989-a237-90b53dc8ee71'
+        $publishProperties['ProjectGuid'] = 'c8efa014-fad8-4bbf-910a-fa71e3a76c7d'
     }
 
     $publishModulePath = Join-Path (Split-Path $MyInvocation.MyCommand.Path) 'publish-module.psm1'
