@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Twilio;
-using WebApi.Extensions.Strings;
 using WebApi.Interfaces.Communications;
 using System.Collections.Generic;
+using WebApi.Extensions.Strings;
 
 namespace WebApi.ServerNotifications
 {
@@ -25,26 +24,26 @@ namespace WebApi.ServerNotifications
             _client = client;
         }
 
-        public Message SendMessage(string msg)
+        public void SendMessage(string msg)
         {
             var contacts = Startup.AppSettings.SmsSettings.Contacts;
-            return _client.SendMessage(_fromNumber, "7275606474", msg);
-            //foreach (var smsContact in contacts)
-            //{
-            //    try
-            //    {
-            //        string strPhone = smsContact.Telephone.Value.ToString().Replace("+", "");
-            //        if (strPhone.IsNumber())
-            //            _client.SendMessage(_fromNumber, "+" + strPhone, msg);
+            //return _client.SendMessage(_fromNumber, "7275606474", msg);
+            foreach (var smsContact in contacts)
+            {
+                try
+                {
+                    string strPhone = smsContact.Telephone.Value.ToString().Replace("+", "");
+                    if (strPhone.IsNumber())
+                        _client.SendMessage(_fromNumber,strPhone, msg);
 
-            //    }
-            //    catch (Exception ex)
-            //    {
+                }
+                catch (Exception ex)
+                {
 
-            //        continue;
-            //    }
+                    continue;
+                }
 
-            //}
+            }
         }
 
 

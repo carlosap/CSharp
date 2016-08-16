@@ -8,7 +8,7 @@ using System.Globalization;
 using WebApi.TraceInfo;
 namespace WebApi.Controllers
 {
-    ///SET - > api/COREALL?name=PMDSensorAPI&serial=TESTBETA123&version=1.0.0&lic=ISC&author=PMT&value=fahrenheit=78.45|celsius=25.80|kelvin=298.95|humidity=44.82|ppm=323|ppb=424&cache=no
+    ///SET - > api/COREALL?name=PMDSensorAPI&serial=TESTBETA123&version=1.0.0&lic=ISC&author=PMT&value=fahrenheit=88.45|celsius=85.80|kelvin=298.95|humidity=84.82|ppm=323|ppb=424&cache=no
     ///GET - > api/COREALL?serial=TESTBETA123
     [Route("api/[controller]")]
     public class COREALLController : Controller

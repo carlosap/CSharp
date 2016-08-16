@@ -17,22 +17,18 @@
     public class PPM
     {
 
-        public int Measurement { get; set; } = 0;
-        public int LowLimit { get; set; } = 500;
-        public string LowLimitMsg { get; set; }
-        public int HighLimit { get; set; } = 1200;   
-        public string HighLimitMsg { get; set; }
+        public int Measurement { get; set; } = 500;
+        public int MaxLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPM.Max;
+        public int LowLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPM.Low;
+        public string Msg { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPM.Msg.Value;
 
     }
 
     public class PPB
     {
-
-        public int Measurement { get; set; } = 0;
-        public int LowLimit { get; set; } = 500;
-        public string LowLimitMsg { get; set; }
-        public int HighLimit { get; set; } = 1200;
-        public string HighLimitMsg { get; set; }
-
+        public int Measurement { get; set; } = 500;
+        public int MaxLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPB.Max;
+        public int LowLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPB.Low;
+        public string Msg { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPB.Msg.Value;
     }
 }

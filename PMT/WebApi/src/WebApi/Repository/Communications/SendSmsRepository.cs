@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using WebApi.Interfaces.Communications;
+﻿using WebApi.Interfaces.Communications;
 using WebApi.ServerNotifications;
 namespace WebApi.Repository
 {
