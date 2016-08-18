@@ -28,6 +28,7 @@ namespace WebApi
             services.AddSingleton<IAppConfig, AppConfigRepository>();
             //services.AddSingleton<IEns210, Ens210Repository>();
             //services.AddSingleton<IiAQCORE, IAQCORERepository>();
+            services.AddSingleton<IStatic, StaticRepository>();
             services.AddSingleton<ICOREALL, COREALLRepository>();
             services.AddSingleton<ISendEmail, SendEmailRepository>();
             services.AddSingleton<ISendSms, SendSmsRepository>();

@@ -72,15 +72,16 @@ namespace WebApi.Repository
 
         public async Task NotifyLimits(COREALL sensor)
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 if (sensor == null) return;
                 if (!sensor.EnableLimitVerification) return;
                 if (string.IsNullOrWhiteSpace(sensor.Notification)) return;
-                //todo check and see if sms notifications are enable
                 var sms = new SendSmsRepository();
+                var email = new SendEmailRepository();
+                await email.SendHtml(sensor.Notification, "email");
                 sms.Send(sensor.Notification);
-                //todo check and see if email notifications are enabled
+                
             });
         }
     }
