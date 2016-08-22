@@ -4,10 +4,10 @@ namespace WebApi.Repository
 {
     public class SendSmsRepository : ISendSms
     {
-        private ServerNotificationsSms _notifier;
+        private Sms _notifier;
         public void Send(string msg)
         {
-            _notifier = new ServerNotificationsSms();
+            _notifier = new Sms();
              _notifier.SendMessage(msg);
         }
     }

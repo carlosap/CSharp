@@ -26184,7 +26184,7 @@
   \******************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -26197,12 +26197,30 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = _react2.default.createClass({
-	  displayName: 'About',
+	  displayName: "About",
 	  render: function render() {
 	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      'About test '
+	      "div",
+	      { className: "col-xs-12" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "row" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "zoom-in-1" },
+	          _react2.default.createElement("img", { src: "/images/home-slider-1.jpg", className: "img-fluid" })
+	        ),
+	        _react2.default.createElement(
+	          "h3",
+	          null,
+	          "TIME-TO-DIGITAL CONVERTERS, MEASUREMENT SYSTEMS & CUSTOMIZED SENSOR SOLUTIONS"
+	        ),
+	        _react2.default.createElement(
+	          "p",
+	          null,
+	          "Precision Measurement Technologies is a Technology Center and are experts in AMS products including the Acam family of products which specializes in high resolution time-to-digital converters. AMS/Acam products produce advanced time-to-digital converters and measurement systems for time-of-flight (TOF), laser applications, digital strain-gage, capacitance, and speed sensors as well as stand-alone assemblies. Time-to-digital converters replace traditional ADC’s (analog-to-digital converters) for lower production cost and faster design cycles. The PMT Technology Center works with customers and applications for the AMS standard products as well. Including the VOC sensors, Air Quality Sensors, POS Magnetic Positioning Sensors, Lighting Detector Sensors, Lighting Sensors, Audio Noise Canceling Sensors, Temperature and Humidity Sensors. We work with customers on Proof of Concept Designs, help with Evaluation Systems and Register Settings to speed up the development and optimize the product to a specific application all the way through into production."
+	        )
+	      )
 	    );
 	  }
 	});
@@ -26447,10 +26465,47 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-xs-12' },
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              'Relative humidity and temperature sensor ENS210'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              'The ENS210 integrates one relative humidity sensor and one high-accuracy temperature sensor.The device is encapsulated in a HWSON4 package and includes an I2C slave interface for communication with a master processor.'
+	            )
+	          )
+	        ),
 	        _react2.default.createElement(_TemperatureF2.default, { measurement: this.state.temperature.fahrenheit }),
 	        _react2.default.createElement(_TemperatureC2.default, { measurement: this.state.temperature.celcius }),
 	        _react2.default.createElement(_TemperatureK2.default, { measurement: this.state.temperature.kelvin }),
 	        _react2.default.createElement(_TemperatureH2.default, { measurement: this.state.temperature.humidity }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-xs-12' },
+	            _react2.default.createElement('hr', null),
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              'Volatile Organic Compounds (VOCs) - IAQCORE '
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              'Volatile organic compounds (VOCs) are emitted as gases from certain solids or liquids. VOCs include a variety of chemicals, some of which may have short- and long-term adverse health effects. Concentrations of many VOCs are consistently higher indoors (up to ten times higher) than outdoors. VOCs are emitted by a wide array of products numbering in the thousands. Organic chemicals are widely used as ingredients in household products.Paints, varnishes; and wax all contain organic solvents, as do many cleaning, disinfecting, cosmetic, degreasing and hobby products.Fuels are made up of organic chemicals.All of these products can release organic compounds while you are using them, and, to some degree, when they are stored.'
+	            )
+	          )
+	        ),
 	        _react2.default.createElement(_VOC2.default, { ppb: this.state.ppb, ppm: this.state.ppm })
 	      );
 	    }
@@ -26536,54 +26591,32 @@
 	                { className: "col-xs-12 col-lg-4 m-b-5" },
 	                _react2.default.createElement(
 	                    "div",
-	                    { className: "text-widget-1" },
+	                    { className: "text-widget-4 bg-info-700 color-white text-center" },
 	                    _react2.default.createElement(
 	                        "div",
-	                        { className: "row" },
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "col-xs-4" },
-	                            _react2.default.createElement("span", { className: "fa-stack fa-stack-2x pull-left" })
-	                        ),
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "col-xs-8 text-left" },
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-xs-12" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "title" },
-	                                        "FAHRENHEIT"
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-xs-12" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "numbers" },
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                "span",
-	                                                { className: "amount" },
-	                                                this.props.measurement,
-	                                                " F"
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        )
+	                        { className: "title" },
+	                        "Temperature"
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "subtitle" },
+	                        "FAHRENHEIT"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { className: "amount", "count-to-currency": "200", value: "0", duration: "1" },
+	                        this.props.measurement,
+	                        " F"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { className: "label label-white-outline" },
+	                        "Sensor"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { "count-to-percent": "100", value: "0", duration: "1", className: "percent" },
+	                        "ENS210"
 	                    )
 	                )
 	            );
@@ -26643,54 +26676,32 @@
 	                { className: "col-xs-12 col-lg-4 m-b-5" },
 	                _react2.default.createElement(
 	                    "div",
-	                    { className: "text-widget-1" },
+	                    { className: "text-widget-4 bg-info-700 color-white text-center" },
 	                    _react2.default.createElement(
 	                        "div",
-	                        { className: "row" },
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "col-xs-4" },
-	                            _react2.default.createElement("span", { className: "fa-stack fa-stack-2x pull-left" })
-	                        ),
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "col-xs-8 text-left" },
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-xs-12" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "title" },
-	                                        "CELCIUS"
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-xs-12" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "numbers" },
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                "span",
-	                                                { className: "amount" },
-	                                                this.props.measurement,
-	                                                " C"
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        )
+	                        { className: "title" },
+	                        "Temperature"
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "subtitle" },
+	                        "CELCIUS"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { className: "amount", "count-to-currency": "200", value: "0", duration: "1" },
+	                        this.props.measurement,
+	                        " C"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { className: "label label-white-outline" },
+	                        "Sensor"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { "count-to-percent": "100", value: "0", duration: "1", className: "percent" },
+	                        "ENS210"
 	                    )
 	                )
 	            );
@@ -26750,54 +26761,32 @@
 	                { className: "col-xs-12 col-lg-4 m-b-5" },
 	                _react2.default.createElement(
 	                    "div",
-	                    { className: "text-widget-1" },
+	                    { className: "text-widget-4 bg-info-700 color-white text-center" },
 	                    _react2.default.createElement(
 	                        "div",
-	                        { className: "row" },
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "col-xs-4" },
-	                            _react2.default.createElement("span", { className: "fa-stack fa-stack-2x pull-left" })
-	                        ),
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "col-xs-8 text-left" },
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-xs-12" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "title" },
-	                                        "KELVIN"
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-xs-12" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "numbers" },
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                "span",
-	                                                { className: "amount" },
-	                                                this.props.measurement,
-	                                                " K"
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        )
+	                        { className: "title" },
+	                        "Temperature"
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "subtitle" },
+	                        "KELVIN"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { className: "amount", "count-to-currency": "200", value: "0", duration: "1" },
+	                        this.props.measurement,
+	                        " K"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { className: "label label-white-outline" },
+	                        "Sensor"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { "count-to-percent": "100", value: "0", duration: "1", className: "percent" },
+	                        "ENS210"
 	                    )
 	                )
 	            );
@@ -26857,54 +26846,32 @@
 	                { className: "col-xs-12 col-lg-4 m-b-5" },
 	                _react2.default.createElement(
 	                    "div",
-	                    { className: "text-widget-1" },
+	                    { className: "text-widget-4 bg-info-700 color-white text-center" },
 	                    _react2.default.createElement(
 	                        "div",
-	                        { className: "row" },
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "col-xs-4" },
-	                            _react2.default.createElement("span", { className: "fa-stack fa-stack-2x pull-left" })
-	                        ),
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "col-xs-8 text-left" },
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-xs-12" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "title" },
-	                                        "Humidity"
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-xs-12" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "numbers" },
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                "span",
-	                                                { className: "amount" },
-	                                                this.props.measurement,
-	                                                " %"
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        )
+	                        { className: "title" },
+	                        "Temperature"
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "subtitle" },
+	                        "Humidity"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { className: "amount", "count-to-currency": "200", value: "0", duration: "1" },
+	                        this.props.measurement,
+	                        " %"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { className: "label label-white-outline" },
+	                        "Sensor"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { "count-to-percent": "100", value: "0", duration: "1", className: "percent" },
+	                        "ENS210"
 	                    )
 	                )
 	            );
@@ -26964,64 +26931,34 @@
 	                { className: "col-xs-12 col-lg-4 m-b-5" },
 	                _react2.default.createElement(
 	                    "div",
-	                    { className: "text-widget-1" },
+	                    { className: "text-widget-4 bg-warning-700 color-white text-center" },
 	                    _react2.default.createElement(
 	                        "div",
-	                        { className: "row" },
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "col-xs-4" },
-	                            _react2.default.createElement("span", { className: "fa-stack fa-stack-2x pull-left" })
-	                        ),
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "col-xs-8 text-left" },
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-xs-12" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "title" },
-	                                        "IAQCORE (VOC)"
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-xs-12" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "numbers" },
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                "span",
-	                                                { className: "amount" },
-	                                                this.props.ppm,
-	                                                " PPM"
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                "span",
-	                                                { className: "amount" },
-	                                                this.props.ppb,
-	                                                " PPB"
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        )
+	                        { className: "title" },
+	                        "Volatile Organic Compounds"
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "subtitle" },
+	                        "VOC"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { className: "amount", "count-to-currency": "200", value: "0", duration: "1" },
+	                        this.props.ppm,
+	                        " PPM     ",
+	                        this.props.ppb,
+	                        " PPB"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { className: "label label-white-outline" },
+	                        "Sensor"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        { "count-to-percent": "100", value: "0", duration: "1", className: "percent" },
+	                        "IAQCORE"
 	                    )
 	                )
 	            );

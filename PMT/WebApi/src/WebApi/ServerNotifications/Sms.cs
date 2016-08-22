@@ -1,52 +1,47 @@
 ﻿using System;
 using Twilio;
 using WebApi.Interfaces.Communications;
-using System.Collections.Generic;
 using WebApi.Extensions.Strings;
-
 namespace WebApi.ServerNotifications
 {
-    public class ServerNotificationsSms: IServerNotification
+    public class Sms: IServerNotification
     {
         private readonly TwilioRestClient _client;
         private readonly string _fromNumber;
-        private readonly List<SmsContact> _contacts;
-        public ServerNotificationsSms()
+        public readonly bool IsEnabled;
+        public Sms()
         {
             var SID = Startup.AppSettings.SmsSettings.SID.Value.ToString();
             var TOKEN = Startup.AppSettings.SmsSettings.TOKEN.Value.ToString();
+            IsEnabled = (bool)Startup.AppSettings.SmsSettings.Enabled;
             _fromNumber = Startup.AppSettings.SmsSettings.FromNumber.Value.ToString();           
             _client = new TwilioRestClient(SID, TOKEN);
         }
 
-        public ServerNotificationsSms(TwilioRestClient client)
+        public Sms(TwilioRestClient client)
         {
             _client = client;
         }
 
         public void SendMessage(string msg)
         {
+            if (!IsEnabled) return;
             var contacts = Startup.AppSettings.SmsSettings.Contacts;
-            //return _client.SendMessage(_fromNumber, "7275606474", msg);
             foreach (var smsContact in contacts)
             {
                 try
                 {
                     string strPhone = smsContact.Telephone.Value.ToString().Replace("+", "");
                     if (strPhone.IsNumber())
-                        _client.SendMessage(_fromNumber,strPhone, msg);
-
+                    {
+                        _client?.SendMessage(_fromNumber, strPhone, msg);
+                    }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-
-                    continue;
+                    // ignored
                 }
-
             }
         }
-
-
-
     }
 }
