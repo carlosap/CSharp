@@ -7,29 +7,61 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="stylesheet" href="css/components/bootstrap.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/1.0.0/css/flag-icon.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="css/components/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
+    />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic,900,900italic"
+        rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/1.0.0/css/flag-icon.min.css" rel="stylesheet" type="text/css"
+    />
     <link rel="stylesheet" href="css/main.css">
+
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.rtl.min.css" />
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.silver.min.css" />
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.mobile.all.min.css" />
+    <style>
+        input.wide {
+            display: block;
+            width: 100%;
+            padding: 0;
+            border-width: 0;
+            border-bottom: 1px solid #d9d9d9 !important;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: rgb(217, 217, 217);
+        }
+        
+        textarea.resize {
+            resize: vertical;
+            width: 100%;
+            padding: 0;
+            border-width: 0;
+            border-bottom: 1px solid #d9d9d9 !important;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: rgb(217, 217, 217);
+        }
+    </style>
+
 </head>
 
 <body data-layout="empty-layout" data-palette="palette-4" data-direction="none">
 
-<nav class="navbar navbar-fixed-top navbar-1">
-    <!--<a class="navbar-brand" href="index.html">PMT Systems</a> -->
-    <img class="navbar-brand" src="images/logo.png" />
+    <nav class="navbar navbar-fixed-top navbar-1">
+        <!--<a class="navbar-brand" href="index.html">PMT Systems</a> -->
+        <img class="navbar-brand" src="images/logo.png" />
 
-    <ul class="nav navbar-nav pull-right toggle-layout">
-        <li class="nav-item">
-            <a class="nav-link" data-click="toggle-layout">
-                <i class="zmdi zmdi-menu"></i>
-            </a>
-        </li>
-    </ul>
-</nav>
+        <ul class="nav navbar-nav pull-right toggle-layout">
+            <li class="nav-item">
+                <a class="nav-link" data-click="toggle-layout">
+                    <i class="zmdi zmdi-menu"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
 
     <div class="container-fluid">
@@ -45,8 +77,8 @@
                                 <div class="section-title">About Us</div>
                                 <ul class="l1 list-unstyled section-content">
                                     <li>
-                                        <a class="sideline" data-id="home"  href="#/about">
-                                            <i class="zmdi zmdi-home md-icon pull-left"></i>  <span class="title">PMT</span>
+                                        <a class="sideline" data-id="home" href="#/about">
+                                            <i class="zmdi zmdi-home md-icon pull-left"></i> <span class="title">PMT</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -57,7 +89,7 @@
                                 <ul class="l1 list-unstyled section-content">
                                     <li>
                                         <a class="sideline" data-id="dashboards" href="#/sensors">
-                                            <i class="zmdi zmdi-view-dashboard md-icon pull-left"></i>  <span class="title">Sensors</span>
+                                            <i class="zmdi zmdi-view-dashboard md-icon pull-left"></i> <span class="title">Sensors</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -67,24 +99,24 @@
                                 <div class="section-title">Contact Us</div>
                                 <ul class="l1 list-unstyled section-content">
                                     <li>
-                                        <a class="sideline" data-id="contactus" href="#/contact" >
-                                            <i class="zmdi zmdi-account-box-phone md-icon pull-left"></i>  <span class="title">Contact</span>
+                                        <a class="sideline" data-id="contactus" href="#/contact">
+                                            <i class="zmdi zmdi-account-box-phone md-icon pull-left"></i> <span class="title">Contact</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
-                            
+
                             <div class="sidebar-section">
                                 <div class="section-title">Documentation</div>
                                 <ul class="l1 list-unstyled section-content">
                                     <li>
-                                        <a class="sideline" data-id="docs" href="#/docs"  >
-                                            <i class="zmdi zmdi-info-outline md-icon pull-left"></i>  <span class="title">Docs</span>
+                                        <a class="sideline" data-id="docs" href="#/docs">
+                                            <i class="zmdi zmdi-info-outline md-icon pull-left"></i> <span class="title">Docs</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
-                      
+
 
 
                         </div>
@@ -94,12 +126,17 @@
 
 
             <div class="col-xs-12 main" id="app">
-                
+
             </div>
         </div>
     </div>
-    <script src="lib/jquery/dist/jquery.min.js"></script>
-    <script src="lib/jquery-queue/jquery.queue.min.js"></script>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2016.2.714/js/kendo.all.min.js"></script>
+
+
+    <!--<script src="lib/jquery/dist/jquery.min.js"></script>-->
+    <script src="lib/jquery-queue/jquery.queue.js"></script>
     <script src="lib/tether/tether.min.js"></script>
     <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="lib/lodash/lodash.min.js"></script>
@@ -113,9 +150,13 @@
     <script src="js/dist/horizontal-navigation-1.js"></script>
     <script src="js/dist/main.js"></script>
     <script src="js/dist/index.js"></script>
+    <!--<script src="js/dist/floating-labels.js"></script>-->
+    <!--<script src="js/dist/forms-basic.js"></script>-->
+
     <!--App base libs-->
     <script src="js/services.js"></script>
     <script src="bundle.js"></script>
+
 </body>
 
 </html>

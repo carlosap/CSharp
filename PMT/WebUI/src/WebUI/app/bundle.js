@@ -26206,11 +26206,6 @@
 	        "div",
 	        { className: "row" },
 	        _react2.default.createElement(
-	          "div",
-	          { className: "zoom-in-1" },
-	          _react2.default.createElement("img", { src: "/images/home-slider-1.jpg", className: "img-fluid" })
-	        ),
-	        _react2.default.createElement(
 	          "h3",
 	          null,
 	          "TIME-TO-DIGITAL CONVERTERS, MEASUREMENT SYSTEMS & CUSTOMIZED SENSOR SOLUTIONS"
@@ -26232,11 +26227,13 @@
   \********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(/*! react */ 1);
 	
@@ -26244,16 +26241,122 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = _react2.default.createClass({
-	  displayName: 'Contact',
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      'Contact us'
-	    );
-	  }
-	});
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Contact = function (_Component) {
+	    _inherits(Contact, _Component);
+	
+	    function Contact(props) {
+	        _classCallCheck(this, Contact);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Contact).call(this, props));
+	    }
+	
+	    _createClass(Contact, [{
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	
+	            $("#firstname").addClass("wide").kendoMaskedTextBox({
+	                clearPromptChar: true
+	            });
+	
+	            $("#email").addClass("wide").kendoMaskedTextBox({
+	                clearPromptChar: true
+	            });
+	
+	            $("#comments").addClass("resize");
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "col-xs-12" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "row" },
+	                        _react2.default.createElement(
+	                            "h3",
+	                            null,
+	                            "We’d Love to Hear from You!"
+	                        ),
+	                        _react2.default.createElement(
+	                            "p",
+	                            null,
+	                            "Do you have questions on how to accept payments for your business? Complete your details and we will contact you shortly."
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "row m-b-20" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "col-xs-12 col-xl-6" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "row" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("input", { id: "firstname", placeholder: "First name" })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("input", { id: "email", placeholder: "@Email" })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-12" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("textarea", {
+	                                        placeholder: "Enter Comments",
+	                                        id: "comments", rows: "5" })
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "row" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "button",
+	                                    { type: "submit",
+	                                        className: "btn btn-warning" },
+	                                    "Submit"
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Contact;
+	}(_react.Component);
+	
+	exports.default = Contact;
 
 /***/ },
 /* 227 */
@@ -26446,10 +26549,11 @@
 	      },
 	      ppb: 0,
 	      ppm: 0,
-	      refreshrate: 3000
+	      refreshrate: 3000,
+	      hashname: 'sensors'
 	    };
 	    _this.isServerMounted = null;
-	    Service.add([{ name: 'COREALL', url: '/COREALL?serial=TESTBETA123', success: _this.setStateHandler.bind(_this), error: _this.error.bind(_this) }]);
+	    Service.add([{ name: 'COREALL', url: '/COREALL?serial=TESTBETA123', success: _this.setStateHandler.bind(_this), error: _this.error.bind(_this) }]).start();
 	    return _this;
 	  }
 	
@@ -26457,7 +26561,7 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.loadFromServerHandler();
-	      this.isServerMounted = setInterval(this.loadFromServerHandler, this.state.refreshrate);
+	      this.isServerMounted = setInterval(this.loadFromServerHandler.bind(this), this.state.refreshrate);
 	    }
 	  }, {
 	    key: 'render',
@@ -26465,75 +26569,46 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-12' },
-	            _react2.default.createElement(
-	              'h1',
-	              null,
-	              'Relative humidity and temperature sensor ENS210'
-	            ),
-	            _react2.default.createElement(
-	              'p',
-	              null,
-	              'The ENS210 integrates one relative humidity sensor and one high-accuracy temperature sensor.The device is encapsulated in a HWSON4 package and includes an I2C slave interface for communication with a master processor.'
-	            )
-	          )
-	        ),
+	        _react2.default.createElement('div', { className: 'row' }),
 	        _react2.default.createElement(_TemperatureF2.default, { measurement: this.state.temperature.fahrenheit }),
 	        _react2.default.createElement(_TemperatureC2.default, { measurement: this.state.temperature.celcius }),
 	        _react2.default.createElement(_TemperatureK2.default, { measurement: this.state.temperature.kelvin }),
 	        _react2.default.createElement(_TemperatureH2.default, { measurement: this.state.temperature.humidity }),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-12' },
-	            _react2.default.createElement('hr', null),
-	            _react2.default.createElement(
-	              'h1',
-	              null,
-	              'Volatile Organic Compounds (VOCs) - IAQCORE '
-	            ),
-	            _react2.default.createElement(
-	              'p',
-	              null,
-	              'Volatile organic compounds (VOCs) are emitted as gases from certain solids or liquids. VOCs include a variety of chemicals, some of which may have short- and long-term adverse health effects. Concentrations of many VOCs are consistently higher indoors (up to ten times higher) than outdoors. VOCs are emitted by a wide array of products numbering in the thousands. Organic chemicals are widely used as ingredients in household products.Paints, varnishes; and wax all contain organic solvents, as do many cleaning, disinfecting, cosmetic, degreasing and hobby products.Fuels are made up of organic chemicals.All of these products can release organic compounds while you are using them, and, to some degree, when they are stored.'
-	            )
-	          )
-	        ),
 	        _react2.default.createElement(_VOC2.default, { ppb: this.state.ppb, ppm: this.state.ppm })
 	      );
 	    }
 	  }, {
 	    key: 'setStateHandler',
 	    value: function setStateHandler(data, reqNum, url, queryData, reqTotal, isNested) {
-	      var responseName = Service.prop(reqNum, 'name');
-	      switch (responseName) {
-	        case "COREALL":
-	          this.setState({
-	            temperature: {
-	              fahrenheit: data.Fahrenheit,
-	              celcius: data.Celcius,
-	              kelvin: data.Kelvin,
-	              humidity: data.Humidity
-	            }
-	          });
-	          this.setState({ ppb: data.PPB.Measurement, ppm: data.PPM.Measurement });
-	          break;
+	      try {
+	        var responseName = Service.prop(reqNum, 'name');
+	        switch (responseName) {
+	          case "COREALL":
+	            this.setState({
+	              temperature: {
+	                fahrenheit: data.Fahrenheit,
+	                celcius: data.Celcius,
+	                kelvin: data.Kelvin,
+	                humidity: data.Humidity
+	              }
+	            });
+	            this.setState({ ppb: data.PPB.Measurement, ppm: data.PPM.Measurement });
+	            break;
 	
-	        default:
-	          return;
-	      }
+	          default:
+	            return;
+	        }
+	      } catch (err) {}
 	    }
 	  }, {
 	    key: 'loadFromServerHandler',
 	    value: function loadFromServerHandler() {
-	      window.app.service.start();
+	      if (window.location.hash.indexOf(this.state.hashname) <= 0) {
+	        clearInterval(this.isServerMounted);
+	        window.app.service.clear();
+	      } else {
+	        window.app.service.start();
+	      }
 	    }
 	  }, {
 	    key: 'error',
@@ -26983,11 +27058,13 @@
   \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(/*! react */ 1);
 	
@@ -26995,16 +27072,999 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = _react2.default.createClass({
-	  displayName: 'Docs',
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      'Documentations'
-	    );
-	  }
-	});
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Docs = function (_Component) {
+	    _inherits(Docs, _Component);
+	
+	    function Docs(props) {
+	        _classCallCheck(this, Docs);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Docs).call(this, props));
+	    }
+	
+	    _createClass(Docs, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                { "ng-view": "", autoscroll: "true" },
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "row documentation" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "col-xs-12" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "bs-nav-tabs nav-tabs-warning" },
+	                            _react2.default.createElement(
+	                                "ul",
+	                                { className: "nav nav-tabs nav-animated-border-from-center" },
+	                                _react2.default.createElement(
+	                                    "li",
+	                                    { className: "nav-item" },
+	                                    " ",
+	                                    _react2.default.createElement(
+	                                        "a",
+	                                        { href: "", className: "nav-link active", "data-toggle": "tab", "data-target": "#nav-tabs-0-8" },
+	                                        "Getting started"
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    "li",
+	                                    { className: "nav-item" },
+	                                    " ",
+	                                    _react2.default.createElement(
+	                                        "a",
+	                                        { href: "", className: "nav-link", "data-toggle": "tab", "data-target": "#nav-tabs-0-1" },
+	                                        "AngularJS"
+	                                    ),
+	                                    " "
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "tab-content" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { role: "tabpanel", className: "tab-pane in active", id: "nav-tabs-0-8" },
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        "Thanks for purchasing ",
+	                                        _react2.default.createElement(
+	                                            "b",
+	                                            null,
+	                                            "Marino"
+	                                        ),
+	                                        ". Marino is here to help you with your next project. If you have any questions that are beyond the scope of this help file, please feel free to contact us via email at support@batchthemes.com or through our contact form in our Theme Forest profile."
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        " ",
+	                                        _react2.default.createElement(
+	                                            "b",
+	                                            null,
+	                                            "Marino"
+	                                        ),
+	                                        " is an advanced, responsive dashboard UI kit built using ",
+	                                        _react2.default.createElement(
+	                                            "a",
+	                                            { href: "http://v4-alpha.getbootstrap.com/" },
+	                                            _react2.default.createElement(
+	                                                "b",
+	                                                null,
+	                                                "Bootstrap 4"
+	                                            )
+	                                        ),
+	                                        ", the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web, ",
+	                                        _react2.default.createElement(
+	                                            "a",
+	                                            { href: "https://angularjs.org", target: "_blank" },
+	                                            _react2.default.createElement(
+	                                                "b",
+	                                                null,
+	                                                "AngularJS"
+	                                            )
+	                                        ),
+	                                        ", the Superheroic JavaScript MVW Framework which enhances your HTML for web apps and ",
+	                                        _react2.default.createElement(
+	                                            "a",
+	                                            { href: "http://jquery.com/",
+	                                                target: "_blank" },
+	                                            _react2.default.createElement(
+	                                                "b",
+	                                                null,
+	                                                "jQuery"
+	                                            )
+	                                        ),
+	                                        ", the fast, small, and feature-rich JavaScript library. It includes 9 different layouts, 23 color schemes, more than 150 HTML files and lots of widgets and custom made reusable components to help you develop your next application."
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "h4",
+	                                        null,
+	                                        " Template versions "
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            "b",
+	                                            null,
+	                                            "Marino"
+	                                        ),
+	                                        " is available in PHP, HTML with jQuery and AngularJS versions. To try the demos, please click ",
+	                                        _react2.default.createElement(
+	                                            "a",
+	                                            { href: "http://marino.batchthemes.com", target: "_blank" },
+	                                            "here"
+	                                        ),
+	                                        "."
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "h4",
+	                                        null,
+	                                        " Ready to use files "
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        "To help you get started, we have compiled and ready to use versions of ",
+	                                        _react2.default.createElement(
+	                                            "b",
+	                                            null,
+	                                            "Marino"
+	                                        ),
+	                                        " in the ",
+	                                        _react2.default.createElement(
+	                                            "code",
+	                                            null,
+	                                            "dist"
+	                                        ),
+	                                        "folder in the root folder of every version. Just go to the version you want to try, open any server and you are ready to go."
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { role: "tabpanel", className: "tab-pane", id: "nav-tabs-0-1" },
+	                                    _react2.default.createElement(
+	                                        "h4",
+	                                        null,
+	                                        " Template requirements "
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        "The following frameworks, components and dependencies are required to install ",
+	                                        _react2.default.createElement(
+	                                            "b",
+	                                            null,
+	                                            "Marino"
+	                                        ),
+	                                        ":"
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "ul",
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h5",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "AngularJS 1.4+"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "HTML enhanced for web apps!"
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "a",
+	                                                    { href: "https://angularjs.org/", target: "_blank" },
+	                                                    " ",
+	                                                    _react2.default.createElement("i", { className: "fa fa-book" }),
+	                                                    " Official Documentation"
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h5",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "Bootstrap 4"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web."
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "a",
+	                                                    { href: "http://v4-alpha.getotbootstrap.com", target: "_blank" },
+	                                                    " ",
+	                                                    _react2.default.createElement("i", { className: "fa fa-book" }),
+	                                                    " Official Documentation"
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h5",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "jQuery"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "jQuery is a fast, small, and feature-rich JavaScript library."
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "a",
+	                                                    { href: "http://jquery.com/", target: "_blank" },
+	                                                    " ",
+	                                                    _react2.default.createElement("i", { className: "fa fa-book" }),
+	                                                    " Official Documentation"
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h5",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "NodeJS"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices."
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "a",
+	                                                    { href: "https://nodejs.org/", target: "_blank" },
+	                                                    " ",
+	                                                    _react2.default.createElement("i", { className: "fa fa-book" }),
+	                                                    " Official Documentation"
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h5",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "Bower"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "A package manager for the web. Web sites are made of lots of things — frameworks, libraries, assets, and utilities. Bower manages all these things for you."
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "a",
+	                                                    { href: "http://bower.io/", target: "_blank" },
+	                                                    " ",
+	                                                    _react2.default.createElement("i", { className: "fa fa-book" }),
+	                                                    " Official Documentation"
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h5",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "Grunt"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "The JavaScript Task Runner. With literally hundreds of plugins to choose from, you can use Grunt to automate just about anything with a minimum of effort."
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "a",
+	                                                    { href: "http://gruntjs.com/", target: "_blank" },
+	                                                    " ",
+	                                                    _react2.default.createElement("i", { className: "fa fa-book" }),
+	                                                    " Official Documentation"
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h5",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "SASS"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "CSS with superpowers. Sass is the most mature, stable, and powerful professional grade CSS extension language in the world."
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "a",
+	                                                    { href: "http://sass-lang.com/", target: "_blank" },
+	                                                    " ",
+	                                                    _react2.default.createElement("i", { className: "fa fa-book" }),
+	                                                    " Official Documentation"
+	                                                )
+	                                            )
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "h4",
+	                                        null,
+	                                        " Installation instructions for local development "
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        "After installing all the required frameworks, components and dependencies, go to the root folder of and run the following commands from the command line:"
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "ul",
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            " ",
+	                                            _react2.default.createElement(
+	                                                "code",
+	                                                null,
+	                                                "npm install"
+	                                            ),
+	                                            " "
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            " ",
+	                                            _react2.default.createElement(
+	                                                "code",
+	                                                null,
+	                                                "bower install"
+	                                            ),
+	                                            " "
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            " ",
+	                                            _react2.default.createElement(
+	                                                "code",
+	                                                null,
+	                                                "grunt serve"
+	                                            ),
+	                                            " "
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        "If everything was installed correctly, you should see the AngularJS version of ",
+	                                        _react2.default.createElement(
+	                                            "b",
+	                                            null,
+	                                            "Marino"
+	                                        ),
+	                                        " running in ",
+	                                        _react2.default.createElement(
+	                                            "code",
+	                                            null,
+	                                            "http://localhost:9003/"
+	                                        ),
+	                                        " "
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "h4",
+	                                        null,
+	                                        " Compilation instructions "
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        "If you want to compile the application to deploy it to a remote server, run the following command:"
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "ul",
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            " ",
+	                                            _react2.default.createElement(
+	                                                "code",
+	                                                null,
+	                                                "grunt build"
+	                                            ),
+	                                            " "
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        "Your application is now ready to deploy and can be found in the ",
+	                                        _react2.default.createElement(
+	                                            "code",
+	                                            null,
+	                                            "dist/"
+	                                        ),
+	                                        " folder."
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "h4",
+	                                        null,
+	                                        "Source code structure "
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        "The main folders of the AngularJS version of ",
+	                                        _react2.default.createElement(
+	                                            "b",
+	                                            null,
+	                                            "Marino"
+	                                        ),
+	                                        " are:"
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "ul",
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "app"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Includes the entire application and its development files"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "bower_components"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Includes all the dependencies installed with bower"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "node_modules"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Includes all node packages, components and dependencies installed with NPM"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "dist"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "After compiling the application with the grunt build command, this folder is created and all production ready files and folders are put in this folder. This is the folder you have to upload if you want to publish your application to the world "
+	                                            )
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "h4",
+	                                        null,
+	                                        " Important files"
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "ul",
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "app/index.html"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Main application file. This file includes every script, stylesheet and template used in the application"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "scripts/app.js"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Main javascript file. Includes module and route definitions, global theme and component configuration"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "styles/main.scss"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Main SCSS stylesheet of the application. Any global style or additional ",
+	                                                _react2.default.createElement(
+	                                                    "code",
+	                                                    null,
+	                                                    ".scss"
+	                                                ),
+	                                                "file added to the application must be included in this file"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "styles/_variables.scss"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Global SCSS variables are defined here."
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "styles/_palettes.scss"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Colour palettes are defined here."
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "styles/layouts/*.scss"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Template layouts are defined in this folder"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "styles/helpers/*.scss"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Includes global CSS and SCSS helpers"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "styles/_mixins.scss"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Includes SASS mixins used in some parts of the application"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "scripts/services/colors.js"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Global colors used in ",
+	                                                _react2.default.createElement(
+	                                                    "code",
+	                                                    null,
+	                                                    ".js"
+	                                                ),
+	                                                " files are defined here. This file is the javascript version of the ",
+	                                                _react2.default.createElement(
+	                                                    "code",
+	                                                    null,
+	                                                    "styles/_variables.scss"
+	                                                ),
+	                                                " file"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "scripts/services/functions.js"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Global functions used in the application are defined here"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "scripts/services/dashboards.js"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Common functions used in every dashboard view are defined here. This includes the maps, charts and notifications that are reused in the dashboard views"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "scripts/services/navigation.js"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Global menus and navigation links are defined here. This includes the left sidebar, navbar and horizontal navigation links and menus"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "h4",
+	                                                null,
+	                                                " ",
+	                                                _react2.default.createElement(
+	                                                    "b",
+	                                                    null,
+	                                                    "scripts/services/sample-data.js"
+	                                                ),
+	                                                " "
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "All the sample data used in the controllers and in some directives is defined here"
+	                                            )
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "h4",
+	                                        null,
+	                                        " Naming convention for widgets "
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        "All the widgets used in the application are directives and they use the following coding and naming convention"
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "ul",
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            "HTML files are located in the ",
+	                                            _react2.default.createElement(
+	                                                "code",
+	                                                null,
+	                                                "app/views/activity-widgets"
+	                                            ),
+	                                            " folder"
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            "SCSS files are located in the ",
+	                                            _react2.default.createElement(
+	                                                "code",
+	                                                null,
+	                                                "app/styles/activity-widgets"
+	                                            ),
+	                                            " folder"
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            "JS files are located in the ",
+	                                            _react2.default.createElement(
+	                                                "code",
+	                                                null,
+	                                                "app/scripts/directives"
+	                                            ),
+	                                            " folder"
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "li",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                null,
+	                                                "In this case, for this widget the file names are the following:"
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "ol",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "li",
+	                                                    null,
+	                                                    " ",
+	                                                    _react2.default.createElement(
+	                                                        "code",
+	                                                        null,
+	                                                        "app/views/activity-widgets/activity-widget-1.js"
+	                                                    ),
+	                                                    " "
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "li",
+	                                                    null,
+	                                                    " ",
+	                                                    _react2.default.createElement(
+	                                                        "code",
+	                                                        null,
+	                                                        "app/styles/activity-widgets/activity-widget-1.html"
+	                                                    ),
+	                                                    " "
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "li",
+	                                                    null,
+	                                                    " ",
+	                                                    _react2.default.createElement(
+	                                                        "code",
+	                                                        null,
+	                                                        "app/scripts/directives/_activity-widget-1.scss"
+	                                                    ),
+	                                                    " "
+	                                                )
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Docs;
+	}(_react.Component);
+	
+	;
+	
+	exports.default = Docs;
 
 /***/ }
 /******/ ]);
