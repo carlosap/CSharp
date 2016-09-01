@@ -1,76 +1,90 @@
 import React, {Component} from 'react';
+import ContactForm from './forms/contactForm'
 class Contact extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            contact: { emailto: 'perezca6576@yahoo.com', firstname: '', email: '', comments: '' },
+            errors: {},
+
+        };
+        this.thankyou_msg = "Thank you,<br> so one of our Customer Service colleagues<br> will get back to you within a few hours.";
+        this.saveContact = this.saveContact.bind(this);
+        this.setContactState = this.setContactState.bind(this);
+    }
+
+    send(contact) {
+
+        app.service.request("/sendemail?emailto=" + contact.emailto + "&" +
+            "emailfrom=" + contact.email + "&" +
+            "emailsubject=Feedback and Comments from client&" +
+            "emailtext=Name: " + contact.firstname + " <br>Comments: " + contact.comments + "&" +
+            "emailattachment=&" +
+            "emailtype=&" +
+            "cache=no", this.success.bind(this), this.error.bind(this));
+
+
+
+    }
+    success(data, reqNum, url, queryData, reqTotal, isNested) {
+        app.progress.hide();
+        app.notify.show(this.thankyou_msg , "info");
+    }
+    error(reqNum, url, queryData, errorType, errorMsg, reqTotal) {
+        app.progress.hide();
+        app.notify.show("Please check network connection and try again." , "warning");
+    }
+    setContactState(e) {
+        var field = e.target.name;
+        var value = e.target.value;
+        this.state.contact[field] = value;
+        return this.setState({ contact: this.state.contact });
 
     }
 
-    componentDidMount() {
+    saveContact() {
+        event.preventDefault();
+        if (!this.contactFormIsValid()) {
+            return;
+        }
 
+        app.progress.show(2);
+        this.send(this.state.contact);
+    }
 
-        $("#firstname").addClass("wide").kendoMaskedTextBox({
-            clearPromptChar: true
-        });
+    contactFormIsValid() {
+        var formIsValid = true;
+        this.state.errors = {}; 
+        if (app.utils.isNullUndefOrEmpty(this.state.contact.firstname)) {
+            this.state.errors.firstname = 'Name can not be empty.';
+            formIsValid = false;
+        }
 
-        $("#email").addClass("wide").kendoMaskedTextBox({
-            clearPromptChar: true
-        });
+        if (!app.utils.isEmail(this.state.contact.email)) {
+            this.state.errors.email = 'Invalid e-mail.';
+            formIsValid = false;
+        }
 
-        $("#comments").addClass("resize");
-
+        if (app.utils.isNullUndefOrEmpty(this.state.contact.comments)) {
+            this.state.errors.comments = 'Comments are required.';
+            formIsValid = false;
+        }
+        this.setState({ errors: this.state.errors });
+        return formIsValid;
     }
     render() {
         return (
-            <div>
-                <div className="col-xs-12">
-                    <div className="row">
-                        <h3>We’d Love to Hear from You!</h3>
-                        <p>
-                            Do you have questions on how to accept payments for your business? 
-                            Complete your details and we will contact you shortly.
-                        </p>
-                    </div>
-                </div>
-                <div className="row m-b-20">
-                    <div className="col-xs-12 col-xl-6">
-                        <div className="row">
-                            <div className="col-xs-12 col-xl-6">
-                                <div className="form-group floating-labels is-empty">
-                                    <input id="firstname" placeholder="First name"/>
-                                </div>
-                            </div>
+            <ContactForm
+                contact={this.state.contact}
+                onChange={this.setContactState}
+                onSave={this.saveContact}
+                errors={this.state.errors}
 
-                            <div className="col-xs-12 col-xl-6">
-                                <div className="form-group floating-labels is-empty">
-                                    <input id="email" placeholder="@Email"/>
-                                </div>
-                            </div>
-
-                            <div className="col-xs-12 col-xl-12">
-                                <div className="form-group floating-labels is-empty">
-                                    <textarea
-                                        placeholder="Enter Comments"
-                                        id="comments" rows="5">
-                                    </textarea>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div className="row">
-                            <div className="col-xs-12 col-xl-6">
-                                <button type="submit"
-                                    className="btn btn-warning">Submit
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+                />
         );
     }
 }
 export default Contact;
+
+
 

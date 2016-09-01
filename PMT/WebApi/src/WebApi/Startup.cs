@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using WebApi.Interfaces;
+using WebApi.Interfaces.Communications;
 using WebApi.Repository;
 
 namespace WebApi
@@ -29,7 +30,7 @@ namespace WebApi
             //services.AddSingleton<IiAQCORE, IAQCORERepository>();
             //services.AddSingleton<IStatic, StaticRepository>();
             services.AddSingleton<ICOREALL, COREALLRepository>();
-            //services.AddSingleton<ISendEmail, SendEmailRepository>();
+            services.AddSingleton<ISendEmail, SendEmailRepository>();
             //services.AddSingleton<ISendSms, SendSmsRepository>();
 
         }

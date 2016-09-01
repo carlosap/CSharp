@@ -78,8 +78,15 @@ var app = app || {};
 					results = true;
 			}
 			return results;
+		},
+
+		isEmail: function(strEmail){
+			var emailFilter = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
+			if (!emailFilter.test(strEmail)) {
+				return false;
+			}
+			return true;
+
 		}
 	}
 })();
-
-

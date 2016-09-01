@@ -6,6 +6,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\www\webapipmt</_PublishTargetUrl>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAuiIj22L7ZUyv986OvCcZmgAAAAACAAAAAAADZgAAwAAAABAAAACclR+8aluMoUciUcx7qDosAAAAAASAAACgAAAAEAAAALlwexmxyiAlV/L9pzSEaVaAAAAAt6bL1faicDChIoapG67I3bq7m/uu5iOiaUac5I0rJWgksKi4rabRWx6l9lrFZLxWQJ3uZLAeTfU79mrQB+jd2Kri7daKkjKRfm07yS9TRIG1vPhkpQ8xLwJKg2KY6EvrGVtsr7BOAx/Op79DCOG8hSMZS1OpxqJT28fJaqxLOnIUAAAAeQ1jxHMh3/1YpEMsQgE2Z+x7Bns=</EncryptedPassword>
   </PropertyGroup>
 </Project>

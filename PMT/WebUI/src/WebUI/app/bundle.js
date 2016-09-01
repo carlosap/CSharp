@@ -69,23 +69,23 @@
 	
 	var _Contact2 = _interopRequireDefault(_Contact);
 	
-	var _Repos = __webpack_require__(/*! ./modules/Repos */ 227);
+	var _Repos = __webpack_require__(/*! ./modules/Repos */ 228);
 	
 	var _Repos2 = _interopRequireDefault(_Repos);
 	
-	var _Repo = __webpack_require__(/*! ./modules/Repo */ 228);
+	var _Repo = __webpack_require__(/*! ./modules/Repo */ 229);
 	
 	var _Repo2 = _interopRequireDefault(_Repo);
 	
-	var _Home = __webpack_require__(/*! ./modules/Home */ 229);
+	var _Home = __webpack_require__(/*! ./modules/Home */ 230);
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _Sensors = __webpack_require__(/*! ./modules/Sensors */ 230);
+	var _Sensors = __webpack_require__(/*! ./modules/Sensors */ 231);
 	
 	var _Sensors2 = _interopRequireDefault(_Sensors);
 	
-	var _Docs = __webpack_require__(/*! ./modules/Docs */ 236);
+	var _Docs = __webpack_require__(/*! ./modules/Docs */ 237);
 	
 	var _Docs2 = _interopRequireDefault(_Docs);
 	
@@ -26227,6 +26227,133 @@
   \********************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _contactForm = __webpack_require__(/*! ./forms/contactForm */ 227);
+	
+	var _contactForm2 = _interopRequireDefault(_contactForm);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Contact = function (_Component) {
+	    _inherits(Contact, _Component);
+	
+	    function Contact(props) {
+	        _classCallCheck(this, Contact);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Contact).call(this, props));
+	
+	        _this.state = {
+	            contact: { emailto: 'perezca6576@yahoo.com', firstname: '', email: '', comments: '' },
+	            errors: {}
+	
+	        };
+	        _this.thankyou_msg = "Thank you,<br> so one of our Customer Service colleagues<br> will get back to you within a few hours.";
+	        _this.saveContact = _this.saveContact.bind(_this);
+	        _this.setContactState = _this.setContactState.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(Contact, [{
+	        key: 'send',
+	        value: function send(contact) {
+	
+	            app.service.request("/sendemail?emailto=" + contact.emailto + "&" + "emailfrom=" + contact.email + "&" + "emailsubject=Feedback and Comments from client&" + "emailtext=Name: " + contact.firstname + " <br>Comments: " + contact.comments + "&" + "emailattachment=&" + "emailtype=&" + "cache=no", this.success.bind(this), this.error.bind(this));
+	        }
+	    }, {
+	        key: 'success',
+	        value: function success(data, reqNum, url, queryData, reqTotal, isNested) {
+	            app.progress.hide();
+	            app.notify.show(this.thankyou_msg, "info");
+	        }
+	    }, {
+	        key: 'error',
+	        value: function error(reqNum, url, queryData, errorType, errorMsg, reqTotal) {
+	            app.progress.hide();
+	            app.notify.show("Please check network connection and try again.", "warning");
+	        }
+	    }, {
+	        key: 'setContactState',
+	        value: function setContactState(e) {
+	            var field = e.target.name;
+	            var value = e.target.value;
+	            this.state.contact[field] = value;
+	            return this.setState({ contact: this.state.contact });
+	        }
+	    }, {
+	        key: 'saveContact',
+	        value: function saveContact() {
+	            event.preventDefault();
+	            if (!this.contactFormIsValid()) {
+	                return;
+	            }
+	
+	            app.progress.show(2);
+	            this.send(this.state.contact);
+	        }
+	    }, {
+	        key: 'contactFormIsValid',
+	        value: function contactFormIsValid() {
+	            var formIsValid = true;
+	            this.state.errors = {};
+	            if (app.utils.isNullUndefOrEmpty(this.state.contact.firstname)) {
+	                this.state.errors.firstname = 'Name can not be empty.';
+	                formIsValid = false;
+	            }
+	
+	            if (!app.utils.isEmail(this.state.contact.email)) {
+	                this.state.errors.email = 'Invalid e-mail.';
+	                formIsValid = false;
+	            }
+	
+	            if (app.utils.isNullUndefOrEmpty(this.state.contact.comments)) {
+	                this.state.errors.comments = 'Comments are required.';
+	                formIsValid = false;
+	            }
+	            this.setState({ errors: this.state.errors });
+	            return formIsValid;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(_contactForm2.default, {
+	                contact: this.state.contact,
+	                onChange: this.setContactState,
+	                onSave: this.saveContact,
+	                errors: this.state.errors
+	
+	            });
+	        }
+	    }]);
+	
+	    return Contact;
+	}(_react.Component);
+	
+	exports.default = Contact;
+
+/***/ },
+/* 227 */
+/*!******************************************!*\
+  !*** ./app/modules/forms/contactForm.js ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -26247,29 +26374,28 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Contact = function (_Component) {
-	    _inherits(Contact, _Component);
+	var ContactForm = function (_Component) {
+	    _inherits(ContactForm, _Component);
 	
-	    function Contact(props) {
-	        _classCallCheck(this, Contact);
+	    function ContactForm(props) {
+	        _classCallCheck(this, ContactForm);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Contact).call(this, props));
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactForm).call(this, props));
 	    }
 	
-	    _createClass(Contact, [{
+	    _createClass(ContactForm, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {}
+	    }, {
 	        key: "componentDidMount",
 	        value: function componentDidMount() {
-	
-	            $("#firstname").addClass("wide").kendoMaskedTextBox({
-	                clearPromptChar: true
-	            });
-	
-	            $("#email").addClass("wide").kendoMaskedTextBox({
-	                clearPromptChar: true
-	            });
-	
+	            $("#firstname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
+	            $("#email").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
 	            $("#comments").addClass("resize");
 	        }
+	    }, {
+	        key: "componentWillUnmount",
+	        value: function componentWillUnmount() {}
 	    }, {
 	        key: "render",
 	        value: function render() {
@@ -26282,6 +26408,7 @@
 	                    _react2.default.createElement(
 	                        "div",
 	                        { className: "row" },
+	                        _react2.default.createElement("span", { id: "popupNotification" }),
 	                        _react2.default.createElement(
 	                            "h3",
 	                            null,
@@ -26309,7 +26436,17 @@
 	                                _react2.default.createElement(
 	                                    "div",
 	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("input", { id: "firstname", placeholder: "First name" })
+	                                    _react2.default.createElement("input", {
+	                                        id: "firstname",
+	                                        name: "firstname",
+	                                        value: this.props.contact.firstname,
+	                                        onChange: this.props.onChange,
+	                                        placeholder: "First name" }),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        { className: "error-block" },
+	                                        this.props.errors.firstname
+	                                    )
 	                                )
 	                            ),
 	                            _react2.default.createElement(
@@ -26318,7 +26455,18 @@
 	                                _react2.default.createElement(
 	                                    "div",
 	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("input", { id: "email", placeholder: "@Email" })
+	                                    _react2.default.createElement("input", {
+	                                        id: "email",
+	                                        name: "email",
+	                                        value: this.props.contact.email,
+	                                        onChange: this.props.onChange,
+	                                        error: this.props.errors.email,
+	                                        placeholder: "@Email" }),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        { className: "error-block" },
+	                                        this.props.errors.email
+	                                    )
 	                                )
 	                            ),
 	                            _react2.default.createElement(
@@ -26329,7 +26477,17 @@
 	                                    { className: "form-group floating-labels is-empty" },
 	                                    _react2.default.createElement("textarea", {
 	                                        placeholder: "Enter Comments",
-	                                        id: "comments", rows: "5" })
+	                                        name: "comments",
+	                                        id: "comments",
+	                                        value: this.props.contact.comments,
+	                                        onChange: this.props.onChange,
+	                                        error: this.props.errors,
+	                                        rows: "5" }),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        { className: "error-block" },
+	                                        this.props.errors.comments
+	                                    )
 	                                )
 	                            )
 	                        ),
@@ -26342,7 +26500,8 @@
 	                                _react2.default.createElement(
 	                                    "button",
 	                                    { type: "submit",
-	                                        className: "btn btn-warning" },
+	                                        className: "btn btn-warning",
+	                                        onClick: this.props.onSave },
 	                                    "Submit"
 	                                )
 	                            )
@@ -26353,13 +26512,20 @@
 	        }
 	    }]);
 	
-	    return Contact;
+	    return ContactForm;
 	}(_react.Component);
 	
-	exports.default = Contact;
+	ContactForm.propTypes = {
+	    contact: _react2.default.PropTypes.object.isRequired,
+	    onSave: _react2.default.PropTypes.func.isRequired,
+	    onChange: _react2.default.PropTypes.func.isRequired,
+	    errors: _react2.default.PropTypes.object
+	};
+	
+	exports.default = ContactForm;
 
 /***/ },
-/* 227 */
+/* 228 */
 /*!******************************!*\
   !*** ./app/modules/Repos.js ***!
   \******************************/
@@ -26420,7 +26586,7 @@
 	});
 
 /***/ },
-/* 228 */
+/* 229 */
 /*!*****************************!*\
   !*** ./app/modules/Repo.js ***!
   \*****************************/
@@ -26454,7 +26620,7 @@
 	});
 
 /***/ },
-/* 229 */
+/* 230 */
 /*!*****************************!*\
   !*** ./app/modules/Home.js ***!
   \*****************************/
@@ -26484,7 +26650,7 @@
 	});
 
 /***/ },
-/* 230 */
+/* 231 */
 /*!********************************!*\
   !*** ./app/modules/Sensors.js ***!
   \********************************/
@@ -26502,23 +26668,23 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TemperatureF = __webpack_require__(/*! ./TemperatureF */ 231);
+	var _TemperatureF = __webpack_require__(/*! ./TemperatureF */ 232);
 	
 	var _TemperatureF2 = _interopRequireDefault(_TemperatureF);
 	
-	var _TemperatureC = __webpack_require__(/*! ./TemperatureC */ 232);
+	var _TemperatureC = __webpack_require__(/*! ./TemperatureC */ 233);
 	
 	var _TemperatureC2 = _interopRequireDefault(_TemperatureC);
 	
-	var _TemperatureK = __webpack_require__(/*! ./TemperatureK */ 233);
+	var _TemperatureK = __webpack_require__(/*! ./TemperatureK */ 234);
 	
 	var _TemperatureK2 = _interopRequireDefault(_TemperatureK);
 	
-	var _TemperatureH = __webpack_require__(/*! ./TemperatureH */ 234);
+	var _TemperatureH = __webpack_require__(/*! ./TemperatureH */ 235);
 	
 	var _TemperatureH2 = _interopRequireDefault(_TemperatureH);
 	
-	var _VOC = __webpack_require__(/*! ./VOC */ 235);
+	var _VOC = __webpack_require__(/*! ./VOC */ 236);
 	
 	var _VOC2 = _interopRequireDefault(_VOC);
 	
@@ -26623,7 +26789,7 @@
 	exports.default = Sensors;
 
 /***/ },
-/* 231 */
+/* 232 */
 /*!*************************************!*\
   !*** ./app/modules/TemperatureF.js ***!
   \*************************************/
@@ -26708,7 +26874,7 @@
 	exports.default = TemperatureF;
 
 /***/ },
-/* 232 */
+/* 233 */
 /*!*************************************!*\
   !*** ./app/modules/TemperatureC.js ***!
   \*************************************/
@@ -26793,7 +26959,7 @@
 	exports.default = TemperatureC;
 
 /***/ },
-/* 233 */
+/* 234 */
 /*!*************************************!*\
   !*** ./app/modules/TemperatureK.js ***!
   \*************************************/
@@ -26878,7 +27044,7 @@
 	exports.default = TemperatureK;
 
 /***/ },
-/* 234 */
+/* 235 */
 /*!*************************************!*\
   !*** ./app/modules/TemperatureH.js ***!
   \*************************************/
@@ -26963,7 +27129,7 @@
 	exports.default = TemperatureH;
 
 /***/ },
-/* 235 */
+/* 236 */
 /*!****************************!*\
   !*** ./app/modules/VOC.js ***!
   \****************************/
@@ -27052,7 +27218,7 @@
 	exports.default = VOC;
 
 /***/ },
-/* 236 */
+/* 237 */
 /*!*****************************!*\
   !*** ./app/modules/Docs.js ***!
   \*****************************/

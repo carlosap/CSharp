@@ -71,6 +71,11 @@ function Queue(ajaxQueue) {
 		return this;
 	}
 
+	this.clear = function() {
+		ajaxQueue = Array();	
+		return this;
+	}
+
 	this.showLoader = function(elem, opacity) {
 		elem = jQuery(elem) || jQuery(document.body);
 		opacity = opacity || 0.65;
