@@ -85,9 +85,17 @@
 	
 	var _Sensors2 = _interopRequireDefault(_Sensors);
 	
-	var _Docs = __webpack_require__(/*! ./modules/Docs */ 237);
+	var _Settings = __webpack_require__(/*! ./modules/Settings */ 237);
+	
+	var _Settings2 = _interopRequireDefault(_Settings);
+	
+	var _Docs = __webpack_require__(/*! ./modules/Docs */ 239);
 	
 	var _Docs2 = _interopRequireDefault(_Docs);
+	
+	var _message = __webpack_require__(/*! ./modules/message */ 242);
+	
+	var _message2 = _interopRequireDefault(_message);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -106,7 +114,9 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/contact', component: _Contact2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/sensors', component: _Sensors2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/docs', component: _Docs2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/docs', component: _Docs2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/settings', component: _Settings2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/message/:header/:msg', component: _message2.default })
 	  )
 	), document.getElementById('app'));
 
@@ -26264,7 +26274,7 @@
 	            errors: {}
 	
 	        };
-	        _this.thankyou_msg = "Thank you,<br> so one of our Customer Service colleagues<br> will get back to you within a few hours.";
+	        _this.thankyou_msg = "Thank you!";
 	        _this.saveContact = _this.saveContact.bind(_this);
 	        _this.setContactState = _this.setContactState.bind(_this);
 	        return _this;
@@ -26273,14 +26283,24 @@
 	    _createClass(Contact, [{
 	        key: 'send',
 	        value: function send(contact) {
+	            this.context.router.push('/message/hello/carlos');
 	
-	            app.service.request("/sendemail?emailto=" + contact.emailto + "&" + "emailfrom=" + contact.email + "&" + "emailsubject=Feedback and Comments from client&" + "emailtext=Name: " + contact.firstname + " <br>Comments: " + contact.comments + "&" + "emailattachment=&" + "emailtype=&" + "cache=no", this.success.bind(this), this.error.bind(this));
+	            // app.service.request("/sendemail?emailto=" + contact.emailto + "&" +
+	            //     "emailfrom=" + contact.email + "&" +
+	            //     "emailsubject=Feedback and Comments from client&" +
+	            //     "emailtext=Name: " + contact.firstname + " <br>Comments: " + contact.comments + "&" +
+	            //     "emailattachment=&" +
+	            //     "emailtype=&" +
+	            //     "cache=no", this.success.bind(this), this.error.bind(this));
+	
 	        }
 	    }, {
 	        key: 'success',
 	        value: function success(data, reqNum, url, queryData, reqTotal, isNested) {
 	            app.progress.hide();
+	            //<br> so one of our Customer Service colleagues<br> will get back to you within a few hours.
 	            app.notify.show(this.thankyou_msg, "info");
+	            this.context.router.push('/message/hello/carlos');
 	        }
 	    }, {
 	        key: 'error',
@@ -26345,6 +26365,9 @@
 	    return Contact;
 	}(_react.Component);
 	
+	Contact.contextTypes = {
+	    router: _react2.default.PropTypes.object
+	};
 	exports.default = Contact;
 
 /***/ },
@@ -27219,6 +27242,673 @@
 
 /***/ },
 /* 237 */
+/*!*********************************!*\
+  !*** ./app/modules/Settings.js ***!
+  \*********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _settingsForm = __webpack_require__(/*! ./forms/settingsForm */ 238);
+	
+	var _settingsForm2 = _interopRequireDefault(_settingsForm);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Settings = function (_Component) {
+	    _inherits(Settings, _Component);
+	
+	    function Settings(props) {
+	        _classCallCheck(this, Settings);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Settings).call(this, props));
+	
+	        _this.state = {
+	            contact: { emailto: 'perezca6576@yahoo.com', firstname: '', email: '', comments: '' },
+	            errors: {}
+	
+	        };
+	        _this.thankyou_msg = "Thank you,<br> so one of our Customer Service colleagues<br> will get back to you within a few hours.";
+	        _this.saveContact = _this.saveContact.bind(_this);
+	        _this.setContactState = _this.setContactState.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(Settings, [{
+	        key: 'send',
+	        value: function send(contact) {
+	
+	            app.service.request("/sendemail?emailto=" + contact.emailto + "&" + "emailfrom=" + contact.email + "&" + "emailsubject=Feedback and Comments from client&" + "emailtext=Name: " + contact.firstname + " <br>Comments: " + contact.comments + "&" + "emailattachment=&" + "emailtype=&" + "cache=no", this.success.bind(this), this.error.bind(this));
+	        }
+	    }, {
+	        key: 'success',
+	        value: function success(data, reqNum, url, queryData, reqTotal, isNested) {
+	            app.progress.hide();
+	            app.notify.show(this.thankyou_msg, "info");
+	        }
+	    }, {
+	        key: 'error',
+	        value: function error(reqNum, url, queryData, errorType, errorMsg, reqTotal) {
+	            app.progress.hide();
+	            app.notify.show("Please check network connection and try again.", "warning");
+	        }
+	    }, {
+	        key: 'setContactState',
+	        value: function setContactState(e) {
+	            var field = e.target.name;
+	            var value = e.target.value;
+	            this.state.contact[field] = value;
+	            return this.setState({ contact: this.state.contact });
+	        }
+	    }, {
+	        key: 'saveContact',
+	        value: function saveContact() {
+	            event.preventDefault();
+	            if (!this.contactFormIsValid()) {
+	                return;
+	            }
+	
+	            app.progress.show(2);
+	            this.send(this.state.contact);
+	        }
+	    }, {
+	        key: 'contactFormIsValid',
+	        value: function contactFormIsValid() {
+	            var formIsValid = true;
+	            this.state.errors = {};
+	            if (app.utils.isNullUndefOrEmpty(this.state.contact.firstname)) {
+	                this.state.errors.firstname = 'Name can not be empty.';
+	                formIsValid = false;
+	            }
+	
+	            if (!app.utils.isEmail(this.state.contact.email)) {
+	                this.state.errors.email = 'Invalid e-mail.';
+	                formIsValid = false;
+	            }
+	
+	            if (app.utils.isNullUndefOrEmpty(this.state.contact.comments)) {
+	                this.state.errors.comments = 'Comments are required.';
+	                formIsValid = false;
+	            }
+	            this.setState({ errors: this.state.errors });
+	            return formIsValid;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h4',
+	                    { className: 'm-b-20' },
+	                    ' Floating labels '
+	                ),
+	                _react2.default.createElement(_settingsForm2.default, {
+	                    contact: this.state.contact,
+	                    onChange: this.setContactState,
+	                    onSave: this.saveContact,
+	                    errors: this.state.errors
+	
+	                })
+	            );
+	        }
+	    }]);
+	
+	    return Settings;
+	}(_react.Component);
+	
+	exports.default = Settings;
+
+/***/ },
+/* 238 */
+/*!*******************************************!*\
+  !*** ./app/modules/forms/settingsForm.js ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var SettingsForm = function (_Component) {
+	    _inherits(SettingsForm, _Component);
+	
+	    function SettingsForm(props) {
+	        _classCallCheck(this, SettingsForm);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(SettingsForm).call(this, props));
+	    }
+	
+	    _createClass(SettingsForm, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {}
+	    }, {
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	            $("#firstname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
+	            $("#lastname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
+	            $("#telephone").kendoMaskedTextBox({ mask: "(999) 000-0000" }).addClass("wide");
+	            $("#email").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
+	            $("#comments").addClass("resize");
+	        }
+	    }, {
+	        key: "componentWillUnmount",
+	        value: function componentWillUnmount() {}
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "row m-b-20" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "col-xs-12 col-xl-6" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "row" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("input", {
+	                                        id: "firstname",
+	                                        name: "firstname",
+	                                        value: this.props.contact.firstname,
+	                                        onChange: this.props.onChange,
+	                                        placeholder: "First name" }),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        { className: "error-block" },
+	                                        this.props.errors.firstname
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("input", {
+	                                        id: "lastname",
+	                                        name: "lastname",
+	                                        value: this.props.contact.lastname,
+	                                        onChange: this.props.onChange,
+	                                        placeholder: "Last name" }),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        { className: "error-block" },
+	                                        this.props.errors.lastname
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "row" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("input", {
+	                                        id: "email",
+	                                        name: "email",
+	                                        value: this.props.contact.email,
+	                                        onChange: this.props.onChange,
+	                                        error: this.props.errors.email,
+	                                        placeholder: "@Email" }),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        { className: "error-block" },
+	                                        this.props.errors.email
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("input", {
+	                                        id: "telephone",
+	                                        name: "telephone",
+	                                        value: this.props.contact.telephone,
+	                                        onChange: this.props.onChange,
+	                                        error: this.props.errors.telephone,
+	                                        placeholder: "Phone number" }),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        { className: "error-block" },
+	                                        this.props.errors.telephone
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "row" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-12" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "table-responsive" },
+	                                    _react2.default.createElement(
+	                                        "table",
+	                                        { className: "table table-hover table-striped sortable-theme-bootstrap", "data-sortable": "", "data-sortable-initialized": "true" },
+	                                        _react2.default.createElement(
+	                                            "thead",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "tr",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    null,
+	                                                    "#"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    null,
+	                                                    "Company"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    null,
+	                                                    "Country"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    null,
+	                                                    "Status"
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "tbody",
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                "tr",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    { scope: "row" },
+	                                                    "1"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Facebook"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Mexico"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    " ",
+	                                                    _react2.default.createElement(
+	                                                        "span",
+	                                                        { className: "label label-danger" },
+	                                                        "danger"
+	                                                    ),
+	                                                    " "
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "tr",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    { scope: "row" },
+	                                                    "2"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "LG Electronics"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "France"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    " ",
+	                                                    _react2.default.createElement(
+	                                                        "span",
+	                                                        { className: "label label-danger" },
+	                                                        "danger"
+	                                                    ),
+	                                                    " "
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "tr",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    { scope: "row" },
+	                                                    "3"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Pinterest"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Sweden"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    " ",
+	                                                    _react2.default.createElement(
+	                                                        "span",
+	                                                        { className: "label label-success" },
+	                                                        "success"
+	                                                    ),
+	                                                    " "
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "tr",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    { scope: "row" },
+	                                                    "4"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Google Inc."
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "USA"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    " ",
+	                                                    _react2.default.createElement(
+	                                                        "span",
+	                                                        { className: "label label-warning" },
+	                                                        "warning"
+	                                                    ),
+	                                                    " "
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "tr",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    { scope: "row" },
+	                                                    "5"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Uber"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "England"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    " ",
+	                                                    _react2.default.createElement(
+	                                                        "span",
+	                                                        { className: "label label-danger" },
+	                                                        "danger"
+	                                                    ),
+	                                                    " "
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "tr",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    { scope: "row" },
+	                                                    "6"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Microsoft Inc."
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Brazil"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    " ",
+	                                                    _react2.default.createElement(
+	                                                        "span",
+	                                                        { className: "label label-info" },
+	                                                        "info"
+	                                                    ),
+	                                                    " "
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "tr",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    { scope: "row" },
+	                                                    "7"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Twitter"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Argentina"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    " ",
+	                                                    _react2.default.createElement(
+	                                                        "span",
+	                                                        { className: "label label-success" },
+	                                                        "success"
+	                                                    ),
+	                                                    " "
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "tr",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    { scope: "row" },
+	                                                    "8"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Facebook"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "USA"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    " ",
+	                                                    _react2.default.createElement(
+	                                                        "span",
+	                                                        { className: "label label-danger" },
+	                                                        "danger"
+	                                                    ),
+	                                                    " "
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "tr",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    { scope: "row" },
+	                                                    "9"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Tinder"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Canada"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    " ",
+	                                                    _react2.default.createElement(
+	                                                        "span",
+	                                                        { className: "label label-warning" },
+	                                                        "warning"
+	                                                    ),
+	                                                    " "
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "tr",
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    "th",
+	                                                    { scope: "row" },
+	                                                    "10"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Apple, Inc."
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    "Germany"
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    "td",
+	                                                    null,
+	                                                    " ",
+	                                                    _react2.default.createElement(
+	                                                        "span",
+	                                                        { className: "label label-primary" },
+	                                                        "primary"
+	                                                    ),
+	                                                    " "
+	                                                )
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "row" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "button",
+	                                    { type: "submit",
+	                                        className: "btn btn-warning",
+	                                        onClick: this.props.onSave },
+	                                    "Submit"
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement("span", { id: "popupNotification" })
+	            );
+	        }
+	    }]);
+	
+	    return SettingsForm;
+	}(_react.Component);
+	
+	SettingsForm.propTypes = {
+	    contact: _react2.default.PropTypes.object.isRequired,
+	    onSave: _react2.default.PropTypes.func.isRequired,
+	    onChange: _react2.default.PropTypes.func.isRequired,
+	    errors: _react2.default.PropTypes.object
+	};
+	
+	exports.default = SettingsForm;
+
+/***/ },
+/* 239 */
 /*!*****************************!*\
   !*** ./app/modules/Docs.js ***!
   \*****************************/
@@ -28231,6 +28921,69 @@
 	;
 	
 	exports.default = Docs;
+
+/***/ },
+/* 240 */,
+/* 241 */,
+/* 242 */
+/*!********************************!*\
+  !*** ./app/modules/message.js ***!
+  \********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Message = function (_Component) {
+	    _inherits(Message, _Component);
+	
+	    function Message(props) {
+	        _classCallCheck(this, Message);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Message).call(this, props));
+	    }
+	
+	    _createClass(Message, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h2',
+	                    null,
+	                    this.props.params.header
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    this.props.params.msg
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Message;
+	}(_react.Component);
+	
+	exports.default = Message;
 
 /***/ }
 /******/ ]);

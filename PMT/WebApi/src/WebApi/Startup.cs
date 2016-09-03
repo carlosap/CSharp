@@ -31,6 +31,8 @@ namespace WebApi
             //services.AddSingleton<IStatic, StaticRepository>();
             services.AddSingleton<ICOREALL, COREALLRepository>();
             services.AddSingleton<ISendEmail, SendEmailRepository>();
+            services.AddSingleton<ILabel, LabelRepository>();
+            services.AddSingleton<IStatic, StaticRepository>();
             //services.AddSingleton<ISendSms, SendSmsRepository>();
 
         }

@@ -1,42 +1,38 @@
 import React, {Component} from 'react';
-import ContactForm from './forms/contactForm'
-class Contact extends Component {
+import SettingsForm from './forms/settingsForm'
+class Settings extends Component {
     constructor(props) {
         super(props);
         this.state = {
             contact: { emailto: 'perezca6576@yahoo.com', firstname: '', email: '', comments: '' },
-            errors: {}
+            errors: {},
 
         };
-        this.thankyou_msg = "Thank you!";
+        this.thankyou_msg = "Thank you,<br> so one of our Customer Service colleagues<br> will get back to you within a few hours.";
         this.saveContact = this.saveContact.bind(this);
         this.setContactState = this.setContactState.bind(this);
     }
 
     send(contact) {
-        this.context.router.push('/message/hello/carlos');
 
-        // app.service.request("/sendemail?emailto=" + contact.emailto + "&" +
-        //     "emailfrom=" + contact.email + "&" +
-        //     "emailsubject=Feedback and Comments from client&" +
-        //     "emailtext=Name: " + contact.firstname + " <br>Comments: " + contact.comments + "&" +
-        //     "emailattachment=&" +
-        //     "emailtype=&" +
-        //     "cache=no", this.success.bind(this), this.error.bind(this));
+        app.service.request("/sendemail?emailto=" + contact.emailto + "&" +
+            "emailfrom=" + contact.email + "&" +
+            "emailsubject=Feedback and Comments from client&" +
+            "emailtext=Name: " + contact.firstname + " <br>Comments: " + contact.comments + "&" +
+            "emailattachment=&" +
+            "emailtype=&" +
+            "cache=no", this.success.bind(this), this.error.bind(this));
 
 
 
     }
     success(data, reqNum, url, queryData, reqTotal, isNested) {
         app.progress.hide();
-        //<br> so one of our Customer Service colleagues<br> will get back to you within a few hours.
-        app.notify.show(this.thankyou_msg, "info");
-        this.context.router.push('/message/hello/carlos');
-
+        app.notify.show(this.thankyou_msg , "info");
     }
     error(reqNum, url, queryData, errorType, errorMsg, reqTotal) {
         app.progress.hide();
-        app.notify.show("Please check network connection and try again.", "warning");
+        app.notify.show("Please check network connection and try again." , "warning");
     }
     setContactState(e) {
         var field = e.target.name;
@@ -58,7 +54,7 @@ class Contact extends Component {
 
     contactFormIsValid() {
         var formIsValid = true;
-        this.state.errors = {};
+        this.state.errors = {}; 
         if (app.utils.isNullUndefOrEmpty(this.state.contact.firstname)) {
             this.state.errors.firstname = 'Name can not be empty.';
             formIsValid = false;
@@ -76,22 +72,20 @@ class Contact extends Component {
         this.setState({ errors: this.state.errors });
         return formIsValid;
     }
-    render() {
-        return (
-            <ContactForm
-                contact={this.state.contact}
-                onChange={this.setContactState}
-                onSave={this.saveContact}
-                errors={this.state.errors}
 
-                />
-        );
-    }
+  render() {
+    return (
+      <div>
+        <h4 className="m-b-20"> Floating labels </h4>
+        <SettingsForm
+          contact={this.state.contact}
+          onChange={this.setContactState}
+          onSave={this.saveContact}
+          errors={this.state.errors}
+
+          />
+      </div>
+    );
+  }
 }
-Contact.contextTypes = {
-  router: React.PropTypes.object
-};
-export default Contact;
-
-
-
+export default Settings;
