@@ -7,9 +7,10 @@ class TemperatureF extends Component {
     render() {
         return (
 
-
             <div className="col-xs-12 col-lg-4 m-b-5">
+
                 <div className="text-widget-4 bg-info-700 color-white text-center">
+                    <div id="gauge"></div>
                     <div className="title">Temperature</div>
                     <div className="subtitle">FAHRENHEIT</div>
                     <span className="amount" count-to-currency="200" value="0" duration="1">{this.props.measurement} F</span>

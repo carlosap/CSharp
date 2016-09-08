@@ -35,6 +35,7 @@ class Sensors extends Component {
     return (
       <div>
         <div className="row">
+        
         </div>
         <TemperatureF measurement={this.state.temperature.fahrenheit} />
         <TemperatureC measurement={this.state.temperature.celcius} />

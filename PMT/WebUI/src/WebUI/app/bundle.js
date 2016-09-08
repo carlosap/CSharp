@@ -85,20 +85,41 @@
 	
 	var _Sensors2 = _interopRequireDefault(_Sensors);
 	
-	var _Settings = __webpack_require__(/*! ./modules/Settings */ 237);
-	
-	var _Settings2 = _interopRequireDefault(_Settings);
-	
-	var _Docs = __webpack_require__(/*! ./modules/Docs */ 239);
+	var _Docs = __webpack_require__(/*! ./modules/Docs */ 237);
 	
 	var _Docs2 = _interopRequireDefault(_Docs);
 	
-	var _message = __webpack_require__(/*! ./modules/message */ 242);
+	var _message = __webpack_require__(/*! ./modules/message */ 238);
 	
 	var _message2 = _interopRequireDefault(_message);
 	
+	var _Settings = __webpack_require__(/*! ./modules/Settings */ 239);
+	
+	var _Settings2 = _interopRequireDefault(_Settings);
+	
+	var _userList = __webpack_require__(/*! ./modules/forms/userList */ 240);
+	
+	var _userList2 = _interopRequireDefault(_userList);
+	
+	var _addUser = __webpack_require__(/*! ./modules/forms/addUser */ 241);
+	
+	var _addUser2 = _interopRequireDefault(_addUser);
+	
+	var _editUser = __webpack_require__(/*! ./modules/forms/editUser */ 242);
+	
+	var _editUser2 = _interopRequireDefault(_editUser);
+	
+	var _settingsForm = __webpack_require__(/*! ./modules/forms/settingsForm3 */ 243);
+	
+	var _settingsForm2 = _interopRequireDefault(_settingsForm);
+	
+	var _HistogramChart = __webpack_require__(/*! ./modules/HistogramChart */ 244);
+	
+	var _HistogramChart2 = _interopRequireDefault(_HistogramChart);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	//settings Pages
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRouter.Router,
 	  { history: _reactRouter.hashHistory },
@@ -115,10 +136,17 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: '/contact', component: _Contact2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/sensors', component: _Sensors2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/docs', component: _Docs2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/message/:header/:msg', component: _message2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/settings', component: _Settings2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/message/:header/:msg', component: _message2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/userlist', component: _userList2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/adduser', component: _addUser2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/edituser/:email', component: _editUser2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/settings3', component: _settingsForm2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/histogram', component: _HistogramChart2.default })
 	  )
 	), document.getElementById('app'));
+	
+	//chart
 
 /***/ },
 /* 1 */
@@ -26283,30 +26311,27 @@
 	    _createClass(Contact, [{
 	        key: 'send',
 	        value: function send(contact) {
-	            this.context.router.push('/message/hello/carlos');
 	
-	            // app.service.request("/sendemail?emailto=" + contact.emailto + "&" +
-	            //     "emailfrom=" + contact.email + "&" +
-	            //     "emailsubject=Feedback and Comments from client&" +
-	            //     "emailtext=Name: " + contact.firstname + " <br>Comments: " + contact.comments + "&" +
-	            //     "emailattachment=&" +
-	            //     "emailtype=&" +
-	            //     "cache=no", this.success.bind(this), this.error.bind(this));
-	
+	            app.service.request("/sendemail?emailto=" + contact.emailto + "&" + "emailfrom=" + contact.email + "&" + "emailsubject=Feedback and Comments from client&" + "emailtext=Name: " + contact.firstname + " <br>Comments: " + contact.comments + "&" + "emailattachment=&" + "emailtype=&" + "cache=no", this.success.bind(this), this.error.bind(this));
 	        }
 	    }, {
 	        key: 'success',
 	        value: function success(data, reqNum, url, queryData, reqTotal, isNested) {
 	            app.progress.hide();
-	            //<br> so one of our Customer Service colleagues<br> will get back to you within a few hours.
 	            app.notify.show(this.thankyou_msg, "info");
-	            this.context.router.push('/message/hello/carlos');
+	            this.userMsg("Thank you!", "One of our Customer Service colleagues will get back to you within a few hours.");
 	        }
 	    }, {
 	        key: 'error',
 	        value: function error(reqNum, url, queryData, errorType, errorMsg, reqTotal) {
 	            app.progress.hide();
 	            app.notify.show("Please check network connection and try again.", "warning");
+	        }
+	    }, {
+	        key: 'userMsg',
+	        value: function userMsg(headerName, msg) {
+	            this.context.router.push('/message/' + headerName + "/" + msg);
+	            return false;
 	        }
 	    }, {
 	        key: 'setContactState',
@@ -26408,10 +26433,15 @@
 	
 	    _createClass(ContactForm, [{
 	        key: "componentWillMount",
-	        value: function componentWillMount() {}
+	        value: function componentWillMount() {
+	            if (kendo) {
+	                kendo.destroy(document.body);
+	            }
+	        }
 	    }, {
 	        key: "componentDidMount",
 	        value: function componentDidMount() {
+	            $("#cmdSave").kendoButton();
 	            $("#firstname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
 	            $("#email").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
 	            $("#comments").addClass("resize");
@@ -26440,7 +26470,7 @@
 	                        _react2.default.createElement(
 	                            "p",
 	                            null,
-	                            "Do you have questions on how to accept payments for your business? Complete your details and we will contact you shortly."
+	                            "Complete your details and we will contact you shortly."
 	                        )
 	                    )
 	                ),
@@ -26522,9 +26552,11 @@
 	                                { className: "col-xs-12 col-xl-6" },
 	                                _react2.default.createElement(
 	                                    "button",
-	                                    { type: "submit",
-	                                        className: "btn btn-warning",
-	                                        onClick: this.props.onSave },
+	                                    {
+	                                        id: "cmdSave",
+	                                        className: "k-primary",
+	                                        onClick: this.props.onSave
+	                                    },
 	                                    "Submit"
 	                                )
 	                            )
@@ -26856,6 +26888,7 @@
 	                _react2.default.createElement(
 	                    "div",
 	                    { className: "text-widget-4 bg-info-700 color-white text-center" },
+	                    _react2.default.createElement("div", { id: "gauge" }),
 	                    _react2.default.createElement(
 	                        "div",
 	                        { className: "title" },
@@ -27242,673 +27275,6 @@
 
 /***/ },
 /* 237 */
-/*!*********************************!*\
-  !*** ./app/modules/Settings.js ***!
-  \*********************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _settingsForm = __webpack_require__(/*! ./forms/settingsForm */ 238);
-	
-	var _settingsForm2 = _interopRequireDefault(_settingsForm);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Settings = function (_Component) {
-	    _inherits(Settings, _Component);
-	
-	    function Settings(props) {
-	        _classCallCheck(this, Settings);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Settings).call(this, props));
-	
-	        _this.state = {
-	            contact: { emailto: 'perezca6576@yahoo.com', firstname: '', email: '', comments: '' },
-	            errors: {}
-	
-	        };
-	        _this.thankyou_msg = "Thank you,<br> so one of our Customer Service colleagues<br> will get back to you within a few hours.";
-	        _this.saveContact = _this.saveContact.bind(_this);
-	        _this.setContactState = _this.setContactState.bind(_this);
-	        return _this;
-	    }
-	
-	    _createClass(Settings, [{
-	        key: 'send',
-	        value: function send(contact) {
-	
-	            app.service.request("/sendemail?emailto=" + contact.emailto + "&" + "emailfrom=" + contact.email + "&" + "emailsubject=Feedback and Comments from client&" + "emailtext=Name: " + contact.firstname + " <br>Comments: " + contact.comments + "&" + "emailattachment=&" + "emailtype=&" + "cache=no", this.success.bind(this), this.error.bind(this));
-	        }
-	    }, {
-	        key: 'success',
-	        value: function success(data, reqNum, url, queryData, reqTotal, isNested) {
-	            app.progress.hide();
-	            app.notify.show(this.thankyou_msg, "info");
-	        }
-	    }, {
-	        key: 'error',
-	        value: function error(reqNum, url, queryData, errorType, errorMsg, reqTotal) {
-	            app.progress.hide();
-	            app.notify.show("Please check network connection and try again.", "warning");
-	        }
-	    }, {
-	        key: 'setContactState',
-	        value: function setContactState(e) {
-	            var field = e.target.name;
-	            var value = e.target.value;
-	            this.state.contact[field] = value;
-	            return this.setState({ contact: this.state.contact });
-	        }
-	    }, {
-	        key: 'saveContact',
-	        value: function saveContact() {
-	            event.preventDefault();
-	            if (!this.contactFormIsValid()) {
-	                return;
-	            }
-	
-	            app.progress.show(2);
-	            this.send(this.state.contact);
-	        }
-	    }, {
-	        key: 'contactFormIsValid',
-	        value: function contactFormIsValid() {
-	            var formIsValid = true;
-	            this.state.errors = {};
-	            if (app.utils.isNullUndefOrEmpty(this.state.contact.firstname)) {
-	                this.state.errors.firstname = 'Name can not be empty.';
-	                formIsValid = false;
-	            }
-	
-	            if (!app.utils.isEmail(this.state.contact.email)) {
-	                this.state.errors.email = 'Invalid e-mail.';
-	                formIsValid = false;
-	            }
-	
-	            if (app.utils.isNullUndefOrEmpty(this.state.contact.comments)) {
-	                this.state.errors.comments = 'Comments are required.';
-	                formIsValid = false;
-	            }
-	            this.setState({ errors: this.state.errors });
-	            return formIsValid;
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'h4',
-	                    { className: 'm-b-20' },
-	                    ' Floating labels '
-	                ),
-	                _react2.default.createElement(_settingsForm2.default, {
-	                    contact: this.state.contact,
-	                    onChange: this.setContactState,
-	                    onSave: this.saveContact,
-	                    errors: this.state.errors
-	
-	                })
-	            );
-	        }
-	    }]);
-	
-	    return Settings;
-	}(_react.Component);
-	
-	exports.default = Settings;
-
-/***/ },
-/* 238 */
-/*!*******************************************!*\
-  !*** ./app/modules/forms/settingsForm.js ***!
-  \*******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var SettingsForm = function (_Component) {
-	    _inherits(SettingsForm, _Component);
-	
-	    function SettingsForm(props) {
-	        _classCallCheck(this, SettingsForm);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(SettingsForm).call(this, props));
-	    }
-	
-	    _createClass(SettingsForm, [{
-	        key: "componentWillMount",
-	        value: function componentWillMount() {}
-	    }, {
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
-	            $("#firstname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
-	            $("#lastname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
-	            $("#telephone").kendoMaskedTextBox({ mask: "(999) 000-0000" }).addClass("wide");
-	            $("#email").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
-	            $("#comments").addClass("resize");
-	        }
-	    }, {
-	        key: "componentWillUnmount",
-	        value: function componentWillUnmount() {}
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            return _react2.default.createElement(
-	                "div",
-	                null,
-	                _react2.default.createElement(
-	                    "div",
-	                    { className: "row m-b-20" },
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "col-xs-12 col-xl-6" },
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "row" },
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-6" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("input", {
-	                                        id: "firstname",
-	                                        name: "firstname",
-	                                        value: this.props.contact.firstname,
-	                                        onChange: this.props.onChange,
-	                                        placeholder: "First name" }),
-	                                    _react2.default.createElement(
-	                                        "p",
-	                                        { className: "error-block" },
-	                                        this.props.errors.firstname
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-6" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("input", {
-	                                        id: "lastname",
-	                                        name: "lastname",
-	                                        value: this.props.contact.lastname,
-	                                        onChange: this.props.onChange,
-	                                        placeholder: "Last name" }),
-	                                    _react2.default.createElement(
-	                                        "p",
-	                                        { className: "error-block" },
-	                                        this.props.errors.lastname
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "row" },
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-6" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("input", {
-	                                        id: "email",
-	                                        name: "email",
-	                                        value: this.props.contact.email,
-	                                        onChange: this.props.onChange,
-	                                        error: this.props.errors.email,
-	                                        placeholder: "@Email" }),
-	                                    _react2.default.createElement(
-	                                        "p",
-	                                        { className: "error-block" },
-	                                        this.props.errors.email
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-6" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("input", {
-	                                        id: "telephone",
-	                                        name: "telephone",
-	                                        value: this.props.contact.telephone,
-	                                        onChange: this.props.onChange,
-	                                        error: this.props.errors.telephone,
-	                                        placeholder: "Phone number" }),
-	                                    _react2.default.createElement(
-	                                        "p",
-	                                        { className: "error-block" },
-	                                        this.props.errors.telephone
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "row" },
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-12" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "table-responsive" },
-	                                    _react2.default.createElement(
-	                                        "table",
-	                                        { className: "table table-hover table-striped sortable-theme-bootstrap", "data-sortable": "", "data-sortable-initialized": "true" },
-	                                        _react2.default.createElement(
-	                                            "thead",
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                "tr",
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    null,
-	                                                    "#"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    null,
-	                                                    "Company"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    null,
-	                                                    "Country"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    null,
-	                                                    "Status"
-	                                                )
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            "tbody",
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                "tr",
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    { scope: "row" },
-	                                                    "1"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Facebook"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Mexico"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    " ",
-	                                                    _react2.default.createElement(
-	                                                        "span",
-	                                                        { className: "label label-danger" },
-	                                                        "danger"
-	                                                    ),
-	                                                    " "
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "tr",
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    { scope: "row" },
-	                                                    "2"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "LG Electronics"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "France"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    " ",
-	                                                    _react2.default.createElement(
-	                                                        "span",
-	                                                        { className: "label label-danger" },
-	                                                        "danger"
-	                                                    ),
-	                                                    " "
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "tr",
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    { scope: "row" },
-	                                                    "3"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Pinterest"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Sweden"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    " ",
-	                                                    _react2.default.createElement(
-	                                                        "span",
-	                                                        { className: "label label-success" },
-	                                                        "success"
-	                                                    ),
-	                                                    " "
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "tr",
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    { scope: "row" },
-	                                                    "4"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Google Inc."
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "USA"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    " ",
-	                                                    _react2.default.createElement(
-	                                                        "span",
-	                                                        { className: "label label-warning" },
-	                                                        "warning"
-	                                                    ),
-	                                                    " "
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "tr",
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    { scope: "row" },
-	                                                    "5"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Uber"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "England"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    " ",
-	                                                    _react2.default.createElement(
-	                                                        "span",
-	                                                        { className: "label label-danger" },
-	                                                        "danger"
-	                                                    ),
-	                                                    " "
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "tr",
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    { scope: "row" },
-	                                                    "6"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Microsoft Inc."
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Brazil"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    " ",
-	                                                    _react2.default.createElement(
-	                                                        "span",
-	                                                        { className: "label label-info" },
-	                                                        "info"
-	                                                    ),
-	                                                    " "
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "tr",
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    { scope: "row" },
-	                                                    "7"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Twitter"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Argentina"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    " ",
-	                                                    _react2.default.createElement(
-	                                                        "span",
-	                                                        { className: "label label-success" },
-	                                                        "success"
-	                                                    ),
-	                                                    " "
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "tr",
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    { scope: "row" },
-	                                                    "8"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Facebook"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "USA"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    " ",
-	                                                    _react2.default.createElement(
-	                                                        "span",
-	                                                        { className: "label label-danger" },
-	                                                        "danger"
-	                                                    ),
-	                                                    " "
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "tr",
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    { scope: "row" },
-	                                                    "9"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Tinder"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Canada"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    " ",
-	                                                    _react2.default.createElement(
-	                                                        "span",
-	                                                        { className: "label label-warning" },
-	                                                        "warning"
-	                                                    ),
-	                                                    " "
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "tr",
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    "th",
-	                                                    { scope: "row" },
-	                                                    "10"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Apple, Inc."
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    "Germany"
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    "td",
-	                                                    null,
-	                                                    " ",
-	                                                    _react2.default.createElement(
-	                                                        "span",
-	                                                        { className: "label label-primary" },
-	                                                        "primary"
-	                                                    ),
-	                                                    " "
-	                                                )
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "row" },
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-6" },
-	                                _react2.default.createElement(
-	                                    "button",
-	                                    { type: "submit",
-	                                        className: "btn btn-warning",
-	                                        onClick: this.props.onSave },
-	                                    "Submit"
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement("span", { id: "popupNotification" })
-	            );
-	        }
-	    }]);
-	
-	    return SettingsForm;
-	}(_react.Component);
-	
-	SettingsForm.propTypes = {
-	    contact: _react2.default.PropTypes.object.isRequired,
-	    onSave: _react2.default.PropTypes.func.isRequired,
-	    onChange: _react2.default.PropTypes.func.isRequired,
-	    errors: _react2.default.PropTypes.object
-	};
-	
-	exports.default = SettingsForm;
-
-/***/ },
-/* 239 */
 /*!*****************************!*\
   !*** ./app/modules/Docs.js ***!
   \*****************************/
@@ -28923,9 +28289,7 @@
 	exports.default = Docs;
 
 /***/ },
-/* 240 */,
-/* 241 */,
-/* 242 */
+/* 238 */
 /*!********************************!*\
   !*** ./app/modules/message.js ***!
   \********************************/
@@ -28984,6 +28348,1380 @@
 	}(_react.Component);
 	
 	exports.default = Message;
+
+/***/ },
+/* 239 */
+/*!*********************************!*\
+  !*** ./app/modules/Settings.js ***!
+  \*********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _userList = __webpack_require__(/*! ./forms/userList */ 240);
+	
+	var _userList2 = _interopRequireDefault(_userList);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Settings = function (_Component) {
+	  _inherits(Settings, _Component);
+	
+	  function Settings(props) {
+	    _classCallCheck(this, Settings);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Settings).call(this, props));
+	
+	    _this.state = {
+	      users: [],
+	      errors: {}
+	
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(Settings, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      if (kendo) {
+	        kendo.destroy(document.body);
+	      }
+	      var localusers = app.cache.localGet("users") || [];
+	      this.setState({ users: localusers });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_userList2.default, { users: this.state.users })
+	      );
+	    }
+	  }]);
+	
+	  return Settings;
+	}(_react.Component);
+	
+	exports.default = Settings;
+
+/***/ },
+/* 240 */
+/*!***************************************!*\
+  !*** ./app/modules/forms/userList.js ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	//<Link to="manageuser" params={{email: user.email}}>{index+1}</Link>
+	var UserList = function (_Component) {
+	    _inherits(UserList, _Component);
+	
+	    function UserList(props) {
+	        _classCallCheck(this, UserList);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(UserList).call(this, props));
+	    }
+	
+	    _createClass(UserList, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            if (kendo) {
+	                kendo.destroy(document.body);
+	            }
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this = this;
+	            $("#select-period").kendoMobileButtonGroup({
+	                select: function select(e) {
+	                    switch (e.index) {
+	                        case 0:
+	                            _this.context.router.push('/settings');
+	                            break;
+	                        case 1:
+	                            _this.context.router.push('/adduser');
+	                            break;
+	                        case 2:
+	                            _this.context.router.push('/settings3');
+	                            break;
+	                    }
+	                },
+	                index: 0
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var createUserRow = function createUserRow(user, index) {
+	                var cellStyleEmail = '';
+	                var cellStyleMsM = '';
+	                var isEmail = user.enableSendEmail ? "Yes" : "No";
+	                var isMsM = user.enableSendText ? "Yes" : "No";
+	                var linkTo = "#/edituser/" + user.email;
+	
+	                //---Styles------------------------------->>>
+	                if (isEmail === "Yes") cellStyleEmail = "label label-success";else cellStyleEmail = "label label-danger";
+	
+	                if (isMsM === "Yes") cellStyleMsM = "label label-success";else cellStyleMsM = "label label-danger";
+	
+	                //<<---Styles--------------------------------
+	
+	                return _react2.default.createElement(
+	                    'tr',
+	                    { key: index },
+	                    _react2.default.createElement(
+	                        'th',
+	                        { scope: 'row' },
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: linkTo },
+	                            index + 1
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        user.firstname + " " + user.lastname
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: cellStyleEmail },
+	                            isEmail
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: cellStyleMsM },
+	                            isMsM
+	                        ),
+	                        ' '
+	                    )
+	                );
+	            };
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'k-content' },
+	                    _react2.default.createElement(
+	                        'ul',
+	                        { id: 'select-period' },
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            'Users'
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            'Add User'
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            'Limits'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement(
+	                    'h4',
+	                    { className: 'm-b-20' },
+	                    ' Users / Notifications '
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row m-b-20' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-xs-12 col-xl-6' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-12' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'table-responsive' },
+	                                    _react2.default.createElement(
+	                                        'table',
+	                                        { className: 'table table-hover table-striped sortable-theme-bootstrap',
+	                                            'data-sortable': '',
+	                                            'data-sortable-initialized': 'true' },
+	                                        _react2.default.createElement(
+	                                            'thead',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'tr',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    '#'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'USER'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'EMAIL'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'SMS'
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'tbody',
+	                                            null,
+	                                            this.props.users.map(createUserRow, this)
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return UserList;
+	}(_react.Component);
+	
+	UserList.propTypes = {
+	    users: _react2.default.PropTypes.array.isRequired
+	};
+	
+	UserList.contextTypes = {
+	    router: _react2.default.PropTypes.object
+	};
+	exports.default = UserList;
+
+/***/ },
+/* 241 */
+/*!**************************************!*\
+  !*** ./app/modules/forms/addUser.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var AddUser = function (_Component) {
+	    _inherits(AddUser, _Component);
+	
+	    function AddUser(props) {
+	        _classCallCheck(this, AddUser);
+	
+	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(AddUser).call(this, props));
+	
+	        _this2.state = {
+	            user: {
+	                firstname: '',
+	                lastname: '',
+	                email: '',
+	                phone: '',
+	                enableSendEmail: true,
+	                enableSendText: true
+	            },
+	            errors: {}
+	
+	        };
+	        _this2.saveUser = _this2.saveUser.bind(_this2);
+	        _this2.setUserState = _this2.setUserState.bind(_this2);
+	        return _this2;
+	    }
+	
+	    _createClass(AddUser, [{
+	        key: 'saveUser',
+	        value: function saveUser() {
+	            event.preventDefault();
+	            //add any non-onChange input required -->>
+	            var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
+	            var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
+	            var phonevalue = $("#phone").val();
+	            this.state.user["phone"] = phonevalue;
+	            this.state.user["enableSendText"] = switchTextInstance.check();
+	            this.state.user["enableSendEmail"] = switchEmailInstance.check();
+	            //<<----
+	
+	            //validate
+	            if (!this.contactFormIsValid()) {
+	                return;
+	            }
+	            //save
+	            app.progress.show(2);
+	            var users = app.cache.localGet("users") || [];
+	            var localUserFound = this.findUser(users, this.state.user) || [];
+	            if (localUserFound.length > 0) {
+	
+	                app.notify.show("user ready in the system");
+	            } else {
+	                users.push(this.state.user);
+	                app.cache.localSet("users", users);
+	                this.context.router.push('/settings');
+	                //app.notify.show(this.state.user.firstname + " was added to the system", "success");
+	                //this.clearForm();
+	            }
+	        }
+	    }, {
+	        key: 'findUser',
+	        value: function findUser(userList, user) {
+	            return $.grep(userList, function (item, i) {
+	                return item.email == user.email;
+	            });
+	        }
+	    }, {
+	        key: 'clearForm',
+	        value: function clearForm() {
+	            this.setState({
+	                user: {
+	                    firstname: '',
+	                    lastname: '',
+	                    email: '',
+	                    phone: '',
+	                    enableSendEmail: true,
+	                    enableSendText: true
+	                }
+	            });
+	            $("#phone").val('');
+	            $("#firstname").val('');
+	            $("#lastname").val('');
+	            $("#email").val('');
+	        }
+	    }, {
+	        key: 'setUserState',
+	        value: function setUserState(e) {
+	
+	            //workarounds
+	            var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
+	            var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
+	            var phonevalue = $("#phone").val();
+	
+	            //native code.
+	            var field = e.target.name;
+	            var value = e.target.value;
+	            this.state.user[field] = value;
+	
+	            this.state.user["enableSendText"] = switchTextInstance.check();
+	            this.state.user["enableSendEmail"] = switchEmailInstance.check();
+	            this.state.user["phone"] = phonevalue;
+	            return this.setState({ user: this.state.user });
+	        }
+	    }, {
+	        key: 'contactFormIsValid',
+	        value: function contactFormIsValid() {
+	            var formIsValid = true;
+	            this.state.errors = {};
+	            if (app.utils.isNullUndefOrEmpty(this.state.user.firstname)) {
+	                this.state.errors.firstname = 'Name can not be empty.';
+	                formIsValid = false;
+	            }
+	
+	            if (app.utils.isNullUndefOrEmpty(this.state.user.lastname)) {
+	                this.state.errors.lastname = 'last Name can not be empty.';
+	                formIsValid = false;
+	            }
+	
+	            if (app.utils.isNullUndefOrEmpty(this.state.user.phone)) {
+	                this.state.errors.phone = 'Phone Number can not be empty.';
+	                formIsValid = false;
+	            }
+	
+	            if (!app.utils.isEmail(this.state.user.email)) {
+	                this.state.errors.email = 'Invalid e-mail.';
+	                formIsValid = false;
+	            }
+	            this.setState({ errors: this.state.errors });
+	            return formIsValid;
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            if (kendo) {
+	                kendo.destroy(document.body);
+	            }
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this = this;
+	            $("#cmdSave").kendoButton();
+	            $("#firstname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
+	            $("#lastname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
+	            $("#phone").kendoMaskedTextBox({ mask: "(999) 000-0000" }).addClass("wide");
+	            $("#email").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
+	            $("#enableSendEmail").kendoMobileSwitch({ onLabel: "YES", offLabel: "NO" });
+	            $("#enableSendText").kendoMobileSwitch({ onLabel: "YES", offLabel: "NO" }).addClass("animated-switch");
+	            var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
+	            var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
+	            switchTextInstance.check(true);
+	            switchEmailInstance.check(true);
+	
+	            $("#comments").addClass("resize");
+	
+	            $("#select-period").kendoMobileButtonGroup({
+	                select: function select(e) {
+	                    switch (e.index) {
+	                        case 0:
+	                            _this.context.router.push('/settings');
+	                            break;
+	                        case 1:
+	                            _this.context.router.push('/adduser');
+	                            break;
+	                        case 2:
+	                            _this.context.router.push('/settings3');
+	                            break;
+	                    }
+	                },
+	                index: 1
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'demo-section k-content' },
+	                    _react2.default.createElement(
+	                        'ul',
+	                        { id: 'select-period' },
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            'Users'
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            'Add User'
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            'Limits'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement(
+	                    'h4',
+	                    { className: 'm-b-20' },
+	                    ' User Information '
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row m-b-20' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-xs-12 col-xl-6' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        id: 'firstname',
+	                                        name: 'firstname',
+	                                        value: this.state.user.firstname,
+	                                        onChange: this.setUserState,
+	                                        placeholder: 'First name' }),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'error-block' },
+	                                        this.state.errors.firstname
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        id: 'lastname',
+	                                        name: 'lastname',
+	                                        value: this.state.user.lastname,
+	                                        onChange: this.setUserState,
+	                                        placeholder: 'Last name' }),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'error-block' },
+	                                        this.state.errors.lastname
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        id: 'email',
+	                                        name: 'email',
+	                                        value: this.state.user.email,
+	                                        onChange: this.setUserState,
+	                                        placeholder: '@Email' }),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'error-block' },
+	                                        this.state.errors.email
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        id: 'phone',
+	                                        name: 'phone',
+	                                        value: this.state.user.phone,
+	                                        onChange: this.setUserState,
+	                                        placeholder: 'Phone number' }),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'error-block' },
+	                                        this.state.errors.phone
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'h4',
+	                                { className: 'm-b-20' },
+	                                ' Notifications '
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'table-responsive' },
+	                                _react2.default.createElement(
+	                                    'table',
+	                                    { className: 'table',
+	                                        'data-sortable-initialized': 'true' },
+	                                    _react2.default.createElement(
+	                                        'thead',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'tr',
+	                                            null,
+	                                            _react2.default.createElement('th', null),
+	                                            _react2.default.createElement('th', null)
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'tbody',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'tr',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                { scope: 'row' },
+	                                                'Email'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                { className: 'pull-left' },
+	                                                _react2.default.createElement('input', {
+	                                                    onClick: this.setUserState,
+	                                                    name: 'enableSendEmail',
+	                                                    id: 'enableSendEmail'
+	
+	                                                })
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'tr',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                { scope: 'row' },
+	                                                'MSM'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                { className: 'pull-left' },
+	                                                _react2.default.createElement('input', {
+	                                                    name: 'enableSendText',
+	                                                    id: 'enableSendText'
+	                                                })
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'button',
+	                                    {
+	                                        id: 'cmdSave',
+	                                        className: 'k-primary',
+	                                        onClick: this.saveUser
+	                                    },
+	                                    'Save Settings'
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement('span', { id: 'popupNotification' })
+	            );
+	        }
+	    }]);
+	
+	    return AddUser;
+	}(_react.Component);
+	
+	AddUser.contextTypes = {
+	    router: _react2.default.PropTypes.object
+	};
+	exports.default = AddUser;
+
+/***/ },
+/* 242 */
+/*!***************************************!*\
+  !*** ./app/modules/forms/editUser.js ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var EditUser = function (_Component) {
+	    _inherits(EditUser, _Component);
+	
+	    function EditUser(props) {
+	        _classCallCheck(this, EditUser);
+	
+	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(EditUser).call(this, props));
+	
+	        _this2.state = {
+	            user: {
+	                firstname: '',
+	                lastname: '',
+	                email: '',
+	                phone: '',
+	                enableSendEmail: true,
+	                enableSendText: true
+	            },
+	            errors: {}
+	        };
+	        _this2.saveUser = _this2.saveUser.bind(_this2);
+	        _this2.setUserState = _this2.setUserState.bind(_this2);
+	        return _this2;
+	    }
+	
+	    _createClass(EditUser, [{
+	        key: 'saveUser',
+	        value: function saveUser() {
+	            event.preventDefault();
+	            //add any non-onChange input required -->>
+	            var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
+	            var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
+	            var phonevalue = $("#phone").val();
+	            this.state.user["phone"] = phonevalue;
+	            this.state.user["enableSendText"] = switchTextInstance.check();
+	            this.state.user["enableSendEmail"] = switchEmailInstance.check();
+	            //<<----
+	
+	            //validate
+	            if (!this.contactFormIsValid()) {
+	                return;
+	            }
+	            //save
+	            app.progress.show(2);
+	            var users = app.cache.localGet("users") || [];
+	            var localUserFound = this.findUser(users, this.state.user.email) || [];
+	            if (localUserFound.length > 0) {
+	
+	                app.notify.show("user ready in the system");
+	            } else {
+	                users.push(this.state.user);
+	                app.cache.localSet("users", users);
+	                this.context.router.push('/settings');
+	                //app.notify.show(this.state.user.firstname + " was added to the system", "success");
+	                //this.clearForm();
+	            }
+	        }
+	    }, {
+	        key: 'findUser',
+	        value: function findUser(userList, userEmail) {
+	            return $.grep(userList, function (item, i) {
+	                return item.email === userEmail;
+	            });
+	        }
+	    }, {
+	        key: 'setUserState',
+	        value: function setUserState(e) {
+	
+	            //workarounds
+	            var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
+	            var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
+	            var phonevalue = $("#phone").val();
+	            //native code.
+	            var field = e.target.name;
+	            var value = e.target.value;
+	            this.state.user[field] = value;
+	            this.state.user["enableSendText"] = switchTextInstance.check();
+	            this.state.user["enableSendEmail"] = switchEmailInstance.check();
+	            this.state.user["phone"] = phonevalue;
+	            return this.setState({ user: this.state.user });
+	        }
+	    }, {
+	        key: 'contactFormIsValid',
+	        value: function contactFormIsValid() {
+	            var formIsValid = true;
+	            this.state.errors = {};
+	            if (app.utils.isNullUndefOrEmpty(this.state.user.firstname)) {
+	                this.state.errors.firstname = 'Name can not be empty.';
+	                formIsValid = false;
+	            }
+	
+	            if (app.utils.isNullUndefOrEmpty(this.state.user.lastname)) {
+	                this.state.errors.lastname = 'last Name can not be empty.';
+	                formIsValid = false;
+	            }
+	
+	            if (app.utils.isNullUndefOrEmpty(this.state.user.phone)) {
+	                this.state.errors.phone = 'Phone Number can not be empty.';
+	                formIsValid = false;
+	            }
+	
+	            if (!app.utils.isEmail(this.state.user.email)) {
+	                this.state.errors.email = 'Invalid e-mail.';
+	                formIsValid = false;
+	            }
+	            this.setState({ errors: this.state.errors });
+	            return formIsValid;
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            if (kendo) kendo.destroy(document.body);
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this = this;
+	            $("#cmdSave").kendoButton();
+	            $("#firstname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
+	            $("#lastname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
+	            $("#phone").kendoMaskedTextBox({ mask: "(999) 000-0000" }).addClass("wide");
+	            $("#email").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
+	            $("#enableSendEmail").kendoMobileSwitch({ onLabel: "YES", offLabel: "NO" });
+	            $("#enableSendText").kendoMobileSwitch({ onLabel: "YES", offLabel: "NO" }).addClass("animated-switch");
+	            var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
+	            var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
+	
+	            //get Current User
+	            var users = app.cache.localGet("users") || [];
+	            var localUserFound = this.findUser(users, this.props.params.email) || [];
+	            if (localUserFound.length > 0) {
+	                $("#phone").val(localUserFound[0].phone);
+	                $("#firstname").val(localUserFound[0].firstname);
+	                $("#lastname").val(localUserFound[0].lastname);
+	                $("#email").val(localUserFound[0].email);
+	                switchTextInstance.check(localUserFound[0].enableSendText);
+	                switchEmailInstance.check(localUserFound[0].enableSendEmail);
+	                this.setState({ user: localUserFound[0] });
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h4',
+	                    { className: 'm-b-20' },
+	                    ' Edit User Information '
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row m-b-20' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-xs-12 col-xl-6' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        id: 'firstname',
+	                                        name: 'firstname',
+	                                        value: this.state.user.firstname,
+	                                        onChange: this.setUserState,
+	                                        placeholder: 'First name' }),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'error-block' },
+	                                        this.state.errors.firstname
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        id: 'lastname',
+	                                        name: 'lastname',
+	                                        value: this.state.user.lastname,
+	                                        onChange: this.setUserState,
+	                                        placeholder: 'Last name' }),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'error-block' },
+	                                        this.state.errors.lastname
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        id: 'email',
+	                                        name: 'email',
+	                                        value: this.state.user.email,
+	                                        onChange: this.setUserState,
+	                                        placeholder: '@Email' }),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'error-block' },
+	                                        this.state.errors.email
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        id: 'phone',
+	                                        name: 'phone',
+	                                        value: this.state.user.phone,
+	                                        onChange: this.setUserState,
+	                                        placeholder: 'Phone number' }),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'error-block' },
+	                                        this.state.errors.phone
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'h4',
+	                                { className: 'm-b-20' },
+	                                ' Notifications '
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'table-responsive' },
+	                                _react2.default.createElement(
+	                                    'table',
+	                                    { className: 'table',
+	                                        'data-sortable-initialized': 'true' },
+	                                    _react2.default.createElement(
+	                                        'thead',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'tr',
+	                                            null,
+	                                            _react2.default.createElement('th', null),
+	                                            _react2.default.createElement('th', null)
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'tbody',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'tr',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                { scope: 'row' },
+	                                                'Email'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                { className: 'pull-left' },
+	                                                _react2.default.createElement('input', {
+	                                                    onClick: this.setUserState,
+	                                                    name: 'enableSendEmail',
+	                                                    id: 'enableSendEmail'
+	
+	                                                })
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'tr',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                { scope: 'row' },
+	                                                'MSM'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                { className: 'pull-left' },
+	                                                _react2.default.createElement('input', {
+	                                                    name: 'enableSendText',
+	                                                    id: 'enableSendText'
+	                                                })
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'button',
+	                                    {
+	                                        id: 'cmdSave',
+	                                        className: 'k-primary',
+	                                        onClick: this.saveUser
+	                                    },
+	                                    'Save Settings'
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement('span', { id: 'popupNotification' })
+	            );
+	        }
+	    }]);
+	
+	    return EditUser;
+	}(_react.Component);
+	
+	EditUser.contextTypes = {
+	    router: _react2.default.PropTypes.object
+	};
+	exports.default = EditUser;
+
+/***/ },
+/* 243 */
+/*!********************************************!*\
+  !*** ./app/modules/forms/settingsForm3.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var SettingsForm3 = function (_Component) {
+	    _inherits(SettingsForm3, _Component);
+	
+	    function SettingsForm3(props) {
+	        _classCallCheck(this, SettingsForm3);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(SettingsForm3).call(this, props));
+	    }
+	
+	    _createClass(SettingsForm3, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.context.router.push('/message/hello');
+	            var _this = this;
+	            $("#select-period").kendoMobileButtonGroup({
+	                select: function select(e) {
+	                    switch (e.index) {
+	                        case 0:
+	                            _this.context.router.push('/settings');
+	                            break;
+	                        case 1:
+	                            _this.context.router.push('/adduser');
+	                            break;
+	                        case 2:
+	                            _this.context.router.push('/settings3');
+	                            break;
+	                    }
+	                },
+	                index: 2
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'k-content' },
+	                    _react2.default.createElement(
+	                        'ul',
+	                        { id: 'select-period' },
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            'Users'
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            'Add User'
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            'Limits'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement(
+	                    'h4',
+	                    { className: 'm-b-20' },
+	                    ' Set Sensor Limits '
+	                ),
+	                _react2.default.createElement('span', { id: 'popupNotification' })
+	            );
+	        }
+	    }]);
+	
+	    return SettingsForm3;
+	}(_react.Component);
+	
+	SettingsForm3.propTypes = {};
+	SettingsForm3.contextTypes = {
+	    router: _react2.default.PropTypes.object
+	};
+	exports.default = SettingsForm3;
+
+/***/ },
+/* 244 */
+/*!***************************************!*\
+  !*** ./app/modules/HistogramChart.js ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var HistogramCart = function (_Component) {
+	    _inherits(HistogramCart, _Component);
+	
+	    function HistogramCart(props) {
+	        _classCallCheck(this, HistogramCart);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(HistogramCart).call(this, props));
+	    }
+	
+	    _createClass(HistogramCart, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            if (kendo) {
+	                kendo.destroy(document.body);
+	            }
+	        }
+	    }, {
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	            this.createTempChart();
+	            this.createVocChart();
+	        }
+	    }, {
+	        key: "createVocChart",
+	        value: function createVocChart() {
+	            $("#chart_voc").kendoChart({
+	                title: {
+	                    text: "VOC"
+	                },
+	                legend: {
+	                    position: "bottom"
+	                },
+	                chartArea: {
+	                    background: ""
+	                },
+	                seriesDefaults: {
+	                    type: "line",
+	                    style: "smooth"
+	                },
+	                series: [{
+	                    name: "PPM",
+	                    data: [500, 1200, 1550, 1350, 1100, 2200, 2800, 3800, 2800, 1200],
+	                    color: "#b8b8b8"
+	                }],
+	                valueAxis: {
+	                    labels: {
+	                        format: "{0}"
+	                    },
+	                    line: {
+	                        visible: false
+	                    },
+	                    axisCrossingValue: -10
+	                },
+	                categoryAxis: {
+	                    categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+	                    majorGridLines: {
+	                        visible: false
+	                    },
+	                    labels: {
+	                        rotation: "auto"
+	                    }
+	                },
+	                tooltip: {
+	                    visible: true,
+	                    format: "{0}PPM",
+	                    template: "#= series.name #: #= value #"
+	                }
+	            });
+	        }
+	    }, {
+	        key: "createTempChart",
+	        value: function createTempChart() {
+	
+	            $("#chart_temperature").kendoChart({
+	                title: {
+	                    text: "Temperatures"
+	                },
+	                legend: {
+	                    position: "bottom"
+	                },
+	                chartArea: {
+	                    background: ""
+	                },
+	                seriesDefaults: {
+	                    type: "line",
+	                    style: "smooth"
+	                },
+	                series: [{
+	                    name: "FAHRENHEIT",
+	                    data: [33.2, 40.5, 55, 67.0, 89.0, 94.2, 80.0, 65.0, 45.0, 32.0]
+	
+	                }],
+	                valueAxis: {
+	                    labels: {
+	                        format: "{0}"
+	                    },
+	                    line: {
+	                        visible: false
+	                    },
+	                    axisCrossingValue: -10
+	                },
+	                categoryAxis: {
+	                    categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+	                    majorGridLines: {
+	                        visible: false
+	                    },
+	                    labels: {
+	                        rotation: "auto"
+	                    }
+	                },
+	                tooltip: {
+	                    visible: true,
+	                    format: "{0}F",
+	                    template: "#= series.name #: #= value #"
+	                }
+	            });
+	
+	            //var tempChart = $("#chart_temperature").kendoChart();
+	            //$("#rangeslider").kendoRangeSlider();
+	            // var rangeSlider = $("#rangeslider").getKendoRangeSlider();
+	            // rangeSlider.wrapper.css("width", "400px");
+	            // rangeSlider.resize();
+	
+	            //tempChart.resize();
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "row" },
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "col-xs-12 col-xl-6" },
+	                    _react2.default.createElement("div", { id: "chart_temperature" })
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "col-xs-12 col-xl-6" },
+	                    _react2.default.createElement("div", { id: "chart_voc" })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return HistogramCart;
+	}(_react.Component);
+	
+	exports.default = HistogramCart;
 
 /***/ }
 /******/ ]);

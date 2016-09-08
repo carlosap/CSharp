@@ -14,29 +14,29 @@ class Contact extends Component {
     }
 
     send(contact) {
-        this.context.router.push('/message/hello/carlos');
-
-        // app.service.request("/sendemail?emailto=" + contact.emailto + "&" +
-        //     "emailfrom=" + contact.email + "&" +
-        //     "emailsubject=Feedback and Comments from client&" +
-        //     "emailtext=Name: " + contact.firstname + " <br>Comments: " + contact.comments + "&" +
-        //     "emailattachment=&" +
-        //     "emailtype=&" +
-        //     "cache=no", this.success.bind(this), this.error.bind(this));
-
-
-
+    
+        app.service.request("/sendemail?emailto=" + contact.emailto + "&" +
+            "emailfrom=" + contact.email + "&" +
+            "emailsubject=Feedback and Comments from client&" +
+            "emailtext=Name: " + contact.firstname + " <br>Comments: " + contact.comments + "&" +
+            "emailattachment=&" +
+            "emailtype=&" +
+            "cache=no", this.success.bind(this), this.error.bind(this));
     }
     success(data, reqNum, url, queryData, reqTotal, isNested) {
         app.progress.hide();
-        //<br> so one of our Customer Service colleagues<br> will get back to you within a few hours.
         app.notify.show(this.thankyou_msg, "info");
-        this.context.router.push('/message/hello/carlos');
+        this.userMsg("Thank you!","One of our Customer Service colleagues will get back to you within a few hours.");
 
     }
     error(reqNum, url, queryData, errorType, errorMsg, reqTotal) {
         app.progress.hide();
         app.notify.show("Please check network connection and try again.", "warning");
+        
+    }
+    userMsg(headerName,msg){
+        this.context.router.push('/message/'+headerName+"/"+msg);
+        return false;
     }
     setContactState(e) {
         var field = e.target.name;

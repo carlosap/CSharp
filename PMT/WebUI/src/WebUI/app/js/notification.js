@@ -4,7 +4,6 @@ aman:notify
 -Date: 8/30/2016
 -usage: 
         show: app.notify.show("hello","warning");
-        show: app.notify("hello");
         hide: app.notify.hide();
 
 -Note: 
@@ -44,6 +43,9 @@ var app = app || {};
                             break;
                         case "info":
                             this.popupNotification.info(msg);
+                            break;
+                        case "success":
+                            this.popupNotification.success(msg);
                             break;
                         default:
                             this.popupNotification.show(msg);
