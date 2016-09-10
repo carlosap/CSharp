@@ -109,9 +109,13 @@
 	
 	var _editUser2 = _interopRequireDefault(_editUser);
 	
-	var _settingsForm = __webpack_require__(/*! ./modules/forms/settingsForm3 */ 243);
+	var _LimitsForm = __webpack_require__(/*! ./modules/forms/LimitsForm */ 243);
 	
-	var _settingsForm2 = _interopRequireDefault(_settingsForm);
+	var _LimitsForm2 = _interopRequireDefault(_LimitsForm);
+	
+	var _network = __webpack_require__(/*! ./modules/forms/network */ 245);
+	
+	var _network2 = _interopRequireDefault(_network);
 	
 	var _HistogramChart = __webpack_require__(/*! ./modules/HistogramChart */ 244);
 	
@@ -119,7 +123,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	//settings Pages
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRouter.Router,
 	  { history: _reactRouter.hashHistory },
@@ -141,12 +144,16 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: '/userlist', component: _userList2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/adduser', component: _addUser2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/edituser/:email', component: _editUser2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/settings3', component: _settingsForm2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/limits', component: _LimitsForm2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/network', component: _network2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/histogram', component: _HistogramChart2.default })
 	  )
 	), document.getElementById('app'));
 	
 	//chart
+	
+	
+	//settings Pages
 
 /***/ },
 /* 1 */
@@ -28448,7 +28455,6 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	//<Link to="manageuser" params={{email: user.email}}>{index+1}</Link>
 	var UserList = function (_Component) {
 	    _inherits(UserList, _Component);
 	
@@ -28476,14 +28482,24 @@
 	                            _this.context.router.push('/settings');
 	                            break;
 	                        case 1:
-	                            _this.context.router.push('/adduser');
+	                            _this.context.router.push('/limits');
 	                            break;
 	                        case 2:
-	                            _this.context.router.push('/settings3');
+	                            _this.context.router.push('/network');
 	                            break;
 	                    }
 	                },
 	                index: 0
+	            });
+	
+	            $("#select-usermenu").kendoMobileButtonGroup({
+	                select: function select(e) {
+	                    switch (e.index) {
+	                        case 0:
+	                            _this.context.router.push('/adduser');
+	                            break;
+	                    }
+	                }
 	            });
 	        }
 	    }, {
@@ -28511,8 +28527,9 @@
 	                        { scope: 'row' },
 	                        _react2.default.createElement(
 	                            'a',
-	                            { href: linkTo },
-	                            index + 1
+	                            { className: 'btn btn-warning btn-sm', href: linkTo },
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-edit m-r-5' }),
+	                            'Edit'
 	                        )
 	                    ),
 	                    _react2.default.createElement(
@@ -28546,32 +28563,49 @@
 	                null,
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'k-content' },
+	                    null,
 	                    _react2.default.createElement(
 	                        'ul',
 	                        { id: 'select-period' },
 	                        _react2.default.createElement(
 	                            'li',
 	                            null,
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-accounts m-r-5' }),
 	                            'Users'
 	                        ),
 	                        _react2.default.createElement(
 	                            'li',
 	                            null,
-	                            'Add User'
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-widgets m-r-5' }),
+	                            'Sensors'
 	                        ),
 	                        _react2.default.createElement(
 	                            'li',
 	                            null,
-	                            'Limits'
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-network-setting m-r-5' }),
+	                            'Network'
 	                        )
 	                    )
 	                ),
-	                _react2.default.createElement('br', null),
+	                _react2.default.createElement('hr', { id: 'hrHeader', className: 'shadow' }),
 	                _react2.default.createElement(
 	                    'h4',
-	                    { className: 'm-b-20' },
+	                    { className: 'm-b-30' },
 	                    ' Users / Notifications '
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'm-b-20' },
+	                    _react2.default.createElement(
+	                        'ul',
+	                        { id: 'select-usermenu' },
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-account-add m-r-5' }),
+	                            'Add User'
+	                        )
+	                    )
 	                ),
 	                _react2.default.createElement(
 	                    'div',
@@ -28599,25 +28633,24 @@
 	                                            _react2.default.createElement(
 	                                                'tr',
 	                                                null,
+	                                                _react2.default.createElement('th', null),
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    '#'
+	                                                    'Users ',
+	                                                    _react2.default.createElement('i', { className: 'zmdi zmdi-account m-r-5' })
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    'USER'
+	                                                    'EMAIL ',
+	                                                    _react2.default.createElement('i', { className: 'zmdi zmdi-account-box-mail m-r-5' })
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    'EMAIL'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'SMS'
+	                                                    'Phone Message ',
+	                                                    _react2.default.createElement('i', { className: 'zmdi zmdi-phone-msg m-r-5' })
 	                                                )
 	                                            )
 	                                        ),
@@ -28718,7 +28751,6 @@
 	                return;
 	            }
 	            //save
-	            app.progress.show(2);
 	            var users = app.cache.localGet("users") || [];
 	            var localUserFound = this.findUser(users, this.state.user) || [];
 	            if (localUserFound.length > 0) {
@@ -28728,8 +28760,6 @@
 	                users.push(this.state.user);
 	                app.cache.localSet("users", users);
 	                this.context.router.push('/settings');
-	                //app.notify.show(this.state.user.firstname + " was added to the system", "success");
-	                //this.clearForm();
 	            }
 	        }
 	    }, {
@@ -28837,9 +28867,6 @@
 	                        case 1:
 	                            _this.context.router.push('/adduser');
 	                            break;
-	                        case 2:
-	                            _this.context.router.push('/settings3');
-	                            break;
 	                    }
 	                },
 	                index: 1
@@ -28853,28 +28880,24 @@
 	                null,
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'demo-section k-content' },
+	                    null,
 	                    _react2.default.createElement(
 	                        'ul',
 	                        { id: 'select-period' },
 	                        _react2.default.createElement(
 	                            'li',
 	                            null,
-	                            'Users'
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-rotate-left m-r-5' }),
+	                            'Return to Users'
 	                        ),
 	                        _react2.default.createElement(
 	                            'li',
 	                            null,
 	                            'Add User'
-	                        ),
-	                        _react2.default.createElement(
-	                            'li',
-	                            null,
-	                            'Limits'
 	                        )
 	                    )
 	                ),
-	                _react2.default.createElement('br', null),
+	                _react2.default.createElement('hr', { id: 'hrHeader', className: 'shadow' }),
 	                _react2.default.createElement(
 	                    'h4',
 	                    { className: 'm-b-20' },
@@ -29106,6 +29129,7 @@
 	
 	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(EditUser).call(this, props));
 	
+	        _this2.Id = _this2.props.params.email;
 	        _this2.state = {
 	            user: {
 	                firstname: '',
@@ -29117,8 +29141,12 @@
 	            },
 	            errors: {}
 	        };
+	        //CRUD functions and Bindings(MIXINGS)
 	        _this2.saveUser = _this2.saveUser.bind(_this2);
+	        _this2.addUser = _this2.addUser.bind(_this2);
+	        _this2.deleteUser = _this2.deleteUser.bind(_this2);
 	        _this2.setUserState = _this2.setUserState.bind(_this2);
+	        _this2.findUser = _this2.findUser.bind(_this2);
 	        return _this2;
 	    }
 	
@@ -29126,116 +29154,163 @@
 	        key: 'saveUser',
 	        value: function saveUser() {
 	            event.preventDefault();
-	            //add any non-onChange input required -->>
-	            var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
-	            var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
-	            var phonevalue = $("#phone").val();
-	            this.state.user["phone"] = phonevalue;
-	            this.state.user["enableSendText"] = switchTextInstance.check();
-	            this.state.user["enableSendEmail"] = switchEmailInstance.check();
-	            //<<----
+	            try {
+	                //add any non-onChange input required -->>
+	                var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
+	                var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
+	                var phonevalue = $("#phone").val();
+	                this.state.user["phone"] = phonevalue;
+	                this.state.user["enableSendText"] = switchTextInstance.check();
+	                this.state.user["enableSendEmail"] = switchEmailInstance.check();
+	                //<<----
 	
-	            //validate
-	            if (!this.contactFormIsValid()) {
-	                return;
-	            }
-	            //save
-	            app.progress.show(2);
-	            var users = app.cache.localGet("users") || [];
-	            var localUserFound = this.findUser(users, this.state.user.email) || [];
-	            if (localUserFound.length > 0) {
-	
-	                app.notify.show("user ready in the system");
-	            } else {
-	                users.push(this.state.user);
-	                app.cache.localSet("users", users);
-	                this.context.router.push('/settings');
-	                //app.notify.show(this.state.user.firstname + " was added to the system", "success");
-	                //this.clearForm();
-	            }
+	                //validate
+	                if (!this.contactFormIsValid()) {
+	                    return;
+	                }
+	                //save
+	                var localUserFound = this.findUser() || [];
+	                if (localUserFound.length > 0) {
+	                    this.deleteUser();
+	                    this.addUser();
+	                    this.context.router.push('/settings');
+	                } else {
+	                    users.push(this.state.user);
+	                    this.context.router.push('/settings');
+	                }
+	            } catch (error) {}
 	        }
 	    }, {
 	        key: 'findUser',
-	        value: function findUser(userList, userEmail) {
-	            return $.grep(userList, function (item, i) {
-	                return item.email === userEmail;
-	            });
+	        value: function findUser() {
+	            try {
+	                var _this = this;
+	                var users = app.cache.localGet("users") || [];
+	                return $.grep(users, function (item, i) {
+	                    return item.email === _this.Id;
+	                });
+	            } catch (error) {}
+	        }
+	    }, {
+	        key: 'addUser',
+	        value: function addUser() {
+	            try {
+	                var users = app.cache.localGet("users") || [];
+	                users.push(this.state.user);
+	                app.cache.localSet("users", users);
+	            } catch (error) {}
+	        }
+	    }, {
+	        key: 'deleteUser',
+	        value: function deleteUser(e) {
+	            try {
+	                var _this = this;
+	
+	                var users = app.cache.localGet("users") || [];
+	                var filtered = users.filter(function (element) {
+	                    return element.email !== _this.Id;
+	                });
+	                app.cache.localSet("users", filtered);
+	
+	                //Add Any Redirect Logic
+	                if (!app.utils.isNullUndefOrEmpty(e)) {
+	                    var commandName = e.currentTarget.id || '';
+	                    if (commandName === "cmdDelete") _this.context.router.push('/settings');
+	                }
+	            } catch (error) {}
 	        }
 	    }, {
 	        key: 'setUserState',
 	        value: function setUserState(e) {
-	
-	            //workarounds
-	            var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
-	            var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
-	            var phonevalue = $("#phone").val();
-	            //native code.
-	            var field = e.target.name;
-	            var value = e.target.value;
-	            this.state.user[field] = value;
-	            this.state.user["enableSendText"] = switchTextInstance.check();
-	            this.state.user["enableSendEmail"] = switchEmailInstance.check();
-	            this.state.user["phone"] = phonevalue;
-	            return this.setState({ user: this.state.user });
+	            try {
+	                //workarounds
+	                var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
+	                var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
+	                var phonevalue = $("#phone").val();
+	                //native code.
+	                var field = e.target.name;
+	                var value = e.target.value;
+	                this.state.user[field] = value;
+	                this.state.user["enableSendText"] = switchTextInstance.check();
+	                this.state.user["enableSendEmail"] = switchEmailInstance.check();
+	                this.state.user["phone"] = phonevalue;
+	                return this.setState({ user: this.state.user });
+	            } catch (error) {}
 	        }
 	    }, {
 	        key: 'contactFormIsValid',
 	        value: function contactFormIsValid() {
-	            var formIsValid = true;
-	            this.state.errors = {};
-	            if (app.utils.isNullUndefOrEmpty(this.state.user.firstname)) {
-	                this.state.errors.firstname = 'Name can not be empty.';
-	                formIsValid = false;
-	            }
+	            try {
+	                var formIsValid = true;
+	                this.state.errors = {};
+	                if (app.utils.isNullUndefOrEmpty(this.state.user.firstname)) {
+	                    this.state.errors.firstname = 'Name can not be empty.';
+	                    formIsValid = false;
+	                }
 	
-	            if (app.utils.isNullUndefOrEmpty(this.state.user.lastname)) {
-	                this.state.errors.lastname = 'last Name can not be empty.';
-	                formIsValid = false;
-	            }
+	                if (app.utils.isNullUndefOrEmpty(this.state.user.lastname)) {
+	                    this.state.errors.lastname = 'last Name can not be empty.';
+	                    formIsValid = false;
+	                }
 	
-	            if (app.utils.isNullUndefOrEmpty(this.state.user.phone)) {
-	                this.state.errors.phone = 'Phone Number can not be empty.';
-	                formIsValid = false;
-	            }
+	                if (app.utils.isNullUndefOrEmpty(this.state.user.phone)) {
+	                    this.state.errors.phone = 'Phone Number can not be empty.';
+	                    formIsValid = false;
+	                }
 	
-	            if (!app.utils.isEmail(this.state.user.email)) {
-	                this.state.errors.email = 'Invalid e-mail.';
-	                formIsValid = false;
-	            }
-	            this.setState({ errors: this.state.errors });
-	            return formIsValid;
+	                if (!app.utils.isEmail(this.state.user.email)) {
+	                    this.state.errors.email = 'Invalid e-mail.';
+	                    formIsValid = false;
+	                }
+	                this.setState({ errors: this.state.errors });
+	                return formIsValid;
+	            } catch (error) {}
 	        }
 	    }, {
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
-	            if (kendo) kendo.destroy(document.body);
+	            try {
+	                if (kendo) kendo.destroy(document.body);
+	            } catch (error) {}
 	        }
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            var _this = this;
-	            $("#cmdSave").kendoButton();
-	            $("#firstname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
-	            $("#lastname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
-	            $("#phone").kendoMaskedTextBox({ mask: "(999) 000-0000" }).addClass("wide");
-	            $("#email").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
-	            $("#enableSendEmail").kendoMobileSwitch({ onLabel: "YES", offLabel: "NO" });
-	            $("#enableSendText").kendoMobileSwitch({ onLabel: "YES", offLabel: "NO" }).addClass("animated-switch");
-	            var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
-	            var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
+	            try {
+	                var _this = this;
+	                $("#cmdSave").kendoButton();
+	                $("#cmdDelete").kendoButton();
+	                $("#firstname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
+	                $("#lastname").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
+	                $("#phone").kendoMaskedTextBox({ mask: "(999) 000-0000" }).addClass("wide");
+	                $("#email").addClass("wide").kendoMaskedTextBox({ clearPromptChar: false });
+	                $("#enableSendEmail").kendoMobileSwitch({ onLabel: "YES", offLabel: "NO" });
+	                $("#enableSendText").kendoMobileSwitch({ onLabel: "YES", offLabel: "NO" }).addClass("animated-switch");
+	                var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
+	                var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
 	
-	            //get Current User
-	            var users = app.cache.localGet("users") || [];
-	            var localUserFound = this.findUser(users, this.props.params.email) || [];
-	            if (localUserFound.length > 0) {
-	                $("#phone").val(localUserFound[0].phone);
-	                $("#firstname").val(localUserFound[0].firstname);
-	                $("#lastname").val(localUserFound[0].lastname);
-	                $("#email").val(localUserFound[0].email);
-	                switchTextInstance.check(localUserFound[0].enableSendText);
-	                switchEmailInstance.check(localUserFound[0].enableSendEmail);
-	                this.setState({ user: localUserFound[0] });
-	            }
+	                var localUserFound = this.findUser() || [];
+	                if (localUserFound.length > 0) {
+	                    $("#phone").val(localUserFound[0].phone);
+	                    $("#firstname").val(localUserFound[0].firstname);
+	                    $("#lastname").val(localUserFound[0].lastname);
+	                    $("#email").val(localUserFound[0].email);
+	                    switchTextInstance.check(localUserFound[0].enableSendText);
+	                    switchEmailInstance.check(localUserFound[0].enableSendEmail);
+	                    this.setState({ user: localUserFound[0] });
+	                }
+	
+	                $("#select-period").kendoMobileButtonGroup({
+	                    select: function select(e) {
+	                        switch (e.index) {
+	                            case 0:
+	                                _this.context.router.push('/settings');
+	                                break;
+	                        }
+	                    },
+	                    index: 1
+	                });
+	            } catch (error) {}
 	        }
 	    }, {
 	        key: 'render',
@@ -29243,6 +29318,26 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'ul',
+	                        { id: 'select-period' },
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-rotate-left m-r-5' }),
+	                            'Return to Users'
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            'Edit User'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement('hr', { className: 'shadow' }),
 	                _react2.default.createElement(
 	                    'h4',
 	                    { className: 'm-b-20' },
@@ -29420,7 +29515,18 @@
 	                                        className: 'k-primary',
 	                                        onClick: this.saveUser
 	                                    },
-	                                    'Save Settings'
+	                                    ' Save'
+	                                ),
+	                                '·',
+	                                '·',
+	                                _react2.default.createElement(
+	                                    'button',
+	                                    {
+	                                        id: 'cmdDelete',
+	                                        className: 'btn btn-lg btn-danger',
+	                                        onClick: this.deleteUser
+	                                    },
+	                                    'Delete'
 	                                )
 	                            )
 	                        )
@@ -29441,12 +29547,12 @@
 
 /***/ },
 /* 243 */
-/*!********************************************!*\
-  !*** ./app/modules/forms/settingsForm3.js ***!
-  \********************************************/
+/*!*****************************************!*\
+  !*** ./app/modules/forms/LimitsForm.js ***!
+  \*****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -29466,20 +29572,33 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var SettingsForm3 = function (_Component) {
-	    _inherits(SettingsForm3, _Component);
+	var LimitsForm = function (_Component) {
+	    _inherits(LimitsForm, _Component);
 	
-	    function SettingsForm3(props) {
-	        _classCallCheck(this, SettingsForm3);
+	    function LimitsForm(props) {
+	        _classCallCheck(this, LimitsForm);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(SettingsForm3).call(this, props));
+	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(LimitsForm).call(this, props));
+	
+	        _this2.setState = _this2.setState.bind(_this2);
+	        return _this2;
 	    }
 	
-	    _createClass(SettingsForm3, [{
-	        key: 'componentDidMount',
+	    _createClass(LimitsForm, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            try {
+	                if (kendo) kendo.destroy(document.body);
+	            } catch (error) {}
+	        }
+	    }, {
+	        key: "componentDidMount",
 	        value: function componentDidMount() {
-	            this.context.router.push('/message/hello');
 	            var _this = this;
+	            $("#lowtemp").addClass("wide");
+	            $("#hightemp").addClass("wide");
+	            $("#tempmsg").addClass("resize");
+	
 	            $("#select-period").kendoMobileButtonGroup({
 	                select: function select(e) {
 	                    switch (e.index) {
@@ -29487,64 +29606,267 @@
 	                            _this.context.router.push('/settings');
 	                            break;
 	                        case 1:
-	                            _this.context.router.push('/adduser');
+	                            _this.context.router.push('/limits');
 	                            break;
 	                        case 2:
-	                            _this.context.router.push('/settings3');
+	                            _this.context.router.push('/network');
 	                            break;
 	                    }
 	                },
-	                index: 2
+	                index: 1
 	            });
 	        }
 	    }, {
-	        key: 'render',
+	        key: "setState",
+	        value: function setState(e) {
+	            var field = e.target.name;
+	            var value = e.target.value;
+	        }
+	    }, {
+	        key: "keypressNumOnly",
+	        value: function keypressNumOnly(e) {
+	            var unicode = e.charCode ? e.charCode : e.keyCode;
+	            if (unicode != 8 && unicode != 0 && (unicode < 48 || unicode > 57)) return false;
+	        }
+	    }, {
+	        key: "render",
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'div',
+	                "div",
 	                null,
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'k-content' },
+	                    "div",
+	                    null,
 	                    _react2.default.createElement(
-	                        'ul',
-	                        { id: 'select-period' },
+	                        "ul",
+	                        { id: "select-period" },
 	                        _react2.default.createElement(
-	                            'li',
+	                            "li",
 	                            null,
-	                            'Users'
+	                            _react2.default.createElement("i", { className: "zmdi zmdi-accounts m-r-5" }),
+	                            "Users"
 	                        ),
 	                        _react2.default.createElement(
-	                            'li',
+	                            "li",
 	                            null,
-	                            'Add User'
+	                            _react2.default.createElement("i", { className: "zmdi zmdi-exposure-alt m-r-5" }),
+	                            "Limits"
 	                        ),
 	                        _react2.default.createElement(
-	                            'li',
+	                            "li",
 	                            null,
-	                            'Limits'
+	                            _react2.default.createElement("i", { className: "zmdi zmdi-network-setting m-r-5" }),
+	                            "Network"
 	                        )
 	                    )
 	                ),
-	                _react2.default.createElement('br', null),
+	                _react2.default.createElement("hr", { className: "shadow" }),
 	                _react2.default.createElement(
-	                    'h4',
-	                    { className: 'm-b-20' },
-	                    ' Set Sensor Limits '
+	                    "h4",
+	                    { className: "m-b-20" },
+	                    " Temperature "
 	                ),
-	                _react2.default.createElement('span', { id: 'popupNotification' })
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "row" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "col-xs-12 col-xl-6" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "row" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("input", {
+	                                        id: "lowtemp",
+	                                        name: "lowtemp",
+	                                        onChange: this.setState,
+	                                        onKeyPress: this.keypressNumOnly,
+	                                        type: "number",
+	                                        placeholder: "Min (°F)" }),
+	                                    _react2.default.createElement("p", { className: "error-block" })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("input", {
+	                                        id: "hightemp",
+	                                        name: "hightemp",
+	                                        onChange: this.setState,
+	                                        onKeyPress: this.keypressNumOnly,
+	                                        type: "number",
+	                                        placeholder: "Max (°F)" }),
+	                                    _react2.default.createElement("p", { className: "error-block" })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-12" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("textarea", {
+	                                        placeholder: "Enter message when Temperature is out of range",
+	                                        name: "tempmsg",
+	                                        id: "tempmsg",
+	                                        rows: "3" }),
+	                                    _react2.default.createElement("p", { className: "error-block" })
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "h4",
+	                    { className: "m-b-30" },
+	                    " Humidity "
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "row" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "col-xs-12 col-xl-6" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "row" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("input", {
+	                                        className: "wide",
+	                                        id: "lowhumidity",
+	                                        name: "lowhumidity",
+	                                        onChange: this.setState,
+	                                        onKeyPress: this.keypressNumOnly,
+	                                        type: "number",
+	                                        placeholder: "Min (%)" }),
+	                                    _react2.default.createElement("p", { className: "error-block" })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("input", {
+	                                        className: "wide",
+	                                        id: "highhumidity",
+	                                        name: "highhumidity",
+	                                        onChange: this.setState,
+	                                        onKeyPress: this.keypressNumOnly,
+	                                        type: "number",
+	                                        placeholder: "Max (%)" }),
+	                                    _react2.default.createElement("p", { className: "error-block" })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-12" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("textarea", {
+	                                        className: "resize",
+	                                        placeholder: "Enter message when humidity is out of range",
+	                                        name: "humiditymsg",
+	                                        id: "humiditymsg",
+	                                        rows: "3" }),
+	                                    _react2.default.createElement("p", { className: "error-block" })
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "h4",
+	                    { className: "m-b-30" },
+	                    " Volatile Organic Compounds (VOC)"
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "row" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "col-xs-12 col-xl-6" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "row" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("input", {
+	                                        className: "wide",
+	                                        id: "lowppm",
+	                                        name: "lowppm",
+	                                        onChange: this.setState,
+	                                        onKeyPress: this.keypressNumOnly,
+	                                        type: "number",
+	                                        placeholder: "Min (PPM)" }),
+	                                    _react2.default.createElement("p", { className: "error-block" })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-6" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("input", {
+	                                        className: "wide",
+	                                        id: "highppm",
+	                                        name: "highppm",
+	                                        onChange: this.setState,
+	                                        onKeyPress: this.keypressNumOnly,
+	                                        type: "number",
+	                                        placeholder: "Max (PPM)" }),
+	                                    _react2.default.createElement("p", { className: "error-block" })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-xs-12 col-xl-12" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "form-group floating-labels is-empty" },
+	                                    _react2.default.createElement("textarea", {
+	                                        className: "resize",
+	                                        placeholder: "Enter message when PPM is out of range",
+	                                        name: "ppmmsg",
+	                                        id: "ppmmsg",
+	                                        rows: "3" }),
+	                                    _react2.default.createElement("p", { className: "error-block" })
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
 	            );
 	        }
 	    }]);
 	
-	    return SettingsForm3;
+	    return LimitsForm;
 	}(_react.Component);
 	
-	SettingsForm3.propTypes = {};
-	SettingsForm3.contextTypes = {
+	LimitsForm.contextTypes = {
 	    router: _react2.default.PropTypes.object
 	};
-	exports.default = SettingsForm3;
+	exports.default = LimitsForm;
 
 /***/ },
 /* 244 */
@@ -29722,6 +30044,169 @@
 	}(_react.Component);
 	
 	exports.default = HistogramCart;
+
+/***/ },
+/* 245 */
+/*!**************************************!*\
+  !*** ./app/modules/forms/network.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var NetworkForm = function (_Component) {
+	    _inherits(NetworkForm, _Component);
+	
+	    function NetworkForm(props) {
+	        _classCallCheck(this, NetworkForm);
+	
+	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(NetworkForm).call(this, props));
+	
+	        _this2.setState = _this2.setState.bind(_this2);
+	        return _this2;
+	    }
+	
+	    _createClass(NetworkForm, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            try {
+	                if (kendo) kendo.destroy(document.body);
+	            } catch (error) {}
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this = this;
+	            $("#select-period").kendoMobileButtonGroup({
+	                select: function select(e) {
+	                    switch (e.index) {
+	                        case 0:
+	                            _this.context.router.push('/settings');
+	                            break;
+	                        case 1:
+	                            _this.context.router.push('/limits');
+	                            break;
+	                        case 2:
+	                            _this.context.router.push('/network');
+	                            break;
+	                    }
+	                },
+	                index: 2
+	            });
+	        }
+	    }, {
+	        key: 'setState',
+	        value: function setState(e) {
+	            var field = e.target.name;
+	            var value = e.target.value;
+	        }
+	    }, {
+	        key: 'keypressNumOnly',
+	        value: function keypressNumOnly(e) {
+	            var unicode = e.charCode ? e.charCode : e.keyCode;
+	            if (unicode != 8 && unicode != 0 && (unicode < 48 || unicode > 57)) return false;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'ul',
+	                        { id: 'select-period' },
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-accounts m-r-5' }),
+	                            'Users'
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-exposure-alt m-r-5' }),
+	                            'Sensors'
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-network-setting m-r-5' }),
+	                            'Network'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement('hr', { className: 'shadow' }),
+	                _react2.default.createElement(
+	                    'h4',
+	                    { className: 'm-b-20' },
+	                    ' Battery Saver Mode '
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'The Battery Saver mode is configurable, enabling you to enable or disable further elements such as your data connection, sensor activities, and CPU usage.'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-xs-12 col-xl-6' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        className: 'wide',
+	                                        id: 'networkrate',
+	                                        name: 'networkrate',
+	                                        onChange: this.setState,
+	                                        onKeyPress: this.keypressNumOnly,
+	                                        type: 'number',
+	                                        placeholder: 'Enter scanning rate in minutes' }),
+	                                    _react2.default.createElement('p', { className: 'error-block' })
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return NetworkForm;
+	}(_react.Component);
+	
+	NetworkForm.contextTypes = {
+	    router: _react2.default.PropTypes.object
+	};
+	exports.default = NetworkForm;
 
 /***/ }
 /******/ ]);

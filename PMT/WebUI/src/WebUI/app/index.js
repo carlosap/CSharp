@@ -16,7 +16,8 @@ import Settings from './modules/Settings'
 import UserList from './modules/forms/userList'
 import AddUser from './modules/forms/addUser'
 import EditUser from './modules/forms/editUser'
-import Settings3 from './modules/forms/settingsForm3'
+import LimitsForm from './modules/forms/LimitsForm'
+import NetworkForm from './modules/forms/network'
 
 //chart
 import HistogramChart from './modules/HistogramChart'
@@ -38,7 +39,8 @@ render((
       <Route path="/userlist" component={UserList}/>
       <Route path="/adduser" component={AddUser}/>
       <Route path="/edituser/:email" component={EditUser}/>
-      <Route path="/settings3" component={Settings3}/>
+      <Route path="/limits" component={LimitsForm}/>
+      <Route path="/network" component={NetworkForm}/>
       <Route path="/histogram" component={HistogramChart}/>
 
     </Route>

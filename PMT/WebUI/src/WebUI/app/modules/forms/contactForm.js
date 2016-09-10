@@ -38,7 +38,7 @@ class ContactForm extends Component {
                 <div className="row m-b-20">
                     <div className="col-xs-12 col-xl-6">
                         <div className="row">
-
+                            
                             <div className="col-xs-12 col-xl-6">
                                 <div className="form-group floating-labels is-empty">
                                     <input

@@ -33,7 +33,6 @@ class AddUser extends Component {
             return;
         }
         //save
-        app.progress.show(2);
         var users = app.cache.localGet("users") || [];
         var localUserFound = this.findUser(users, this.state.user) || [];
         if (localUserFound.length > 0) {
@@ -43,8 +42,6 @@ class AddUser extends Component {
             users.push(this.state.user);
             app.cache.localSet("users", users);
             this.context.router.push('/settings');
-            //app.notify.show(this.state.user.firstname + " was added to the system", "success");
-            //this.clearForm();
         }
     }
 
@@ -142,9 +139,6 @@ class AddUser extends Component {
                     case 1:
                         _this.context.router.push('/adduser');
                         break;
-                    case 2:
-                        _this.context.router.push('/settings3');
-                        break;
                 }
             },
             index: 1
@@ -154,20 +148,13 @@ class AddUser extends Component {
     render() {
         return (
             <div>
-                <div className="demo-section k-content">
+                <div>
                     <ul id="select-period">
-                        <li>
-                            Users
-                        </li>
-                        <li>
-                            Add User
-                        </li>
-                        <li>
-                            Limits
-                        </li>
+                        <li><i className="zmdi zmdi-rotate-left m-r-5"></i>Return to Users</li> 
+                        <li>Add User</li>
                     </ul>
                 </div>
-                <br/>
+                <hr id="hrHeader"className="shadow"/>
                 <h4 className="m-b-20"> User Information </h4>
                 <div className="row m-b-20">
                     <div className="col-xs-12 col-xl-6">

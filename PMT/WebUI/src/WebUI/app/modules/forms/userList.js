@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-//<Link to="manageuser" params={{email: user.email}}>{index+1}</Link>
 class UserList extends Component {
     constructor(props) {
         super(props);
@@ -18,39 +17,55 @@ class UserList extends Component {
                         _this.context.router.push('/settings');
                         break;
                     case 1:
-                        _this.context.router.push('/adduser');
+                        _this.context.router.push('/limits');
                         break;
                     case 2:
-                        _this.context.router.push('/settings3');
+                        _this.context.router.push('/network');
                         break;
                 }
             },
             index: 0
         });
+
+        $("#select-usermenu").kendoMobileButtonGroup({
+            select: function (e) {
+                switch (e.index) {
+                    case 0:
+                        _this.context.router.push('/adduser');
+                        break;
+                }
+            }
+        });
+
     }
 
     render() {
         var createUserRow = function (user, index) {
             var cellStyleEmail = '';
             var cellStyleMsM = '';
-            var isEmail = user.enableSendEmail ? "Yes": "No";
-            var isMsM = user.enableSendText ? "Yes": "No";
+            var isEmail = user.enableSendEmail ? "Yes" : "No";
+            var isMsM = user.enableSendText ? "Yes" : "No";
             var linkTo = "#/edituser/" + user.email;
 
             //---Styles------------------------------->>>
-            if(isEmail === "Yes") cellStyleEmail = "label label-success"
+            if (isEmail === "Yes") cellStyleEmail = "label label-success"
             else cellStyleEmail = "label label-danger"
-                
-            if(isMsM === "Yes")cellStyleMsM = "label label-success"
+
+            if (isMsM === "Yes") cellStyleMsM = "label label-success"
             else cellStyleMsM = "label label-danger"
 
             //<<---Styles--------------------------------
 
             return (
                 <tr key={index}>
-                
-                    <th scope="row"><a href={linkTo}>{index+1}</a></th>
-                    <td>{user.firstname + " " +user.lastname}</td>
+
+                    <th scope="row">
+
+                        <a className="btn btn-warning btn-sm" href={linkTo}>
+                            <i className="zmdi zmdi-edit m-r-5"></i>Edit
+                        </a>
+                    </th>
+                    <td>{user.firstname + " " + user.lastname}</td>
                     <td><span className={cellStyleEmail}>{isEmail}</span></td>
                     <td><span className={cellStyleMsM}>{isMsM}</span> </td>
                 </tr>
@@ -58,21 +73,22 @@ class UserList extends Component {
         };
         return (
             <div>
-                <div className="k-content">
+                <div>
                     <ul id="select-period">
-                        <li>
-                            Users
-                        </li>
-                        <li>
-                            Add User
-                        </li>
-                        <li>
-                            Limits
-                        </li>
+                        <li><i className="zmdi zmdi-accounts m-r-5"></i>Users</li>
+                        <li><i className="zmdi zmdi-widgets m-r-5"></i>Sensors</li>
+                        <li><i className="zmdi zmdi-network-setting m-r-5"></i>Network</li>
                     </ul>
                 </div>
-                <br/>
-                <h4 className="m-b-20"> Users / Notifications </h4>
+
+                <hr id="hrHeader"className="shadow"/>
+                <h4 className="m-b-30"> Users / Notifications </h4>
+                <div className="m-b-20">
+                    <ul id="select-usermenu">
+                        <li><i className="zmdi zmdi-account-add m-r-5"></i>Add User</li>
+                    </ul>
+
+                </div>
                 <div className="row m-b-20">
                     <div className="col-xs-12 col-xl-6">
                         <div className="row">
@@ -83,10 +99,10 @@ class UserList extends Component {
                                         data-sortable-initialized="true">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>USER</th>
-                                                <th>EMAIL</th>
-                                                <th>SMS</th>
+                                                <th></th>
+                                                <th>Users <i className="zmdi zmdi-account m-r-5"></i></th>
+                                                <th>EMAIL <i className="zmdi zmdi-account-box-mail m-r-5"></i></th>
+                                                <th>Phone Message <i className="zmdi zmdi-phone-msg m-r-5"></i></th>
                                             </tr>
                                         </thead>
                                         <tbody>

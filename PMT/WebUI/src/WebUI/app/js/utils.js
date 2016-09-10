@@ -87,6 +87,10 @@ var app = app || {};
 			}
 			return true;
 
+		},
+
+		isNumber: function(value){
+			return isNaN(value);
 		}
 	}
 })();
