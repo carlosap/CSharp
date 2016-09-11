@@ -113,11 +113,11 @@
 	
 	var _LimitsForm2 = _interopRequireDefault(_LimitsForm);
 	
-	var _network = __webpack_require__(/*! ./modules/forms/network */ 245);
+	var _network = __webpack_require__(/*! ./modules/forms/network */ 244);
 	
 	var _network2 = _interopRequireDefault(_network);
 	
-	var _HistogramChart = __webpack_require__(/*! ./modules/HistogramChart */ 244);
+	var _HistogramChart = __webpack_require__(/*! ./modules/HistogramChart */ 245);
 	
 	var _HistogramChart2 = _interopRequireDefault(_HistogramChart);
 	
@@ -29552,7 +29552,399 @@
   \*****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var LimitsForm = function (_Component) {
+	    _inherits(LimitsForm, _Component);
+	
+	    function LimitsForm(props) {
+	        _classCallCheck(this, LimitsForm);
+	
+	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(LimitsForm).call(this, props));
+	
+	        _this2.state = {
+	            limits: {
+	                temp_min: 0,
+	                temp_max: 0,
+	                temp_msg: '',
+	                humidity_min: 0,
+	                humidity_max: 0,
+	                humidity_msg: '',
+	                voc_min: 0,
+	                voc_max: 0,
+	                voc_msg: ''
+	            }
+	        };
+	        _this2.setLimitState = _this2.setLimitState.bind(_this2);
+	        _this2.saveLimits = _this2.saveLimits.bind(_this2);
+	        return _this2;
+	    }
+	
+	    _createClass(LimitsForm, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            try {
+	                if (kendo) kendo.destroy(document.body);
+	            } catch (error) {}
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this = this;
+	            $("#cmdSave").kendoButton();
+	            $("#select-period").kendoMobileButtonGroup({
+	                select: function select(e) {
+	                    switch (e.index) {
+	                        case 0:
+	                            _this.context.router.push('/settings');
+	                            break;
+	                        case 1:
+	                            _this.context.router.push('/limits');
+	                            break;
+	                        case 2:
+	                            _this.context.router.push('/network');
+	                            break;
+	                    }
+	                },
+	                index: 1
+	            });
+	
+	            var localLimits = this.getLimits();
+	            if (!app.utils.isNullUndefOrEmpty(localLimits)) {
+	                this.setState({ limits: localLimits });
+	                $("#temp_min").val(localLimits.temp_min);
+	                $("#temp_max").val(localLimits.temp_max);
+	                $("#temp_msg").val(localLimits.temp_msg);
+	                $("#humidity_min").val(localLimits.humidity_min);
+	                $("#humidity_max").val(localLimits.humidity_max);
+	                $("#humidity_msg").val(localLimits.humidity_msg);
+	                $("#temp_min").val(localLimits.temp_min);
+	                $("#voc_min").val(localLimits.voc_min);
+	                $("#voc_max").val(localLimits.voc_max);
+	                $("#voc_msg").val(localLimits.voc_msg);
+	            }
+	        }
+	    }, {
+	        key: 'setLimitState',
+	        value: function setLimitState(e) {
+	            var field = e.target.name;
+	            var value = e.target.value;
+	            this.state.limits[field] = value;
+	            return this.setState({ limits: this.state.limits });
+	        }
+	    }, {
+	        key: 'saveLimits',
+	        value: function saveLimits() {
+	            event.preventDefault();
+	            app.cache.localSet("limits", this.state.limits);
+	            this.context.router.push('/settings');
+	        }
+	    }, {
+	        key: 'getLimits',
+	        value: function getLimits() {
+	            try {
+	                var _this = this;
+	                var limits = app.cache.localGet("limits") || {};
+	                return limits;
+	            } catch (error) {}
+	        }
+	    }, {
+	        key: 'keypressNumOnly',
+	        value: function keypressNumOnly(e) {
+	            var unicode = e.charCode ? e.charCode : e.keyCode;
+	            if (unicode != 8 && unicode != 0 && (unicode < 48 || unicode > 57)) return false;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _React$createElement;
+	
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'ul',
+	                        { id: 'select-period' },
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-accounts m-r-5' }),
+	                            'Users'
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-exposure-alt m-r-5' }),
+	                            'Limits'
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-network-setting m-r-5' }),
+	                            'Network'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement('hr', { className: 'shadow' }),
+	                _react2.default.createElement(
+	                    'h4',
+	                    { className: 'm-b-20' },
+	                    ' Temperature '
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-xs-12 col-xl-6' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        className: 'wide',
+	                                        id: 'temp_min',
+	                                        name: 'temp_min',
+	                                        onChange: this.setLimitState,
+	                                        onKeyPress: this.keypressNumOnly,
+	                                        type: 'number',
+	                                        placeholder: 'Min (°F)' }),
+	                                    _react2.default.createElement('p', { className: 'error-block' })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        className: 'wide',
+	                                        id: 'temp_max',
+	                                        name: 'temp_max',
+	                                        onChange: this.setLimitState,
+	                                        onKeyPress: this.keypressNumOnly,
+	                                        type: 'number',
+	                                        placeholder: 'Max (°F)' }),
+	                                    _react2.default.createElement('p', { className: 'error-block' })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-12' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('textarea', {
+	                                        className: 'resize',
+	                                        onChange: this.setLimitState,
+	                                        placeholder: 'Enter message when Temperature is out of range',
+	                                        name: 'temp_msg',
+	                                        id: 'temp_msg',
+	                                        rows: '3' }),
+	                                    _react2.default.createElement('p', { className: 'error-block' })
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'h4',
+	                    { className: 'm-b-30' },
+	                    ' Humidity '
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-xs-12 col-xl-6' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        className: 'wide',
+	                                        id: 'humidity_min',
+	                                        name: 'humidity_min',
+	                                        onChange: this.setLimitState,
+	                                        onKeyPress: this.keypressNumOnly,
+	                                        type: 'number',
+	                                        placeholder: 'Min (%)' }),
+	                                    _react2.default.createElement('p', { className: 'error-block' })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        className: 'wide',
+	                                        id: 'humidity_max',
+	                                        name: 'humidity_max',
+	                                        onChange: this.setLimitState,
+	                                        onKeyPress: this.keypressNumOnly,
+	                                        type: 'number',
+	                                        placeholder: 'Max (%)' }),
+	                                    _react2.default.createElement('p', { className: 'error-block' })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-12' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('textarea', {
+	                                        className: 'resize',
+	                                        onChange: this.setLimitState,
+	                                        placeholder: 'Enter message when humidity is out of range',
+	                                        name: 'humidity_msg',
+	                                        id: 'humidity_msg',
+	                                        rows: '3' }),
+	                                    _react2.default.createElement('p', { className: 'error-block' })
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'h4',
+	                    { className: 'm-b-30' },
+	                    ' Volatile Organic Compounds (VOC) '
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-xs-12 col-xl-6' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', (_React$createElement = {
+	                                        className: 'wide',
+	                                        onChange: this.setLimitState,
+	                                        id: 'voc_min',
+	                                        name: 'voc_min'
+	                                    }, _defineProperty(_React$createElement, 'onChange', this.setLimitState), _defineProperty(_React$createElement, 'onKeyPress', this.keypressNumOnly), _defineProperty(_React$createElement, 'type', 'number'), _defineProperty(_React$createElement, 'placeholder', 'Min (PPM)'), _React$createElement)),
+	                                    _react2.default.createElement('p', { className: 'error-block' })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        className: 'wide',
+	                                        id: 'voc_max',
+	                                        name: 'voc_max',
+	                                        onChange: this.setLimitState,
+	                                        onKeyPress: this.keypressNumOnly,
+	                                        type: 'number',
+	                                        placeholder: 'Max (PPM)' }),
+	                                    _react2.default.createElement('p', { className: 'error-block' })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-12' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('textarea', {
+	                                        className: 'resize',
+	                                        onChange: this.setLimitState,
+	                                        placeholder: 'Enter message when PPM is out of range',
+	                                        name: 'voc_msg',
+	                                        id: 'voc_msg',
+	                                        rows: '3' }),
+	                                    _react2.default.createElement('p', { className: 'error-block' })
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-xs-12 col-xl-6' },
+	                        _react2.default.createElement(
+	                            'button',
+	                            {
+	                                id: 'cmdSave',
+	                                className: 'k-primary',
+	                                onClick: this.saveLimits
+	                            },
+	                            'Save Sensor Limits'
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return LimitsForm;
+	}(_react.Component);
+	
+	LimitsForm.contextTypes = {
+	    router: _react2.default.PropTypes.object
+	};
+	exports.default = LimitsForm;
+
+/***/ },
+/* 244 */
+/*!**************************************!*\
+  !*** ./app/modules/forms/network.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -29572,33 +29964,29 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var LimitsForm = function (_Component) {
-	    _inherits(LimitsForm, _Component);
+	var NetworkForm = function (_Component) {
+	    _inherits(NetworkForm, _Component);
 	
-	    function LimitsForm(props) {
-	        _classCallCheck(this, LimitsForm);
+	    function NetworkForm(props) {
+	        _classCallCheck(this, NetworkForm);
 	
-	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(LimitsForm).call(this, props));
+	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(NetworkForm).call(this, props));
 	
 	        _this2.setState = _this2.setState.bind(_this2);
 	        return _this2;
 	    }
 	
-	    _createClass(LimitsForm, [{
-	        key: "componentWillMount",
+	    _createClass(NetworkForm, [{
+	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            try {
 	                if (kendo) kendo.destroy(document.body);
 	            } catch (error) {}
 	        }
 	    }, {
-	        key: "componentDidMount",
+	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var _this = this;
-	            $("#lowtemp").addClass("wide");
-	            $("#hightemp").addClass("wide");
-	            $("#tempmsg").addClass("resize");
-	
 	            $("#select-period").kendoMobileButtonGroup({
 	                select: function select(e) {
 	                    switch (e.index) {
@@ -29613,244 +30001,88 @@
 	                            break;
 	                    }
 	                },
-	                index: 1
+	                index: 2
 	            });
 	        }
 	    }, {
-	        key: "setState",
+	        key: 'setState',
 	        value: function setState(e) {
 	            var field = e.target.name;
 	            var value = e.target.value;
 	        }
 	    }, {
-	        key: "keypressNumOnly",
+	        key: 'keypressNumOnly',
 	        value: function keypressNumOnly(e) {
 	            var unicode = e.charCode ? e.charCode : e.keyCode;
 	            if (unicode != 8 && unicode != 0 && (unicode < 48 || unicode > 57)) return false;
 	        }
 	    }, {
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                "div",
+	                'div',
 	                null,
 	                _react2.default.createElement(
-	                    "div",
+	                    'div',
 	                    null,
 	                    _react2.default.createElement(
-	                        "ul",
-	                        { id: "select-period" },
+	                        'ul',
+	                        { id: 'select-period' },
 	                        _react2.default.createElement(
-	                            "li",
+	                            'li',
 	                            null,
-	                            _react2.default.createElement("i", { className: "zmdi zmdi-accounts m-r-5" }),
-	                            "Users"
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-accounts m-r-5' }),
+	                            'Users'
 	                        ),
 	                        _react2.default.createElement(
-	                            "li",
+	                            'li',
 	                            null,
-	                            _react2.default.createElement("i", { className: "zmdi zmdi-exposure-alt m-r-5" }),
-	                            "Limits"
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-exposure-alt m-r-5' }),
+	                            'Sensors'
 	                        ),
 	                        _react2.default.createElement(
-	                            "li",
+	                            'li',
 	                            null,
-	                            _react2.default.createElement("i", { className: "zmdi zmdi-network-setting m-r-5" }),
-	                            "Network"
+	                            _react2.default.createElement('i', { className: 'zmdi zmdi-network-setting m-r-5' }),
+	                            'Network'
 	                        )
 	                    )
 	                ),
-	                _react2.default.createElement("hr", { className: "shadow" }),
+	                _react2.default.createElement('hr', { className: 'shadow' }),
 	                _react2.default.createElement(
-	                    "h4",
-	                    { className: "m-b-20" },
-	                    " Temperature "
+	                    'h4',
+	                    { className: 'm-b-20' },
+	                    ' Battery Saver Mode '
 	                ),
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "row" },
+	                    'p',
+	                    null,
+	                    'The Battery Saver mode is configurable, enabling you to enable or disable further elements such as your data connection, sensor activities, and CPU usage.'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "col-xs-12 col-xl-6" },
+	                        'div',
+	                        { className: 'col-xs-12 col-xl-6' },
 	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "row" },
+	                            'div',
+	                            { className: 'row' },
 	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-6" },
+	                                'div',
+	                                { className: 'col-xs-12 col-xl-6' },
 	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("input", {
-	                                        id: "lowtemp",
-	                                        name: "lowtemp",
+	                                    'div',
+	                                    { className: 'form-group floating-labels is-empty' },
+	                                    _react2.default.createElement('input', {
+	                                        className: 'wide',
+	                                        id: 'networkrate',
+	                                        name: 'networkrate',
 	                                        onChange: this.setState,
 	                                        onKeyPress: this.keypressNumOnly,
-	                                        type: "number",
-	                                        placeholder: "Min (°F)" }),
-	                                    _react2.default.createElement("p", { className: "error-block" })
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-6" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("input", {
-	                                        id: "hightemp",
-	                                        name: "hightemp",
-	                                        onChange: this.setState,
-	                                        onKeyPress: this.keypressNumOnly,
-	                                        type: "number",
-	                                        placeholder: "Max (°F)" }),
-	                                    _react2.default.createElement("p", { className: "error-block" })
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-12" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("textarea", {
-	                                        placeholder: "Enter message when Temperature is out of range",
-	                                        name: "tempmsg",
-	                                        id: "tempmsg",
-	                                        rows: "3" }),
-	                                    _react2.default.createElement("p", { className: "error-block" })
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    "h4",
-	                    { className: "m-b-30" },
-	                    " Humidity "
-	                ),
-	                _react2.default.createElement(
-	                    "div",
-	                    { className: "row" },
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "col-xs-12 col-xl-6" },
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "row" },
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-6" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("input", {
-	                                        className: "wide",
-	                                        id: "lowhumidity",
-	                                        name: "lowhumidity",
-	                                        onChange: this.setState,
-	                                        onKeyPress: this.keypressNumOnly,
-	                                        type: "number",
-	                                        placeholder: "Min (%)" }),
-	                                    _react2.default.createElement("p", { className: "error-block" })
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-6" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("input", {
-	                                        className: "wide",
-	                                        id: "highhumidity",
-	                                        name: "highhumidity",
-	                                        onChange: this.setState,
-	                                        onKeyPress: this.keypressNumOnly,
-	                                        type: "number",
-	                                        placeholder: "Max (%)" }),
-	                                    _react2.default.createElement("p", { className: "error-block" })
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-12" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("textarea", {
-	                                        className: "resize",
-	                                        placeholder: "Enter message when humidity is out of range",
-	                                        name: "humiditymsg",
-	                                        id: "humiditymsg",
-	                                        rows: "3" }),
-	                                    _react2.default.createElement("p", { className: "error-block" })
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    "h4",
-	                    { className: "m-b-30" },
-	                    " Volatile Organic Compounds (VOC)"
-	                ),
-	                _react2.default.createElement(
-	                    "div",
-	                    { className: "row" },
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "col-xs-12 col-xl-6" },
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "row" },
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-6" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("input", {
-	                                        className: "wide",
-	                                        id: "lowppm",
-	                                        name: "lowppm",
-	                                        onChange: this.setState,
-	                                        onKeyPress: this.keypressNumOnly,
-	                                        type: "number",
-	                                        placeholder: "Min (PPM)" }),
-	                                    _react2.default.createElement("p", { className: "error-block" })
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-6" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("input", {
-	                                        className: "wide",
-	                                        id: "highppm",
-	                                        name: "highppm",
-	                                        onChange: this.setState,
-	                                        onKeyPress: this.keypressNumOnly,
-	                                        type: "number",
-	                                        placeholder: "Max (PPM)" }),
-	                                    _react2.default.createElement("p", { className: "error-block" })
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col-xs-12 col-xl-12" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "form-group floating-labels is-empty" },
-	                                    _react2.default.createElement("textarea", {
-	                                        className: "resize",
-	                                        placeholder: "Enter message when PPM is out of range",
-	                                        name: "ppmmsg",
-	                                        id: "ppmmsg",
-	                                        rows: "3" }),
-	                                    _react2.default.createElement("p", { className: "error-block" })
+	                                        type: 'number',
+	                                        placeholder: 'Enter scanning rate in minutes' }),
+	                                    _react2.default.createElement('p', { className: 'error-block' })
 	                                )
 	                            )
 	                        )
@@ -29860,16 +30092,16 @@
 	        }
 	    }]);
 	
-	    return LimitsForm;
+	    return NetworkForm;
 	}(_react.Component);
 	
-	LimitsForm.contextTypes = {
+	NetworkForm.contextTypes = {
 	    router: _react2.default.PropTypes.object
 	};
-	exports.default = LimitsForm;
+	exports.default = NetworkForm;
 
 /***/ },
-/* 244 */
+/* 245 */
 /*!***************************************!*\
   !*** ./app/modules/HistogramChart.js ***!
   \***************************************/
@@ -30044,169 +30276,6 @@
 	}(_react.Component);
 	
 	exports.default = HistogramCart;
-
-/***/ },
-/* 245 */
-/*!**************************************!*\
-  !*** ./app/modules/forms/network.js ***!
-  \**************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var NetworkForm = function (_Component) {
-	    _inherits(NetworkForm, _Component);
-	
-	    function NetworkForm(props) {
-	        _classCallCheck(this, NetworkForm);
-	
-	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(NetworkForm).call(this, props));
-	
-	        _this2.setState = _this2.setState.bind(_this2);
-	        return _this2;
-	    }
-	
-	    _createClass(NetworkForm, [{
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            try {
-	                if (kendo) kendo.destroy(document.body);
-	            } catch (error) {}
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this = this;
-	            $("#select-period").kendoMobileButtonGroup({
-	                select: function select(e) {
-	                    switch (e.index) {
-	                        case 0:
-	                            _this.context.router.push('/settings');
-	                            break;
-	                        case 1:
-	                            _this.context.router.push('/limits');
-	                            break;
-	                        case 2:
-	                            _this.context.router.push('/network');
-	                            break;
-	                    }
-	                },
-	                index: 2
-	            });
-	        }
-	    }, {
-	        key: 'setState',
-	        value: function setState(e) {
-	            var field = e.target.name;
-	            var value = e.target.value;
-	        }
-	    }, {
-	        key: 'keypressNumOnly',
-	        value: function keypressNumOnly(e) {
-	            var unicode = e.charCode ? e.charCode : e.keyCode;
-	            if (unicode != 8 && unicode != 0 && (unicode < 48 || unicode > 57)) return false;
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement(
-	                        'ul',
-	                        { id: 'select-period' },
-	                        _react2.default.createElement(
-	                            'li',
-	                            null,
-	                            _react2.default.createElement('i', { className: 'zmdi zmdi-accounts m-r-5' }),
-	                            'Users'
-	                        ),
-	                        _react2.default.createElement(
-	                            'li',
-	                            null,
-	                            _react2.default.createElement('i', { className: 'zmdi zmdi-exposure-alt m-r-5' }),
-	                            'Sensors'
-	                        ),
-	                        _react2.default.createElement(
-	                            'li',
-	                            null,
-	                            _react2.default.createElement('i', { className: 'zmdi zmdi-network-setting m-r-5' }),
-	                            'Network'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement('hr', { className: 'shadow' }),
-	                _react2.default.createElement(
-	                    'h4',
-	                    { className: 'm-b-20' },
-	                    ' Battery Saver Mode '
-	                ),
-	                _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    'The Battery Saver mode is configurable, enabling you to enable or disable further elements such as your data connection, sensor activities, and CPU usage.'
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'row' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-xs-12 col-xl-6' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-xs-12 col-xl-6' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group floating-labels is-empty' },
-	                                    _react2.default.createElement('input', {
-	                                        className: 'wide',
-	                                        id: 'networkrate',
-	                                        name: 'networkrate',
-	                                        onChange: this.setState,
-	                                        onKeyPress: this.keypressNumOnly,
-	                                        type: 'number',
-	                                        placeholder: 'Enter scanning rate in minutes' }),
-	                                    _react2.default.createElement('p', { className: 'error-block' })
-	                                )
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return NetworkForm;
-	}(_react.Component);
-	
-	NetworkForm.contextTypes = {
-	    router: _react2.default.PropTypes.object
-	};
-	exports.default = NetworkForm;
 
 /***/ }
 /******/ ]);

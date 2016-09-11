@@ -2,7 +2,21 @@ import React, {Component, PropTypes} from 'react';
 class LimitsForm extends Component {
     constructor(props) {
         super(props);
-        this.setState = this.setState.bind(this);
+        this.state = {
+            limits: {
+                temp_min: 0,
+                temp_max: 0,
+                temp_msg: '',
+                humidity_min: 0,
+                humidity_max: 0,
+                humidity_msg: '',
+                voc_min: 0,
+                voc_max: 0,
+                voc_msg: ''
+            },
+        };
+        this.setLimitState = this.setLimitState.bind(this);
+        this.saveLimits = this.saveLimits.bind(this);
     }
     componentWillMount() {
         try {
@@ -13,10 +27,7 @@ class LimitsForm extends Component {
     }
     componentDidMount() {
         var _this = this;
-        $("#lowtemp").addClass("wide");
-        $("#hightemp").addClass("wide");
-        $("#tempmsg").addClass("resize");
-
+        $("#cmdSave").kendoButton();
         $("#select-period").kendoMobileButtonGroup({
             select: function (e) {
                 switch (e.index) {
@@ -33,11 +44,40 @@ class LimitsForm extends Component {
             },
             index: 1
         });
+
+        var localLimits = this.getLimits();
+        if (!app.utils.isNullUndefOrEmpty(localLimits)) {
+            this.setState({ limits: localLimits });
+            $("#temp_min").val(localLimits.temp_min);
+            $("#temp_max").val(localLimits.temp_max);
+            $("#temp_msg").val(localLimits.temp_msg);
+            $("#humidity_min").val(localLimits.humidity_min);
+            $("#humidity_max").val(localLimits.humidity_max);
+            $("#humidity_msg").val(localLimits.humidity_msg);
+            $("#temp_min").val(localLimits.temp_min);
+            $("#voc_min").val(localLimits.voc_min);
+            $("#voc_max").val(localLimits.voc_max);
+            $("#voc_msg").val(localLimits.voc_msg);
+        }
     }
 
-    setState(e) {
+    setLimitState(e) {
         var field = e.target.name;
         var value = e.target.value;
+        this.state.limits[field] = value;
+        return this.setState({ limits: this.state.limits });
+    }
+    saveLimits() {
+        event.preventDefault();
+        app.cache.localSet("limits", this.state.limits);
+        this.context.router.push('/settings');
+    }
+    getLimits() {
+        try {
+            var _this = this;
+            var limits = app.cache.localGet("limits") || {};
+            return limits;
+        } catch (error) { }
     }
     keypressNumOnly(e) {
         var unicode = e.charCode ? e.charCode : e.keyCode
@@ -49,7 +89,7 @@ class LimitsForm extends Component {
             <div>
                 <div>
                     <ul id="select-period">
-                        <li><i className="zmdi zmdi-accounts m-r-5"></i>Users</li>                    
+                        <li><i className="zmdi zmdi-accounts m-r-5"></i>Users</li>
                         <li><i className="zmdi zmdi-exposure-alt m-r-5"></i>Limits</li>
                         <li><i className="zmdi zmdi-network-setting m-r-5"></i>Network</li>
                     </ul>
@@ -63,9 +103,10 @@ class LimitsForm extends Component {
                             <div className="col-xs-12 col-xl-6">
                                 <div className="form-group floating-labels is-empty">
                                     <input
-                                        id="lowtemp"
-                                        name="lowtemp"
-                                        onChange={this.setState}
+                                        className="wide"
+                                        id="temp_min"
+                                        name="temp_min"
+                                        onChange={this.setLimitState}
                                         onKeyPress={this.keypressNumOnly}
                                         type="number"
                                         placeholder="Min (°F)"/>
@@ -76,9 +117,10 @@ class LimitsForm extends Component {
                             <div className="col-xs-12 col-xl-6">
                                 <div className="form-group floating-labels is-empty">
                                     <input
-                                        id="hightemp"
-                                        name="hightemp"
-                                        onChange={this.setState}
+                                        className="wide"
+                                        id="temp_max"
+                                        name="temp_max"
+                                        onChange={this.setLimitState}
                                         onKeyPress={this.keypressNumOnly}
                                         type="number"
                                         placeholder="Max (°F)"/>
@@ -89,9 +131,11 @@ class LimitsForm extends Component {
                             <div className="col-xs-12 col-xl-12">
                                 <div className="form-group floating-labels is-empty">
                                     <textarea
+                                        className="resize"
+                                        onChange={this.setLimitState}
                                         placeholder="Enter message when Temperature is out of range"
-                                        name="tempmsg"
-                                        id="tempmsg"
+                                        name="temp_msg"
+                                        id="temp_msg"
                                         rows="3">
                                     </textarea>
                                     <p className="error-block"></p>
@@ -111,9 +155,9 @@ class LimitsForm extends Component {
                                 <div className="form-group floating-labels is-empty">
                                     <input
                                         className="wide"
-                                        id="lowhumidity"
-                                        name="lowhumidity"
-                                        onChange={this.setState}
+                                        id="humidity_min"
+                                        name="humidity_min"
+                                        onChange={this.setLimitState}
                                         onKeyPress={this.keypressNumOnly}
                                         type="number"
                                         placeholder="Min (%)"/>
@@ -125,9 +169,9 @@ class LimitsForm extends Component {
                                 <div className="form-group floating-labels is-empty">
                                     <input
                                         className="wide"
-                                        id="highhumidity"
-                                        name="highhumidity"
-                                        onChange={this.setState}
+                                        id="humidity_max"
+                                        name="humidity_max"
+                                        onChange={this.setLimitState}
                                         onKeyPress={this.keypressNumOnly}
                                         type="number"
                                         placeholder="Max (%)"/>
@@ -139,9 +183,10 @@ class LimitsForm extends Component {
                                 <div className="form-group floating-labels is-empty">
                                     <textarea
                                         className="resize"
+                                        onChange={this.setLimitState}
                                         placeholder="Enter message when humidity is out of range"
-                                        name="humiditymsg"
-                                        id="humiditymsg"
+                                        name="humidity_msg"
+                                        id="humidity_msg"
                                         rows="3">
                                     </textarea>
                                     <p className="error-block"></p>
@@ -153,7 +198,7 @@ class LimitsForm extends Component {
                 </div>
 
 
-                <h4 className="m-b-30"> Volatile Organic Compounds (VOC)</h4>
+                <h4 className="m-b-30"> Volatile Organic Compounds (VOC) </h4>
                 <div className="row">
                     <div className="col-xs-12 col-xl-6">
                         <div className="row">
@@ -162,9 +207,10 @@ class LimitsForm extends Component {
                                 <div className="form-group floating-labels is-empty">
                                     <input
                                         className="wide"
-                                        id="lowppm"
-                                        name="lowppm"
-                                        onChange={this.setState}
+                                        onChange={this.setLimitState}
+                                        id="voc_min"
+                                        name="voc_min"
+                                        onChange={this.setLimitState}
                                         onKeyPress={this.keypressNumOnly}
                                         type="number"
                                         placeholder="Min (PPM)"/>
@@ -176,9 +222,9 @@ class LimitsForm extends Component {
                                 <div className="form-group floating-labels is-empty">
                                     <input
                                         className="wide"
-                                        id="highppm"
-                                        name="highppm"
-                                        onChange={this.setState}
+                                        id="voc_max"
+                                        name="voc_max"
+                                        onChange={this.setLimitState}
                                         onKeyPress={this.keypressNumOnly}
                                         type="number"
                                         placeholder="Max (PPM)"/>
@@ -190,9 +236,10 @@ class LimitsForm extends Component {
                                 <div className="form-group floating-labels is-empty">
                                     <textarea
                                         className="resize"
+                                        onChange={this.setLimitState}
                                         placeholder="Enter message when PPM is out of range"
-                                        name="ppmmsg"
-                                        id="ppmmsg"
+                                        name="voc_msg"
+                                        id="voc_msg"
                                         rows="3">
                                     </textarea>
                                     <p className="error-block"></p>
@@ -203,6 +250,16 @@ class LimitsForm extends Component {
                     </div>
                 </div>
 
+                <div className="row">
+                    <div className="col-xs-12 col-xl-6">
+                        <button
+                            id="cmdSave"
+                            className="k-primary"
+                            onClick={this.saveLimits}
+                            >Save Sensor Limits
+                        </button>
+                    </div>
+                </div>
             </div >
         );
     }
