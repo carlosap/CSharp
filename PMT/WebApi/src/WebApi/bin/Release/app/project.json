@@ -1,0 +1,40 @@
+{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+  "dependencies": {
+    "WebApi": "1.0.0"
+  },
+  "commands": {
+    "web": "Microsoft.AspNet.Server.Kestrel"
+  },
+  "frameworks": {
+    "dnx451": {
+      "dependencies": {
+        "System.Data.Common": "1.0.0-beta1",
+        "System.Data.SqlClient": "1.0.0-beta1"
+      },
+      "frameworkAssemblies": {
+        "System.configuration": "4.0.0.0",
+        "System.Data": "4.0.0.0"
+      }
+    }
+  },
+  "exclude": [
+    "wwwroot",
+    "node_modules"
+  ],
+  "publishExclude": [
+    "**.ex",
+    "**.log",
+    "**.err",
+    "**.warn",
+    "**.unknown",
+    "**.cache",
+    "**.user",
+    "**.vspscc"
+  ],
+  "entryPoint": "WebApi",
+  "loadable": false
+}

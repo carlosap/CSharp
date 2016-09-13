@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:WebApi.Cache.CacheMemory.SetAndExpiresDays(System.String,System.Object,System.Int32)">
+            SetAbsoluteExpiration(DateTimeOffset.UtcNow.AddDays(2)));
+        </member>
+        <member name="T:WebApi.Controllers.DataSourceController">
+            api/datasource?name=uiconfig
+        </member>
+        <member name="T:WebApi.Controllers.FormController">
+            api/form?name=checkout
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:WebApi.Controllers.ImageController" -->
+        <!-- Badly formed XML comment ignored for member "T:WebApi.Controllers.LabelController" -->
+        <member name="T:WebApi.Controllers.MediaController">
+            api/media?name=header
+        </member>
+        <member name="T:WebApi.Controllers.MenuController">
+            api/menu
+        </member>
+        <member name="T:WebApi.Controllers.PageController">
+            api/page?name=menu
+        </member>
+        <member name="T:WebApi.Controllers.StaticController">
+            api/static?name=*
+            /api/static?name=contact
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:WebApi.Controllers.COREALLController" -->
+        <!-- Badly formed XML comment ignored for member "T:WebApi.Controllers.ENS210Controller" -->
+        <!-- Badly formed XML comment ignored for member "T:WebApi.Controllers.IAQCOREController" -->
+    </members>
+</doc>
