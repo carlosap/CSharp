@@ -19,8 +19,8 @@ import EditUser from './modules/forms/editUser'
 import LimitsForm from './modules/forms/LimitsForm'
 import NetworkForm from './modules/forms/network'
 
-//chart
-import HistogramChart from './modules/HistogramChart'
+//charts
+import ChartLine from './modules/charts/Line'
 
 render((
   <Router history={hashHistory}>
@@ -34,15 +34,13 @@ render((
       <Route path="/sensors" component={Sensors}/>
       <Route path="/docs" component={Documentations}/>
       <Route path="/message/:header/:msg" component={Message}/>
-
       <Route path="/settings" component={Settings}/>
       <Route path="/userlist" component={UserList}/>
       <Route path="/adduser" component={AddUser}/>
       <Route path="/edituser/:email" component={EditUser}/>
       <Route path="/limits" component={LimitsForm}/>
       <Route path="/network" component={NetworkForm}/>
-      <Route path="/histogram" component={HistogramChart}/>
-
+      <Route path="/chartline/:header/:type" component={ChartLine}/>
     </Route>
   </Router>
 ), document.getElementById('app'))

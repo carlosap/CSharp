@@ -17,7 +17,7 @@ class Sensors extends Component {
       },
       ppb: 0,
       ppm: 0,
-      refreshrate: 3000,
+      refreshrate: 800,
       hashname: 'sensors'
     };
     this.isServerMounted = null;
@@ -25,6 +25,13 @@ class Sensors extends Component {
       { name: 'COREALL', url: '/COREALL?serial=TESTBETA123', success: this.setStateHandler.bind(this), error: this.error.bind(this) }
 
     ]).start();
+  }
+  componentWillMount() {
+    try {
+      if (kendo)
+        kendo.destroy(document.body);
+
+    } catch (error) { }
   }
   componentDidMount() {
     this.loadFromServerHandler();
@@ -35,7 +42,8 @@ class Sensors extends Component {
     return (
       <div>
         <div className="row">
-        
+          <h4>Sensor Measurements</h4>
+          <hr className="shadow"/>
         </div>
         <TemperatureF measurement={this.state.temperature.fahrenheit} />
         <TemperatureC measurement={this.state.temperature.celcius} />
@@ -47,34 +55,34 @@ class Sensors extends Component {
   }
 
   setStateHandler(data, reqNum, url, queryData, reqTotal, isNested) {
-    try{
-          var responseName = Service.prop(reqNum, 'name');
-          switch (responseName) {
-            case "COREALL":
-              this.setState({
-                temperature: {
-                  fahrenheit: data.Fahrenheit,
-                  celcius: data.Celcius,
-                  kelvin: data.Kelvin,
-                  humidity: data.Humidity
-                }
-              });
-              this.setState({ ppb: data.PPB.Measurement, ppm: data.PPM.Measurement });
-              break;
+    try {
+      var responseName = Service.prop(reqNum, 'name');
+      switch (responseName) {
+        case "COREALL":
+          this.setState({
+            temperature: {
+              fahrenheit: data.Fahrenheit,
+              celcius: data.Celcius,
+              kelvin: data.Kelvin,
+              humidity: data.Humidity
+            }
+          });
+          this.setState({ ppb: data.PPB.Measurement, ppm: data.PPM.Measurement });
+          break;
 
-            default:
-              return;
-          }
-    }catch(err){}
+        default:
+          return;
+      }
+    } catch (err) { }
   }
 
   loadFromServerHandler() {
-    if(window.location.hash.indexOf(this.state.hashname)<=0){
-        clearInterval(this.isServerMounted);
-        window.app.service.clear();
+    if (window.location.hash.indexOf(this.state.hashname) <= 0) {
+      clearInterval(this.isServerMounted);
+      window.app.service.clear();
     }
-    else{
-        window.app.service.start();
+    else {
+      window.app.service.start();
     }
   }
 

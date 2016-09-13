@@ -1,3 +1,12 @@
+/***************************************************************************
+aman:cache
+-developer: Carlos A. Perez
+-Date: 9/01/2016
+-usage: (see also getters)
+        local: app.cache.localSet(key,value);
+        cookie: app.cache.setCookie(key,value);
+        session: app.cache.sessionSet(key,value);
+****************************************************************************/
 var app = app || {};
 (function () {
 	app.cache = {

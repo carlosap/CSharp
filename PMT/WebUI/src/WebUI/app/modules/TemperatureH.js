@@ -2,12 +2,17 @@ import React, {Component, PropTypes} from 'react';
 class TemperatureH extends Component {
     constructor(props) {
         super(props);
+        this.sensorClick = this.sensorClick.bind(this);
+    }
 
+    sensorClick(e) {
+        this.context.router.push('/chartline/HUMIDITY/Temperature');
+        return false;
     }
     render() {
         return (
 
-            <div className="col-xs-12 col-lg-4 m-b-5">
+            <div id="TemperatureH" className="col-xs-12 col-lg-4 m-b-5" onClick={this.sensorClick} >
                 <div className="text-widget-4 bg-info-700 color-white text-center">
                     <div className="title">Temperature</div>
                     <div className="subtitle">Humidity</div>
@@ -23,6 +28,10 @@ class TemperatureH extends Component {
 
 TemperatureH.propTypes = {
     measurement: React.PropTypes.number,
+};
+
+TemperatureH.contextTypes = {
+    router: React.PropTypes.object
 };
 
 export default TemperatureH;

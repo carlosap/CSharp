@@ -18,10 +18,10 @@
     />
     <link rel="stylesheet" href="css/main.css">
 
-    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.common.min.css" />
-    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.rtl.min.css" />
-    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.silver.min.css" />
-    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.mobile.all.min.css" />
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.714/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.714/styles/kendo.material.min.css" />
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.714/styles/kendo.default.mobile.min.css" />
+
     <style>
         input.wide {
             display: block;
@@ -44,11 +44,19 @@
             border-bottom-style: solid;
             border-bottom-color: rgb(217, 217, 217);
         }
+        
+        hr.shadow {
+            height: 10px;
+            border: 0;
+            box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+            width: 100%;
+        }
     </style>
 
 </head>
 
 <body data-layout="empty-layout" data-palette="palette-4" data-direction="none">
+
 
     <nav class="navbar navbar-fixed-top navbar-1">
         <!--<a class="navbar-brand" href="index.html">PMT Systems</a> -->
@@ -117,6 +125,16 @@
                                 </ul>
                             </div>
 
+                            <div class="sidebar-section">
+                                <div class="section-title">Settings</div>
+                                <ul class="l1 list-unstyled section-content">
+                                    <li>
+                                        <a class="sideline" data-id="docs" href="#/settings">
+                                            <i class="zmdi zmdi-settings md-icon pull-left"></i> <span class="title">Settings</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
 
 
                         </div>
@@ -133,6 +151,7 @@
 
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="http://kendo.cdn.telerik.com/2016.2.714/js/kendo.all.min.js"></script>
+
 
 
     <!--<script src="lib/jquery/dist/jquery.min.js"></script>-->
@@ -154,6 +173,9 @@
     <!--App base libs-->
     <script src="js/utils.js"></script>
     <script src="js/services.js"></script>
+    <script src="js/notification.js"></script>
+    <script src="js/progress.js"></script>
+    <script src="js/cache.js"></script>
     <script src="bundle.js"></script>
 
 </body>

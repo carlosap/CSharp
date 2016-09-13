@@ -1,4 +1,6 @@
-﻿namespace WebApi.Model
+﻿using WebApi.Queue;
+
+namespace WebApi.Model
 {
     public class IAQCORE
     {
@@ -18,6 +20,7 @@
     {
 
         public int Measurement { get; set; } = 500;
+        public FixedQueue<int> Histogram { get; set; } = new FixedQueue<int>();
         public int MaxLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPM.Max;
         public int LowLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPM.Low;
         public string Msg { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPM.Msg.Value;
