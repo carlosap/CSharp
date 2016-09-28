@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAuiIj22L7ZUyv986OvCcZmgAAAAACAAAAAAADZgAAwAAAABAAAADiiRi9cUY1TwH1wERCKwZ1AAAAAASAAACgAAAAEAAAAMa441qRDozNP/ak4zZVglCAAAAAwAb5FKDssMGird64kc6m1wv9MpsTwWW4CSgbcPelsERZVhZsuVb1oHkYvVXx6zLu3taFpxdJKdIFO0rzzSlVE9VR6cXih1f5XjOi0ssD25Ch8C4J9LoxNfXShKWa2hfTysQjRsPq6Q13L12hkjpAGnS3JTXcWRshwCNsX8NMHacUAAAAJe2Ped0OtBLJNioV+ofnJSZKIrg=</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <EfMigrations Include="WebDbServer.Model.LimitHumidityContext">
+      <Value>Server=tcp:pmt.database.windows.net,1433;Initial Catalog=PMT;Persist Security Info=False;User ID=cperez;Password=08&amp;pmt-FL-W;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;</Value>
+    </EfMigrations>
+    <EfMigrations Include="WebDbServer.Model.LimitPPBContext">
+      <Value>Server=tcp:pmt.database.windows.net,1433;Initial Catalog=PMT;Persist Security Info=False;User ID=cperez;Password=08&amp;pmt-FL-W;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;</Value>
+    </EfMigrations>
+    <EfMigrations Include="WebDbServer.Model.LimitPPMContext">
+      <Value>Server=tcp:pmt.database.windows.net,1433;Initial Catalog=PMT;Persist Security Info=False;User ID=cperez;Password=08&amp;pmt-FL-W;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;</Value>
+    </EfMigrations>
+    <EfMigrations Include="WebDbServer.Model.LimitTemperatureContext">
+      <Value>Server=tcp:pmt.database.windows.net,1433;Initial Catalog=PMT;Persist Security Info=False;User ID=cperez;Password=08&amp;pmt-FL-W;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;</Value>
+    </EfMigrations>
+    <EfMigrations Include="WebDbServer.Model.UserClientContext">
+      <Value>Server=tcp:pmt.database.windows.net,1433;Initial Catalog=PMT;Persist Security Info=False;User ID=cperez;Password=08&amp;pmt-FL-W;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;</Value>
+    </EfMigrations>
+  </ItemGroup>
+</Project>
