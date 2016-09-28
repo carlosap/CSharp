@@ -5,16 +5,16 @@ class Settings extends Component {
     super(props);
     this.state = {
       users: [],
-      errors: {},
-
+      errors: {}
     };
   }
   componentWillMount() {
-    if (kendo) {
-      kendo.destroy(document.body);
-    }
-    var localusers = app.cache.localGet("users") || [];
-    this.setState({users: localusers})
+    try {
+      if (kendo) {
+        kendo.destroy(document.body);
+      }
+      this.setState({ users: app.cache.localGet("users") });
+    } catch (error) { }
   }
   render() {
     return (

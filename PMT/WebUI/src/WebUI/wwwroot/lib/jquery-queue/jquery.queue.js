@@ -20,8 +20,8 @@ function Queue(ajaxQueue) {
 			}		
 			return queryData;
 		};
-	this.connection = {timeout: 2000, check: true, url: 'http://www.designcise.com/framework/img/chk_conn.gif'}, 
-	this.timeout = 5000, this.baseURL = '', this.alwaysSend = null, this.dataType = 'json', this.cache = false, 
+	this.connection = {timeout: 2000, check: false, url: 'http://www.designcise.com/framework/img/chk_conn.gif'}, 
+	this.timeout = 4000, this.baseURL = '', this.alwaysSend = null, this.dataType = 'json', this.cache = false, 
 	this.loaderClass = 'loader', this.type = 'POST';
 	this.on = function(e, callback) {
 		if(!callbacks[e]) {

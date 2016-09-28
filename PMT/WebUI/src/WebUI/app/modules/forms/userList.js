@@ -20,12 +20,13 @@ class UserList extends Component {
                         _this.context.router.push('/limits');
                         break;
                     case 2:
-                        _this.context.router.push('/network');
+                        _this.context.router.push('/battery');
                         break;
                 }
             },
             index: 0
         });
+
 
         $("#select-usermenu").kendoMobileButtonGroup({
             select: function (e) {
@@ -73,15 +74,15 @@ class UserList extends Component {
         };
         return (
             <div>
-                <div>
+                <div className="m-b-30">
                     <ul id="select-period">
                         <li><i className="zmdi zmdi-accounts m-r-5"></i>Users</li>
                         <li><i className="zmdi zmdi-widgets m-r-5"></i>Sensors</li>
-                        <li><i className="zmdi zmdi-network-setting m-r-5"></i>Network</li>
+                        <li><i className="zmdi zmdi-battery-flash m-r-5"></i>Baterry</li>
                     </ul>
                 </div>
 
-                <hr id="hrHeader"className="shadow"/>
+   
                 <h4 className="m-b-30"> Users / Notifications </h4>
                 <div className="m-b-20">
                     <ul id="select-usermenu">
@@ -102,7 +103,7 @@ class UserList extends Component {
                                                 <th></th>
                                                 <th>Users <i className="zmdi zmdi-account m-r-5"></i></th>
                                                 <th>EMAIL <i className="zmdi zmdi-account-box-mail m-r-5"></i></th>
-                                                <th>Phone Message <i className="zmdi zmdi-phone-msg m-r-5"></i></th>
+                                                <th>Text Message <i className="zmdi zmdi-phone-msg m-r-5"></i></th>
                                             </tr>
                                         </thead>
                                         <tbody>

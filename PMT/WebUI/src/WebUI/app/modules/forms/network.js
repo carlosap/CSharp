@@ -29,6 +29,18 @@ class NetworkForm extends Component {
             },
             index: 2
         });
+
+        $("#network").kendoDropDownList({
+            dataTextField: "text",
+            dataValueField: "value",
+            dataSource: [
+                { text: "Select Network..", value: "1" },
+                { text: "PMT-Wifi", value: "2" },
+                { text: "ATT&T-HOTSPOT232", value: "3" },
+                { text: "HOST-Wifi", value: "4" }
+            ],
+            index: 0
+        });
     }
 
     setState(e) {
@@ -47,35 +59,48 @@ class NetworkForm extends Component {
                     <ul id="select-period">
                         <li><i className="zmdi zmdi-accounts m-r-5"></i>Users</li>
                         <li><i className="zmdi zmdi-exposure-alt m-r-5"></i>Sensors</li>
-                        <li><i className="zmdi zmdi-network-setting m-r-5"></i>Network</li>
+                        <li><i className="zmdi zmdi-network-setting m-r-5"></i>Wireless</li>
                     </ul>
                 </div>
-                <hr className="shadow"/>
+    
                 <h4 className="m-b-20"> Battery Saver Mode </h4>
                 <p>
-                    The Battery Saver mode is configurable, enabling you to enable or disable 
-                    further elements such as your data connection, sensor activities, 
+                    The Battery Saver mode is configurable, enabling you to enable or disable
+                    further elements such as your data connection, sensor activities,
                     and CPU usage.
                 </p>
                 <div className="row">
-                    <div className="col-xs-12 col-xl-6">
-                        <div className="row">
 
-                            <div className="col-xs-12 col-xl-6">
-                                <div className="form-group floating-labels is-empty">
-                                    <input
-                                        className="wide"
-                                        id="networkrate"
-                                        name="networkrate"
-                                        onChange={this.setState}
-                                        onKeyPress={this.keypressNumOnly}
-                                        type="number"
-                                        placeholder="Enter scanning rate in minutes"/>
-                                    <p className="error-block"></p>
-                                </div>
+                    <div className="row">
+                        <div className="col-xs-12 col-xl-6">
+                            <div className="form-group floating-labels is-empty">
+                                <input
+                                    className="wide"
+                                    id="network"
+                                    name="network"
+                                    placeholder="Select Network"/>
+                                <p className="error-block"></p>
                             </div>
                         </div>
                     </div>
+
+
+
+
+                    <div className="row">
+                        <div className="col-xs-12 col-xl-6">
+                            <div className="form-group floating-labels is-empty">
+                                <input
+                                    className="wide"
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    placeholder="Enter Password"/>
+                                <p className="error-block"></p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div >
         );

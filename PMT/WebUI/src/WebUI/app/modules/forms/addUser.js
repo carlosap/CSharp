@@ -2,18 +2,18 @@ import React, {Component} from 'react';
 class AddUser extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            user: {
-                firstname: '',
-                lastname: '',
-                email: '',
-                phone: '',
-                enableSendEmail: true,
-                enableSendText: true
-            },
-            errors: {}
-
-        };
+        this.users = [],
+            this.state = {
+                user: {
+                    firstname: '',
+                    lastname: '',
+                    email: '',
+                    phone: '',
+                    enableSendEmail: true,
+                    enableSendText: true
+                },
+                errors: {}
+            };
         this.saveUser = this.saveUser.bind(this);
         this.setUserState = this.setUserState.bind(this);
     }
@@ -36,11 +36,12 @@ class AddUser extends Component {
         var users = app.cache.localGet("users") || [];
         var localUserFound = this.findUser(users, this.state.user) || [];
         if (localUserFound.length > 0) {
-
             app.notify.show("user ready in the system");
         } else {
+
             users.push(this.state.user);
             app.cache.localSet("users", users);
+            app.service.user.trigger("create", { data: this.state.user });
             this.context.router.push('/settings');
         }
     }
@@ -68,17 +69,14 @@ class AddUser extends Component {
     }
 
     setUserState(e) {
-
         //workarounds
         var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
         var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
         var phonevalue = $("#phone").val();
-
         //native code.
         var field = e.target.name;
         var value = e.target.value;
         this.state.user[field] = value;
-
         this.state.user["enableSendText"] = switchTextInstance.check();
         this.state.user["enableSendEmail"] = switchEmailInstance.check();
         this.state.user["phone"] = phonevalue;
@@ -110,9 +108,11 @@ class AddUser extends Component {
         return formIsValid;
     }
     componentWillMount() {
-        if (kendo) {
-            kendo.destroy(document.body);
-        }
+        try {
+            if (kendo) {
+                kendo.destroy(document.body);
+            }
+        } catch (error) {}
     }
     componentDidMount() {
         var _this = this;
@@ -127,9 +127,7 @@ class AddUser extends Component {
         var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
         switchTextInstance.check(true);
         switchEmailInstance.check(true);
-
         $("#comments").addClass("resize");
-
         $("#select-period").kendoMobileButtonGroup({
             select: function (e) {
                 switch (e.index) {
@@ -144,18 +142,17 @@ class AddUser extends Component {
             index: 1
         });
     }
-
     render() {
         return (
             <div>
-                <div>
+                <div className="m-b-30">
                     <ul id="select-period">
-                        <li><i className="zmdi zmdi-rotate-left m-r-5"></i>Return to Users</li> 
+                        <li><i className="zmdi zmdi-rotate-left m-r-5"></i>Return to Users</li>
                         <li>Add User</li>
                     </ul>
                 </div>
-                <hr id="hrHeader"className="shadow"/>
-                <h4 className="m-b-20"> User Information </h4>
+
+                <h4 className="m-b-30"> User Information </h4>
                 <div className="row m-b-20">
                     <div className="col-xs-12 col-xl-6">
                         <div className="row">
@@ -236,7 +233,7 @@ class AddUser extends Component {
                                         </tr>
 
                                         <tr>
-                                            <th scope="row">MSM</th>
+                                            <th scope="row">Text</th>
                                             <td className="pull-left">
                                                 <input
                                                     name="enableSendText"
@@ -253,14 +250,14 @@ class AddUser extends Component {
                         </div>
 
                         <div className="row">
-                        <br/>
+                            <br/>
                             <div className="col-xs-12 col-xl-6">
-                                <button 
-                                    id="cmdSave" 
+                                <button
+                                    id="cmdSave"
                                     className="k-primary"
-                                    onClick={this.saveUser}                               
+                                    onClick={this.saveUser}
                                     >Save Settings
-                                    </button>
+                                </button>
                             </div>
 
 
@@ -274,7 +271,6 @@ class AddUser extends Component {
         );
     }
 }
-
 AddUser.contextTypes = {
     router: React.PropTypes.object
 };

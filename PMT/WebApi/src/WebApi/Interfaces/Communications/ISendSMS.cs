@@ -3,7 +3,7 @@ namespace WebApi.Interfaces.Communications
 {
     public interface ISendSms
     {
-        void Send(string msg);
+        void Send(string telphoneNumber,string msg);
     }
 }
 

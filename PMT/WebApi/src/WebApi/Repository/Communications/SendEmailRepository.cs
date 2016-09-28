@@ -30,6 +30,8 @@ namespace WebApi.Repository
         }
 
         public async Task SendHtml(
+            string email,
+            string name,
             string emailText,
             string templateName,
             string language = "eng")
@@ -40,34 +42,21 @@ namespace WebApi.Repository
             {
                 if (!string.IsNullOrWhiteSpace(emailText))
                 {
-                    var contacts = Startup.AppSettings.EmailGridSettings.Contacts;
                     var emailFrom = Startup.AppSettings.EmailGridSettings.From.Value;
-                    var emailSubject = Startup.AppSettings.EmailGridSettings.Subject.Value;
-                    var isEnabled = (bool) Startup.AppSettings.EmailGridSettings.Enabled;               
+                    var emailSubject = Startup.AppSettings.EmailGridSettings.Subject.Value;              
                     var template = pages.FirstOrDefault()?.Value;
-                    if (!isEnabled) return;
-                    foreach (var smsContact in contacts)
+                    try
                     {
-                        try
-                        {
-                            string strName = smsContact.Name.Value.ToString();
-                            string emailTo = smsContact.Email.Value.ToString();
-                            var msg = template?.Replace("[NAME]", strName).Replace("[MSG]", emailText);
-                            if (emailTo.Contains(";"))
-                            {
-                                var emails = emailTo.Split(';');
-                                foreach (var email in emails)
-                                    if (email.IsValidEmail())
-                                        await MailSend(email, emailFrom, emailSubject, msg, "text/html");
-                            }
-                            else if (emailTo.IsValidEmail())
-                                await MailSend(emailTo, emailFrom, emailSubject, msg, "text/html");
-                        }
-                        catch (Exception)
-                        {
-                            // ignored
-                        }
+                        var msg = template?.Replace("[NAME]", name).Replace("[MSG]", emailText);
+                        if (email.IsValidEmail())
+                            await MailSend(email, emailFrom, emailSubject, msg, "text/html");
+
                     }
+                    catch (Exception)
+                    {
+                        // ignored
+                    }
+
                 }
             }
         }

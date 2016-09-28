@@ -18,14 +18,14 @@ import AddUser from './modules/forms/addUser'
 import EditUser from './modules/forms/editUser'
 import LimitsForm from './modules/forms/LimitsForm'
 import NetworkForm from './modules/forms/network'
-
+import BatteryForm from './modules/forms/battery'
 //charts
 import ChartLine from './modules/charts/Line'
 
 render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Home}/>
+      <IndexRoute component={About}/>
       <Route path="/repos" component={Repos}>
         <Route path="/repos/:userName/:repoName" component={Repo}/>
       </Route>
@@ -40,6 +40,7 @@ render((
       <Route path="/edituser/:email" component={EditUser}/>
       <Route path="/limits" component={LimitsForm}/>
       <Route path="/network" component={NetworkForm}/>
+      <Route path="/battery" component={BatteryForm}/>
       <Route path="/chartline/:header/:type" component={ChartLine}/>
     </Route>
   </Router>

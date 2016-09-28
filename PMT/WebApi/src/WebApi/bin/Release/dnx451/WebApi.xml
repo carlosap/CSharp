@@ -31,5 +31,6 @@
         <!-- Badly formed XML comment ignored for member "T:WebApi.Controllers.COREALLController" -->
         <!-- Badly formed XML comment ignored for member "T:WebApi.Controllers.ENS210Controller" -->
         <!-- Badly formed XML comment ignored for member "T:WebApi.Controllers.IAQCOREController" -->
+        <!-- Badly formed XML comment ignored for member "T:WebApi.Controllers.AddUserClientController" -->
     </members>
 </doc>

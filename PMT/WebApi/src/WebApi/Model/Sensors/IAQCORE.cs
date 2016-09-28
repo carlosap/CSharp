@@ -19,19 +19,19 @@ namespace WebApi.Model
     public class PPM
     {
 
-        public int Measurement { get; set; } = 500;
-        public FixedQueue<int> Histogram { get; set; } = new FixedQueue<int>();
-        public int MaxLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPM.Max;
-        public int LowLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPM.Low;
+        public decimal Measurement { get; set; } = 500;
+        public FixedQueue<decimal> Histogram { get; set; } = new FixedQueue<decimal>();
+        public decimal MaxLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPM.Max;
+        public decimal LowLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPM.Low;
         public string Msg { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPM.Msg.Value;
 
     }
 
     public class PPB
     {
-        public int Measurement { get; set; } = 500;
-        public int MaxLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPB.Max;
-        public int LowLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPB.Low;
+        public decimal Measurement { get; set; } = 500;
+        public decimal MaxLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPB.Max;
+        public decimal LowLimit { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPB.Low;
         public string Msg { get; set; } = Startup.AppSettings.LimitSettings.VOC.PPB.Msg.Value;
     }
 }

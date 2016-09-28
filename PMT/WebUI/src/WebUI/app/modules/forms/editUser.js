@@ -2,7 +2,8 @@ import React, {Component, PropTypes} from 'react';
 class EditUser extends Component {
     constructor(props) {
         super(props);
-        this.Id = this.props.params.email;
+        this.users = [],
+            this.Id = this.props.params.email;
         this.state = {
             user: {
                 firstname: '',
@@ -20,6 +21,8 @@ class EditUser extends Component {
         this.deleteUser = this.deleteUser.bind(this);
         this.setUserState = this.setUserState.bind(this);
         this.findUser = this.findUser.bind(this);
+        this.updateUser = this.updateUser.bind(this);
+        
     }
     saveUser() {
         event.preventDefault();
@@ -40,18 +43,17 @@ class EditUser extends Component {
             //save
             var localUserFound = this.findUser() || [];
             if (localUserFound.length > 0) {
-                this.deleteUser();
-                this.addUser();
+                //update
+                this.updateUser();
+                app.service.user.trigger("update", { data: this.state.user });
                 this.context.router.push('/settings');
             } else {
+                //new
+                this.addUser();
                 users.push(this.state.user);
                 this.context.router.push('/settings');
             }
-        } catch (error) {
-
-        }
-
-
+        } catch (error) { }
     }
 
     findUser() {
@@ -68,26 +70,36 @@ class EditUser extends Component {
             var users = app.cache.localGet("users") || [];
             users.push(this.state.user);
             app.cache.localSet("users", users);
+            app.service.user.trigger("create", { data: this.state.user });
         } catch (error) { }
     }
-    deleteUser(e) {
+
+    deleteUser() {
         try {
             var _this = this;
-
+            var user = _this.state.user;
             var users = app.cache.localGet("users") || [];
             var filtered = users.filter(function (element) {
                 return element.email !== _this.Id;
             });
             app.cache.localSet("users", filtered);
-
-            //Add Any Redirect Logic
-            if (!app.utils.isNullUndefOrEmpty(e)) {
-                var commandName = e.currentTarget.id || '';
-                if (commandName === "cmdDelete") _this.context.router.push('/settings');
-            }
-
+            app.service.user.trigger("delete", { data: user });
+            _this.context.router.push('/settings');
         } catch (error) { }
     }
+    updateUser() {
+        try {
+            var _this = this;
+            var user = _this.state.user;
+            var users = app.cache.localGet("users") || [];
+            var filtered = users.filter(function (element) {
+                return element.email !== _this.Id;
+            });
+            filtered.push(this.state.user);
+            app.cache.localSet("users", filtered);
+        } catch (error) { }
+    }
+
     setUserState(e) {
         try {
             //workarounds
@@ -102,7 +114,6 @@ class EditUser extends Component {
             this.state.user["enableSendEmail"] = switchEmailInstance.check();
             this.state.user["phone"] = phonevalue;
             return this.setState({ user: this.state.user });
-
         } catch (error) { }
 
     }
@@ -154,7 +165,6 @@ class EditUser extends Component {
             $("#enableSendText").kendoMobileSwitch({ onLabel: "YES", offLabel: "NO" }).addClass("animated-switch");
             var switchTextInstance = $("#enableSendText").data("kendoMobileSwitch");
             var switchEmailInstance = $("#enableSendEmail").data("kendoMobileSwitch");
-
             var localUserFound = this.findUser() || [];
             if (localUserFound.length > 0) {
                 $("#phone").val(localUserFound[0].phone);
@@ -183,15 +193,15 @@ class EditUser extends Component {
     render() {
         return (
             <div>
-                <div>
+                <div className="m-b-30">
                     <ul id="select-period">
                         <li><i className="zmdi zmdi-rotate-left m-r-5"></i>Return to Users</li>
                         <li>Edit User</li>
                     </ul>
                 </div>
 
-                <hr className="shadow"/>
-                <h4 className="m-b-20"> Edit User Information </h4>
+     
+                <h4 className="m-b-30"> Edit User Information </h4>
                 <div className="row m-b-20">
                     <div className="col-xs-12 col-xl-6">
                         <div className="row">

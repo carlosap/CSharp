@@ -10,40 +10,35 @@ class Sensors extends Component {
     super(props);
     this.state = {
       temperature: {
-        fahrenheit: 23.3,
-        celcius: 54.9,
-        kelvin: 333,
-        humidity: 40
+        fahrenheit: 0,
+        celcius: 0,
+        kelvin: 0,
+        humidity: 0
       },
       ppb: 0,
       ppm: 0,
-      refreshrate: 800,
+      refreshrate: 1000,
       hashname: 'sensors'
     };
     this.isServerMounted = null;
-    Service.add([
-      { name: 'COREALL', url: '/COREALL?serial=TESTBETA123', success: this.setStateHandler.bind(this), error: this.error.bind(this) }
-
-    ]).start();
+    this.q = new Queue([{ name: 'COREALL', url: '/COREALL?serial=TESTBETA123', success: this.setStateHandler.bind(this), error: this.error.bind(this) }]);
+    this.q.baseURL = 'http://pmtwebapi.azurewebsites.net/api';
   }
   componentWillMount() {
     try {
       if (kendo)
         kendo.destroy(document.body);
-
     } catch (error) { }
   }
   componentDidMount() {
     this.loadFromServerHandler();
     this.isServerMounted = setInterval(this.loadFromServerHandler.bind(this), this.state.refreshrate);
-
   }
   render() {
     return (
       <div>
-        <div className="row">
+        <div className="m-b-30">
           <h4>Sensor Measurements</h4>
-          <hr className="shadow"/>
         </div>
         <TemperatureF measurement={this.state.temperature.fahrenheit} />
         <TemperatureC measurement={this.state.temperature.celcius} />
@@ -56,7 +51,7 @@ class Sensors extends Component {
 
   setStateHandler(data, reqNum, url, queryData, reqTotal, isNested) {
     try {
-      var responseName = Service.prop(reqNum, 'name');
+      var responseName = this.q.prop(reqNum, 'name');
       switch (responseName) {
         case "COREALL":
           this.setState({
@@ -65,11 +60,11 @@ class Sensors extends Component {
               celcius: data.Celcius,
               kelvin: data.Kelvin,
               humidity: data.Humidity
-            }
+            },
+            ppb: data.PPB.Measurement,
+            ppm: data.PPM.Measurement
           });
-          this.setState({ ppb: data.PPB.Measurement, ppm: data.PPM.Measurement });
           break;
-
         default:
           return;
       }
@@ -79,18 +74,15 @@ class Sensors extends Component {
   loadFromServerHandler() {
     if (window.location.hash.indexOf(this.state.hashname) <= 0) {
       clearInterval(this.isServerMounted);
-      window.app.service.clear();
+      this.q.stop();
     }
     else {
-      window.app.service.start();
+      this.q.start();
     }
   }
-
   error(reqNum, url, queryData, errorType, errorMsg, reqTotal) {
-    console.log(errorMsg);
+    //console.log(errorMsg);
   }
-
 }
-
 export default Sensors;
 

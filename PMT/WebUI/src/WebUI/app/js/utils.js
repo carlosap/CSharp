@@ -1,3 +1,11 @@
+/***************************************************************************
+aman:utils
+-developer: Carlos A. Perez
+-Date: 9/24/2016
+-usage:
+	- app.utils.isNullUndefOrEmpty(item);
+
+****************************************************************************/
 var app = app || {};
 (function () {
     "use strict";
@@ -79,8 +87,14 @@ var app = app || {};
 			}
 			return results;
 		},
+		
+		scrollPageTo: function (cssSelector, offset,speed) {
+			//fast, slow
+			var speedType = speed || 'fast';
+			$('html,body').animate({ scrollTop: $(cssSelector).offset().top + offset }, speedType);
+		},
 
-		isEmail: function(strEmail){
+		isEmail: function (strEmail) {
 			var emailFilter = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
 			if (!emailFilter.test(strEmail)) {
 				return false;
@@ -89,7 +103,7 @@ var app = app || {};
 
 		},
 
-		isNumber: function(value){
+		isNumber: function (value) {
 			return isNaN(value);
 		}
 	}

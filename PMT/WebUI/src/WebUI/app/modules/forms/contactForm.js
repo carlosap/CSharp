@@ -5,7 +5,6 @@ class ContactForm extends Component {
         super(props);
 
     }
-
     componentWillMount() {
         if (kendo) {
             kendo.destroy(document.body);
@@ -18,10 +17,6 @@ class ContactForm extends Component {
         $("#comments").addClass("resize");
     }
 
-    componentWillUnmount() {
-
-    }
-
     render() {
         return (
             <div>
@@ -29,8 +24,7 @@ class ContactForm extends Component {
                     <div className="row">
                         <span id="popupNotification"></span>
                         <h3>We’d Love to Hear from You!</h3>
-                        <p>
-                           
+                        <p>                         
                             Complete your details and we will contact you shortly.
                         </p>
                     </div>

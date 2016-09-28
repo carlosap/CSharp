@@ -105,8 +105,8 @@ namespace WebApi.Controllers
 
         private static async Task GetPpmHistogram(string ppmQueueKey, COREALL sensor)
         {
-            var ppmQueueTemp = await CacheMemory.Get<FixedQueue<int>>(ppmQueueKey) ??
-                                      new FixedQueue<int>();
+            var ppmQueueTemp = await CacheMemory.Get<FixedQueue<decimal>>(ppmQueueKey) ??
+                                      new FixedQueue<decimal>();
 
             ppmQueueTemp.Enqueue(sensor.PPM.Measurement);
             await CacheMemory.SetAndExpiresDays(ppmQueueKey, ppmQueueTemp, 1);

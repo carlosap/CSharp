@@ -13,11 +13,11 @@ class VOC extends Component {
 
             <div id="vocChart" className="col-xs-12 col-lg-4 m-b-5" onClick={this.sensorClick} >
                 <div className="text-widget-4 bg-warning-700 color-white text-center">
-                    <div className="title">Volatile Organic Compounds</div>
-                    <div className="subtitle">VOC</div>
+                    <div className="title">Air Quality</div>
+                    <div className="subtitle">CO2-VOC</div>
                     <span className="amount" count-to-currency="200" value="0" duration="1">{this.props.ppm} PPM &nbsp; &nbsp; {this.props.ppb} PPB</span>
                     <span className="label label-white-outline">Sensor</span>
-                    <span count-to-percent="100" value="0" duration="1" className="percent">IAQCORE</span>
+                    <span count-to-percent="100" value="0" duration="1" className="percent">iAQ CORE</span>
                 </div>
             </div>
 

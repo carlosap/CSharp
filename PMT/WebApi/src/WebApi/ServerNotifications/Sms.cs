@@ -23,25 +23,20 @@ namespace WebApi.ServerNotifications
             _client = client;
         }
 
-        public void SendMessage(string msg)
+        public void SendMessage(string telphoneNumber,string msg)
         {
             if (!IsEnabled) return;
-            var contacts = Startup.AppSettings.SmsSettings.Contacts;
-            foreach (var smsContact in contacts)
+            try
             {
-                try
-                {
-                    string strPhone = smsContact.Telephone.Value.ToString().Replace("+", "");
-                    if (strPhone.IsNumber())
-                    {
-                        _client?.SendMessage(_fromNumber, strPhone, msg);
-                    }
-                }
-                catch (Exception)
-                {
-                    // ignored
-                }
+                var strPhone = telphoneNumber.Replace("+", "").Replace("(","").Replace(")","").Replace("-","").Replace(" ","");
+                if (strPhone.IsNumber())
+                    _client?.SendMessage(_fromNumber, strPhone, msg);
             }
+            catch (Exception)
+            {
+                // ignored
+            }
+
         }
     }
 }

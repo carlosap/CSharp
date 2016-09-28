@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>title name</title>
+    <title>PMT Sensor Services</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="favicon.ico">
@@ -52,7 +52,7 @@
             width: 100%;
         }
     </style>
-
+                <!--<hr id="hrHeader"className="shadow"/>-->
 </head>
 
 <body data-layout="empty-layout" data-palette="palette-4" data-direction="none">
@@ -60,12 +60,12 @@
 
     <nav class="navbar navbar-fixed-top navbar-1">
         <!--<a class="navbar-brand" href="index.html">PMT Systems</a> -->
-        <img class="navbar-brand" src="images/logo.png" />
+        <img class="img-responsive" src="images/logo.png" />
 
         <ul class="nav navbar-nav pull-right toggle-layout">
             <li class="nav-item">
                 <a class="nav-link" data-click="toggle-layout">
-                    <i class="zmdi zmdi-menu"></i>
+                    <i class="zmdi zmdi-menu zmdi-hc-3x"></i>
                 </a>
             </li>
         </ul>
@@ -129,14 +129,35 @@
                                 <div class="section-title">Settings</div>
                                 <ul class="l1 list-unstyled section-content">
                                     <li>
-                                        <a class="sideline" data-id="docs" href="#/settings">
-                                            <i class="zmdi zmdi-settings md-icon pull-left"></i> <span class="title">Settings</span>
-                                        </a>
+                                        <a class="sideline" data-id="widgets" data-click="toggle-section">
+                                            <i class="pull-right fa fa-caret-down icon-widgets"></i>
+                                            <i class="zmdi zmdi-settings md-icon pull-left"></i>
+                                            <span class="title">Settings</span> </a>
+
+                                        <ul class="list-unstyled section-widgets l2">
+
+                                            <a class="sideline" data-id="docs" href="#/settings">
+                                                <i class="zmdi zmdi-accounts md-icon pull-left"></i> <span class="title">Users</span>
+                                            </a>
+
+                                            
+                                            <a class="sideline" data-id="docs" href="#/limits">
+                                                <i class="zmdi zmdi-exposure-alt md-icon pull-left"></i> <span class="title">Limits</span>
+                                            </a>
+
+                                            <a class="sideline" data-id="docs" href="#/battery">
+                                                <i class="zmdi zmdi-battery-flash md-icon pull-left"></i> <span class="title">Battery</span>
+                                            </a>
+
+                                            <a class="sideline" data-id="docs" href="#/network">
+                                                <i class="zmdi zmdi-network-setting md-icon pull-left"></i> <span class="title">Wireless</span>
+                                            </a>
+
+                                        </ul>
+
                                     </li>
                                 </ul>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
@@ -151,9 +172,6 @@
 
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="http://kendo.cdn.telerik.com/2016.2.714/js/kendo.all.min.js"></script>
-
-
-
     <!--<script src="lib/jquery/dist/jquery.min.js"></script>-->
     <script src="lib/jquery-queue/jquery.queue.js"></script>
     <script src="lib/tether/tether.min.js"></script>

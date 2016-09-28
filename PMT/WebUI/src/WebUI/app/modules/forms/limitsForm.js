@@ -3,17 +3,21 @@ class LimitsForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            limits: {
-                temp_min: 0,
-                temp_max: 0,
-                temp_msg: '',
-                humidity_min: 0,
-                humidity_max: 0,
-                humidity_msg: '',
-                voc_min: 0,
-                voc_max: 0,
-                voc_msg: ''
+            temp: {
+                min: 0,
+                max: 0,
+                msg: ''
             },
+            humidity: {
+                min: 0,
+                max: 0,
+                msg: '',
+            },
+            voc: {
+                min: 0,
+                max: 0,
+                msg: ''
+            }
         };
         this.setLimitState = this.setLimitState.bind(this);
         this.saveLimits = this.saveLimits.bind(this);
@@ -22,7 +26,6 @@ class LimitsForm extends Component {
         try {
             if (kendo)
                 kendo.destroy(document.body);
-
         } catch (error) { }
     }
     componentDidMount() {
@@ -38,45 +41,90 @@ class LimitsForm extends Component {
                         _this.context.router.push('/limits');
                         break;
                     case 2:
-                        _this.context.router.push('/network');
+                        _this.context.router.push('/battery');
                         break;
                 }
             },
             index: 1
         });
 
+        //get grup of limits
         var localLimits = this.getLimits();
         if (!app.utils.isNullUndefOrEmpty(localLimits)) {
-            this.setState({ limits: localLimits });
-            $("#temp_min").val(localLimits.temp_min);
-            $("#temp_max").val(localLimits.temp_max);
-            $("#temp_msg").val(localLimits.temp_msg);
-            $("#humidity_min").val(localLimits.humidity_min);
-            $("#humidity_max").val(localLimits.humidity_max);
-            $("#humidity_msg").val(localLimits.humidity_msg);
-            $("#temp_min").val(localLimits.temp_min);
-            $("#voc_min").val(localLimits.voc_min);
-            $("#voc_max").val(localLimits.voc_max);
-            $("#voc_msg").val(localLimits.voc_msg);
+            this.setState({ temp: localLimits.temp });
+            this.setState({ humidity: localLimits.humidity });
+            this.setState({ voc: localLimits.voc });
+
+            $("#temp_min").val(localLimits.temp.min ||'');
+            $("#temp_max").val(localLimits.temp.max ||'');
+            $("#temp_msg").val(localLimits.temp.msg || '');
+            $("#humidity_min").val(localLimits.humidity.min || '');
+            $("#humidity_max").val(localLimits.humidity.max || '');
+            $("#humidity_msg").val(localLimits.humidity.msg || '');
+            $("#voc_min").val(localLimits.voc.min || '');
+            $("#voc_max").val(localLimits.voc.max ||'');
+            $("#voc_msg").val(localLimits.voc.msg ||'');
         }
+
     }
 
     setLimitState(e) {
         var field = e.target.name;
         var value = e.target.value;
-        this.state.limits[field] = value;
-        return this.setState({ limits: this.state.limits });
+        switch (field) {
+            case "temp_min":
+                this.state.temp["min"] = value;
+                return this.setState({ temp: this.state.temp });
+            case "temp_max":
+                this.state.temp["max"] = value;
+                return this.setState({ temp: this.state.temp });
+            case "temp_msg":
+                this.state.temp["msg"] = value;
+                return this.setState({ temp: this.state.temp });
+            case "humidity_min":
+                this.state.humidity["min"] = value;
+                return this.setState({ humidity: this.state.humidity });
+            case "humidity_max":
+                this.state.humidity["max"] = value;
+                return this.setState({ humidity: this.state.humidity });
+            case "humidity_msg":
+                this.state.humidity["msg"] = value;
+                return this.setState({ humidity: this.state.humidity });
+            case "voc_min":
+                this.state.voc["min"] = value;
+                return this.setState({ voc: this.state.voc });
+            case "voc_max":
+                this.state.voc["max"] = value;
+                return this.setState({ voc: this.state.voc });
+            case "voc_msg":
+                this.state.voc["msg"] = value;
+                return this.setState({ voc: this.state.voc });
+            default:
+                break;
+        }
+        return false;
     }
     saveLimits() {
         event.preventDefault();
-        app.cache.localSet("limits", this.state.limits);
-        this.context.router.push('/settings');
+        app.cache.localSet("temp", this.state.temp);
+        app.cache.localSet("humidity", this.state.humidity);
+        app.cache.localSet("voc", this.state.voc);
+        app.service.Limits.trigger("humidity", { data: this.state.humidity });
+        app.service.Limits.trigger("voc", { data: this.state.voc });
+        app.service.Limits.trigger("temperature", { data: this.state.temp });
+        app.notify.show("Saved!");
+
     }
     getLimits() {
         try {
-            var _this = this;
-            var limits = app.cache.localGet("limits") || {};
-            return limits;
+            var results = {};
+            var humidity = app.cache.localGet("humidity") ? app.cache.localGet("humidity") :{};
+            var temp = app.cache.localGet("temp") ? app.cache.localGet("temp") :{};
+            var voc = app.cache.localGet("voc") ? app.cache.localGet("voc") :{};
+            results.humidity = humidity;
+            results.temp = temp;
+            results.voc = voc;
+            return results;
         } catch (error) { }
     }
     keypressNumOnly(e) {
@@ -87,15 +135,15 @@ class LimitsForm extends Component {
     render() {
         return (
             <div>
-                <div>
+                <div className="m-b-30">
                     <ul id="select-period">
                         <li><i className="zmdi zmdi-accounts m-r-5"></i>Users</li>
                         <li><i className="zmdi zmdi-exposure-alt m-r-5"></i>Limits</li>
-                        <li><i className="zmdi zmdi-network-setting m-r-5"></i>Network</li>
+                        <li><i className="zmdi zmdi-battery-flash m-r-5"></i>Baterry</li>
                     </ul>
                 </div>
-                <hr className="shadow"/>
-                <h4 className="m-b-20"> Temperature </h4>
+    
+                <h4 className="m-b-30"> Temperature </h4>
                 <div className="row">
                     <div className="col-xs-12 col-xl-6">
                         <div className="row">
@@ -106,6 +154,7 @@ class LimitsForm extends Component {
                                         className="wide"
                                         id="temp_min"
                                         name="temp_min"
+                                        value={this.state.temp.min}
                                         onChange={this.setLimitState}
                                         onKeyPress={this.keypressNumOnly}
                                         type="number"
@@ -198,7 +247,7 @@ class LimitsForm extends Component {
                 </div>
 
 
-                <h4 className="m-b-30"> Volatile Organic Compounds (VOC) </h4>
+                <h4 className="m-b-30"> Volatile Organic Compounds (VOC-CO2) </h4>
                 <div className="row">
                     <div className="col-xs-12 col-xl-6">
                         <div className="row">
@@ -260,6 +309,7 @@ class LimitsForm extends Component {
                         </button>
                     </div>
                 </div>
+                <span id="popupNotification"></span>
             </div >
         );
     }
