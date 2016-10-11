@@ -247,7 +247,7 @@ class LimitsForm extends Component {
                 </div>
 
 
-                <h4 className="m-b-30"> Volatile Organic Compounds (VOC-CO2) </h4>
+                <h4 className="m-b-30"> Air Quality </h4>
                 <div className="row">
                     <div className="col-xs-12 col-xl-6">
                         <div className="row">

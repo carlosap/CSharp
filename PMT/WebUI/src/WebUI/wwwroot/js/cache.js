@@ -45,16 +45,12 @@ var app = app || {};
 			return cookies[name];
 		},
 		getCookies: function () {
-			if (this.app.isNode) {
-				return this.app.server.request.cookies;
-			} else {
-				var cookies = {};
-				_.each(document.cookie.split('; ') || [], function (cookie) {
-					var split = cookie.split('=');
-					cookies[split[0]] = split[1];
-				});
-				return cookies;
-			}
+		    var cookies = {};
+		    _.each(document.cookie.split('; ') || [], function (cookie) {
+		        var split = cookie.split('=');
+		        cookies[split[0]] = split[1];
+		    });
+		    return cookies;
 		},
 		setCookie: function (name, value, options) {
 			options = _.extend({
@@ -71,8 +67,6 @@ var app = app || {};
 			if (options.domain) { sendCookie.push('Domain=' + options.domain); }
 			sendCookie.push('Path=' + options.path);
 			document.cookie = sendCookie.join('; ');
-
-
 		},
 		removeCookie: function (name, options) {
 			options = _.extend({

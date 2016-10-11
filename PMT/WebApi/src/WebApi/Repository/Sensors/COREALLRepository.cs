@@ -38,7 +38,7 @@ namespace WebApi.Repository
                         sensor.MaxTempLimit = limit.Max;
                         sensor.TemperatureMsg = limit.Msg;
                         if (!(sensor.Fahrenheit > sensor.LowTempLimit && sensor.Fahrenheit <= sensor.MaxTempLimit))
-                            msgBuilder.Append($"{sensor.TemperatureMsg} ({sensor.Fahrenheit}). ");
+                            msgBuilder.Append($"{sensor.TemperatureMsg} ({sensor.Fahrenheit} F). ");
                         
                     }
                         
@@ -58,7 +58,7 @@ namespace WebApi.Repository
                         sensor.HumidityMsg = limit.Msg;
 
                         if (!(sensor.Humidity > sensor.LowHumidityLimit && sensor.Humidity <= sensor.MaxHumidityLimit))
-                            msgBuilder.Append($"{sensor.HumidityMsg} ({sensor.Humidity}). ");
+                            msgBuilder.Append($"{sensor.HumidityMsg} ({sensor.Humidity} %). ");
                     }
 
 
@@ -71,7 +71,7 @@ namespace WebApi.Repository
                         sensor.PPM.MaxLimit = limit.Max;
                         sensor.PPM.Msg = limit.Msg;
                         if (!(sensor.PPM.Measurement > sensor.PPM.LowLimit && sensor.PPM.Measurement <= sensor.PPM.MaxLimit))
-                            msgBuilder.Append($"{sensor.PPM.Msg} ({sensor.PPM.Measurement}). ");
+                            msgBuilder.Append($"{sensor.PPM.Msg} ({sensor.PPM.Measurement} ppm co2). ");
 
                     }
 
