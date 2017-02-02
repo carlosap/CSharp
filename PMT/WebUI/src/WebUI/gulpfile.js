@@ -2,10 +2,10 @@
 var gulp = require('gulp');
 var connect = require('gulp-connect'); //Runs a local dev server
 var open = require('gulp-open'); //Open a URL in a web browser
-var browserify = require('browserify'); // Bundles JS
-var reactify = require('reactify');  // Transforms React JSX to JS
-var source = require('vinyl-source-stream'); // Use conventional text streams with Gulp
 var concat = require('gulp-concat'); //Concatenates files
+var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
+var htmlmin = require('gulp-html-minifier'); //Minifies HTML
 var config = {
 	port: 9000,
 	devBaseUrl: 'http://localhost',
@@ -35,7 +35,8 @@ gulp.task('open', ['connect'], function() {
 });
 
 gulp.task('html', function() {
-	gulp.src(config.paths.html)
+    gulp.src(config.paths.html)
+        .pipe(htmlmin({ collapseWhitespace: true }))
 		.pipe(gulp.dest(config.paths.dist))
 		.pipe(connect.reload());
 });
@@ -51,6 +52,23 @@ gulp.task('js', function () {
         .pipe(gulp.dest(config.paths.dist + '/js'))
         .pipe(connect.reload());
 });
+
+gulp.task('scripts', function () {
+    return gulp.src([
+        './app/js/utils.js',
+        './app/js/services.js',
+        './app/js/notification.js',
+        './app/js/notification.js',
+        './app/js/progress.js',
+        './app/js/cache.js',
+        './app/js/bundle.js'])
+      .pipe(concat('scripts.js'))     
+      .pipe(gulp.dest(config.paths.dist + '/js'))
+      .pipe(rename('scripts.min.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest(config.paths.dist + '/js'));
+});
+
 gulp.task('css', function () {
     gulp.src(config.paths.css)
         .pipe(gulp.dest(config.paths.dist + '/css'))
@@ -74,4 +92,4 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', ['html', 'js', 'css', 'images', 'lib', , 'bundle', 'open', 'watch']);
-gulp.task('production', ['html', 'js', 'css', 'images', 'lib', 'bundle']);
+gulp.task('prod', ['html', 'js', 'css', 'images', 'lib', 'bundle', 'scripts']);

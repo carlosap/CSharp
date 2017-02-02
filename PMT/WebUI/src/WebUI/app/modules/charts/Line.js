@@ -63,6 +63,17 @@ class ChartLine extends Component {
                 kendo.destroy(document.body);
         } catch (error) { }
     }
+
+    componentWillUnmount() {
+        try {
+
+            clearInterval(this.isServerMounted);
+            this.q.stop();
+            app.progress.show(1);
+            
+        } catch (error) { }
+    }
+
     componentDidMount() {
         var _this = this;
         $("#select-period").kendoMobileButtonGroup({

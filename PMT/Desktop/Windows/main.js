@@ -20,7 +20,7 @@ function createWindow () {
   //mainWindow.loadURL(`http://pmtui.azurewebsites.net/index.html`)
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   //Menu
   mainWindow.setMenu(null);

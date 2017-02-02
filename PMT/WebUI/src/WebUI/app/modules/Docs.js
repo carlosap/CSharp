@@ -16,8 +16,8 @@ class Docs extends Component {
                 <div className="row">
 
                     <div className="col-xs-12 col-xl-6">
-                        <img class="img-responsive" src="images/iphone.png" />
-                        <span><img class="img-responsive" src="images/download.png" /></span>
+                        <img className="img-responsive" src="images/iphone.png" />
+                        <span><img className="img-responsive" src="images/download.png" /></span>
                     </div>
                 </div>
             </div>

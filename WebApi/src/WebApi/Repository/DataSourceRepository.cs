@@ -12,7 +12,7 @@ namespace WebApi.Repository
             {
                 var results = new object();
                 var directoryPath = Path.Combine(Startup._appEnvironment.ApplicationBasePath, "DataSource");
-                var fileName = Path.Combine(directoryPath, name + ".js");
+                var fileName = Path.Combine(directoryPath, name + ".json");
                 if(File.Exists(fileName))
                     results = fileName.LoadAsTypeAsync<object>();
 

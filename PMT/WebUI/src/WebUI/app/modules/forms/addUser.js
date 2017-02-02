@@ -114,6 +114,7 @@ class AddUser extends Component {
             }
         } catch (error) {}
     }
+
     componentDidMount() {
         var _this = this;
         $("#cmdSave").kendoButton();

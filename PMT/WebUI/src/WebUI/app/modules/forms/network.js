@@ -63,11 +63,11 @@ class NetworkForm extends Component {
                     </ul>
                 </div>
     
-                <h4 className="m-b-20"> Battery Saver Mode </h4>
+                <h4 className="m-b-20"> Network Settings </h4>
                 <p>
-                    The Battery Saver mode is configurable, enabling you to enable or disable
-                    further elements such as your data connection, sensor activities,
-                    and CPU usage.
+                    Setting up network is a good way to get more out of your system. 
+                    Networking allows you to manage all of the operations 
+                    of data transfer, and storage.
                 </p>
                 <div className="row">
 

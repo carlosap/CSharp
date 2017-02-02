@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    
+
     <title>PMT Sensor Services</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,44 +12,23 @@
     <link rel="stylesheet" href="css/components/bootstrap.css" />
     <link rel="stylesheet" href="css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/animate.min.css" />
-    <link rel="stylesheet" href="css/material-design-iconic-font.min.css"/>
+    <link rel="stylesheet" href="css/material-design-iconic-font.min.css" />
     <link href="css/fontsgoogleapi.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/kendo.common-material.min.css" />
     <link rel="stylesheet" href="css/kendo.material.min.css" />
     <link rel="stylesheet" href="css/kendo.default.mobile.min.css" />
-
-    <style>
-        input.wide {
-            display: block;
-            width: 100%;
-            padding: 0;
-            border-width: 0;
-            border-bottom: 1px solid #d9d9d9 !important;
-            border-bottom-width: 1px;
-            border-bottom-style: solid;
-            border-bottom-color: rgb(217, 217, 217);
-        }
-        
-        textarea.resize {
-            resize: vertical;
-            width: 100%;
-            padding: 0;
-            border-width: 0;
-            border-bottom: 1px solid #d9d9d9 !important;
-            border-bottom-width: 1px;
-            border-bottom-style: solid;
-            border-bottom-color: rgb(217, 217, 217);
-        }
-        
-        hr.shadow {
-            height: 10px;
-            border: 0;
-            box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.5);
-            width: 100%;
+    <script>
+    	window.app = window.app || {
+			mode: 'DEV'
+		};
+    </script>
+    <style>  
+        .k-loading-mask .k-loading-image {
+            background-image: url('images/loader.gif');
         }
     </style>
-                <!--<hr id="hrHeader"className="shadow"/>-->
+
 </head>
 
 <body data-layout="empty-layout" data-palette="palette-4" data-direction="none">
@@ -57,7 +36,7 @@
 
     <nav class="navbar navbar-fixed-top navbar-1">
         <!--<a class="navbar-brand" href="index.html">PMT Systems</a> -->
-        <img class="img-responsive" src="images/logo.png" />
+        <img class="img-responsive" src="images/logo.jpg" />
 
         <ul class="nav navbar-nav pull-right toggle-layout">
             <li class="nav-item">
@@ -83,7 +62,7 @@
                                 <ul class="l1 list-unstyled section-content">
                                     <li>
                                         <a class="sideline" data-id="home" href="#/about">
-                                            <i class="zmdi zmdi-home md-icon pull-left"></i> <span class="title">PMT</span>
+                                            <i class="zmdi zmdi-home md-icon pull-left"></i> <span class="title">Home</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -126,35 +105,30 @@
                                 <div class="section-title">Settings</div>
                                 <ul class="l1 list-unstyled section-content">
                                     <li>
-                                        <a class="sideline" data-id="widgets" data-click="toggle-section">
-                                            <i class="pull-right fa fa-caret-down icon-widgets"></i>
-                                            <i class="zmdi zmdi-settings md-icon pull-left"></i>
-                                            <span class="title">Settings</span> </a>
-
-                                        <ul class="list-unstyled section-widgets l2">
-
-                                            <a class="sideline" data-id="docs" href="#/settings">
-                                                <i class="zmdi zmdi-accounts md-icon pull-left"></i> <span class="title">Users</span>
-                                            </a>
-
-                                            
-                                            <a class="sideline" data-id="docs" href="#/limits">
-                                                <i class="zmdi zmdi-exposure-alt md-icon pull-left"></i> <span class="title">Limits</span>
-                                            </a>
-
-                                            <a class="sideline" data-id="docs" href="#/battery">
-                                                <i class="zmdi zmdi-battery-flash md-icon pull-left"></i> <span class="title">Battery</span>
-                                            </a>
-
-                                            <a class="sideline" data-id="docs" href="#/network">
-                                                <i class="zmdi zmdi-network-setting md-icon pull-left"></i> <span class="title">Wireless</span>
-                                            </a>
-
-                                        </ul>
-
+                                        <a class="sideline" data-id="docs" href="#/settings">
+                                            <i class="zmdi zmdi-accounts md-icon pull-left"></i> <span class="title">Users</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="sideline" data-id="docs" href="#/limits">
+                                            <i class="zmdi zmdi-exposure-alt md-icon pull-left"></i> <span class="title">Limits</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="sideline" data-id="docs" href="#/battery">
+                                            <i class="zmdi zmdi-battery-flash md-icon pull-left"></i> <span class="title">Battery</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="sideline" data-id="docs" href="#/network">
+                                            <i class="zmdi zmdi-network-setting md-icon pull-left"></i> <span class="title">Wireless</span>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -168,7 +142,7 @@
     </div>
 
     <script src="lib/jquery/dist/jquery.min.js"></script>
-    <script src="lib/kendo/kendo.all.min.js"></script>  
+    <script src="lib/kendo/kendo.all.min.js"></script>
     <script src="lib/jquery-queue/jquery.queue.js"></script>
     <script src="lib/tether/tether.min.js"></script>
     <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -183,14 +157,8 @@
     <script src="js/dist/horizontal-navigation-1.js"></script>
     <script src="js/dist/main.js"></script>
     <script src="js/dist/index.js"></script>
-
-    <!--App base libs-->
-    <script src="js/utils.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/notification.js"></script>
-    <script src="js/progress.js"></script>
-    <script src="js/cache.js"></script>
-    <script src="bundle.js"></script>
+    <!--Module Js base -->
+    <script src="js/index.js"></script>
 
 </body>
 

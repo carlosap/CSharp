@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import TemperatureF from './TemperatureF'
 import TemperatureC from './TemperatureC'
 import TemperatureK from './TemperatureK'
@@ -34,11 +34,19 @@ class Sensors extends Component {
     this.loadFromServerHandler();
     this.isServerMounted = setInterval(this.loadFromServerHandler.bind(this), this.state.refreshrate);
   }
+  componentWillUnmount() {
+    try {
+
+      clearInterval(this.isServerMounted);
+      this.q.stop();
+      app.progress.show(1);
+    } catch (error) { }
+  }
   render() {
     return (
       <div>
         <div className="m-b-30">
-          <h4>Sensor Measurements</h4>
+          <h4 id="sensorhader">Sensor Measurements</h4>
         </div>
         <TemperatureF measurement={this.state.temperature.fahrenheit} />
         <TemperatureC measurement={this.state.temperature.celcius} />

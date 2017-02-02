@@ -72,6 +72,37 @@ body {
 ::selection {
   background-color: #5cb85c; }
 
+/*cperez -->*/
+input.wide {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border-width: 0;
+    border-bottom: 1px solid #d9d9d9 !important;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(217, 217, 217);
+}
+
+textarea.resize {
+    resize: vertical;
+    width: 100%;
+    padding: 0;
+    border-width: 0;
+    border-bottom: 1px solid #d9d9d9 !important;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(217, 217, 217);
+}
+
+hr.shadow {
+    height: 10px;
+    border: 0;
+    box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+    width: 100%;
+}
+/*<----cperez*/
+        
 .fullsize {
   position: fixed;
   top: -50%;

@@ -1,0 +1,35 @@
+﻿{
+  "slider": [
+    {
+      "title": "test1",
+      "subtitle": "test1substring",
+      "description": "description1",
+      "imgSrc": "img/4.jpg",
+      "actionlink": "#",
+      "actiontext": "action1",
+      "position": "center"
+
+    },
+    {
+      "title": "test2",
+      "subtitle": "test2substring",
+      "description": "description2",
+      "imgSrc": "img/1.jpg",
+      "actionlink": "#",
+      "actiontext": "action2",
+      "position": "right"
+
+    },
+    {
+      "title": "test3",
+      "subtitle": "test3substring",
+      "description": "description3",
+      "imgSrc": "img/3.jpg",
+      "actionlink": "#",
+      "actiontext": "action3",
+      "position": "center"
+
+    }
+
+  ]
+}

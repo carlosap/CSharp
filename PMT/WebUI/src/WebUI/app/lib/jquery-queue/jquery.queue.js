@@ -1,15 +1,25 @@
 //app.service.request("/api/datasource?name=uiconfig",sucess,fail);
 function Queue(ajaxQueue) {
 	ajaxQueue = ajaxQueue || Array();	
-	var self = this, checkAjax = null, xhr = null, connection = true, cancelNum = -1, processed = 0, lastProcessed = -1, 
-	loading = false, callbacks = {}, nested = false,
+	var self = this, 
+	checkAjax = null, 
+	xhr = null, 
+	connection = true, 
+	cancelNum = -1, 
+	processed = 0, 
+	lastProcessed = -1, 
+	loading = false, 
+	callbacks = {}, 
+	nested = false,
 		trigger = function(e, args) {
 			if(callbacks[e]) {
 				callbacks[e].fireWith(self, args);
 			}
 		},		
-		getURL = function(str) {return self.baseURL + ((str.lastIndexOf('?') !== -1) ? str.substr(0, str.lastIndexOf('?')) : str);},
-		getQueryData = function(url) {
+	getURL = function(str) {
+		return self.baseURL + ((str.lastIndexOf('?') !== -1) ? str.substr(0, str.lastIndexOf('?')) : str);
+	},
+	getQueryData = function(url) {
 			var queryData = {};			
 			if(url.lastIndexOf('?') !== -1) {
 				var arrKeys = (url.substr(url.lastIndexOf('?')+1)).split('&');				
@@ -19,10 +29,16 @@ function Queue(ajaxQueue) {
 				});
 			}		
 			return queryData;
-		};
+	};
+
 	this.connection = {timeout: 2000, check: false, url: 'http://www.designcise.com/framework/img/chk_conn.gif'}, 
-	this.timeout = 4000, this.baseURL = '', this.alwaysSend = null, this.dataType = 'json', this.cache = false, 
-	this.loaderClass = 'loader', this.type = 'POST';
+	this.timeout = 4000, this.baseURL = '', 
+	this.alwaysSend = null, 
+	this.dataType = 'json', 
+	this.cache = false, 
+	this.loaderClass = 'loader', 
+	this.type = 'POST';
+	
 	this.on = function(e, callback) {
 		if(!callbacks[e]) {
 			callbacks[e] = jQuery.Callbacks();

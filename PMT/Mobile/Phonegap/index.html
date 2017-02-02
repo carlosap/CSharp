@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>PMT Sensor Services</title>
+    <title>Transducers Direct Sensor Services</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="favicon.ico">
@@ -47,6 +47,13 @@
             width: 100%;
         }
     </style>
+
+    <style>  
+        .k-loading-mask .k-loading-image {
+            background-image: url('images/loader.gif');
+        }
+    </style>
+
                 <!--<hr id="hrHeader"className="shadow"/>-->
 </head>
 
@@ -55,7 +62,7 @@
 
     <nav class="navbar navbar-fixed-top navbar-1">
         <!--<a class="navbar-brand" href="index.html">PMT Systems</a> -->
-        <img class="img-responsive" src="images/logo.png" />
+        <img class="img-responsive" src="images/logo.jpg" />
 
         <ul class="nav navbar-nav pull-right toggle-layout">
             <li class="nav-item">
@@ -81,7 +88,7 @@
                                 <ul class="l1 list-unstyled section-content">
                                     <li>
                                         <a class="sideline" data-id="home" href="#/about">
-                                            <i class="zmdi zmdi-home md-icon pull-left"></i> <span class="title">PMT</span>
+                                            <i class="zmdi zmdi-home md-icon pull-left"></i> <span class="title">Home</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -124,32 +131,24 @@
                                 <div class="section-title">Settings</div>
                                 <ul class="l1 list-unstyled section-content">
                                     <li>
-                                        <a class="sideline" data-id="widgets" data-click="toggle-section">
-                                            <i class="pull-right fa fa-caret-down icon-widgets"></i>
-                                            <i class="zmdi zmdi-settings md-icon pull-left"></i>
-                                            <span class="title">Settings</span> </a>
-
-                                        <ul class="list-unstyled section-widgets l2">
-
-                                            <a class="sideline" data-id="docs" href="#/settings">
-                                                <i class="zmdi zmdi-accounts md-icon pull-left"></i> <span class="title">Users</span>
-                                            </a>
-
-                                            
-                                            <a class="sideline" data-id="docs" href="#/limits">
-                                                <i class="zmdi zmdi-exposure-alt md-icon pull-left"></i> <span class="title">Limits</span>
-                                            </a>
-
-                                            <a class="sideline" data-id="docs" href="#/battery">
-                                                <i class="zmdi zmdi-battery-flash md-icon pull-left"></i> <span class="title">Battery</span>
-                                            </a>
-
-                                            <a class="sideline" data-id="docs" href="#/network">
-                                                <i class="zmdi zmdi-network-setting md-icon pull-left"></i> <span class="title">Wireless</span>
-                                            </a>
-
-                                        </ul>
-
+                                        <a class="sideline" data-id="docs" href="#/settings">
+                                            <i class="zmdi zmdi-accounts md-icon pull-left"></i> <span class="title">Users</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="sideline" data-id="docs" href="#/limits">
+                                            <i class="zmdi zmdi-exposure-alt md-icon pull-left"></i> <span class="title">Limits</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="sideline" data-id="docs" href="#/battery">
+                                            <i class="zmdi zmdi-battery-flash md-icon pull-left"></i> <span class="title">Battery</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="sideline" data-id="docs" href="#/network">
+                                            <i class="zmdi zmdi-network-setting md-icon pull-left"></i> <span class="title">Wireless</span>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -183,12 +182,7 @@
     <script src="js/dist/index.js"></script>
 
     <!--App base libs-->
-    <script src="js/utils.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/notification.js"></script>
-    <script src="js/progress.js"></script>
-    <script src="js/cache.js"></script>
-    <script src="bundle.js"></script>
+    <script src="js/scripts.min.js"></script>
 	<script src="phonegap.js"></script>
 
 </body>

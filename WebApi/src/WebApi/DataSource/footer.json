@@ -1,0 +1,35 @@
+﻿{
+  "logo": "/img/logo-3.png",
+  "description": "About Unify dolor sit amet, consectetur adipiscing elit. Maecenas eget nisl id libero tincidunt sodales.",
+  "address": {
+    "address1": "25 Lorem Lis Street",
+    "address2": "",
+    "city": "Orange",
+    "state": "California",
+    "zip": "33813",
+    "country": "US"
+  },
+  "phonelabel": "Phone",
+  "phone": "800 888-8888",
+  "faxlabel": "Fax",
+  "fax": "800 888-8888",
+  "emaillabel": "Email",
+  "email": "info@anybiz.co",
+  "copyrightyear": "2016",
+  "rightreservetext": "Unify. ALL Rights Reserved.",
+  "links": [
+    {
+      "text": "Home",
+      "link": "#"
+    },
+    {
+      "text": "Privacy Policy",
+      "link": "#"
+    },
+    {
+      "text": "Terms of Service",
+      "link": "#"
+    }
+  ]
+}
+
