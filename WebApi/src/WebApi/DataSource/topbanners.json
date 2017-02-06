@@ -1,0 +1,16 @@
+﻿{
+  "TopBanners": [
+    {
+      "title": "Women",
+      "subtitle": "56 Items",
+      "link": "#",
+      "imgSrc": "/img/banners/top1.png"
+    },
+    {
+      "title": "Men",
+      "subtitle": "20 Items",
+      "link": "#",
+      "imgSrc": "/img/banners/top2.png"
+    }
+  ]
+}

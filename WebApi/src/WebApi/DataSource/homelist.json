@@ -1,0 +1,28 @@
+﻿{
+  "homelist": [
+    {
+      "text": "Accessories",
+      "href": "#",
+      "color": "#f47920",
+      "direction": "rarrow"
+    },
+    {
+      "text": "Sales and Clearance",
+      "href": "#",
+      "color": "#f47920",
+      "direction": "rarrow"
+    },
+    {
+      "text": "Purchase Gift Cards",
+      "href": "#",
+      "color": "#f47920",
+      "direction": "rarrow"
+    },
+    {
+      "text": "Order Status",
+      "href": "#",
+      "color": "#f47920",
+      "direction": "rarrow"
+    }
+  ]
+}
