@@ -1,11 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel;
 using System;
 
-namespace UserManager.Models
+namespace UserManager
 {
-    public class UserMapLocation
+    public class UserGeoLocation
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -16,12 +15,21 @@ namespace UserManager.Models
         public virtual User User_UserId { get; set; }
 
         [Required]
+        [StringLength(200)]
+        public string Name { get; set; }
+
+        [Required]
         [StringLength(50)]
         public string Latitude { get; set; }
 
         [Required]
         [StringLength(50)]
         public string Longitude { get; set; }
+
+        [Required]
+        public DateTime DateCreated { get; set; }
+
+        public DateTime LastUpdated { get; set; }
 
     }
 }

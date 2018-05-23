@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
 using System.Collections.Generic;
 
-namespace UserManager.Models
+namespace UserManager
 {
     public class MaritalStatus
     {

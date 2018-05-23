@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace UserManager.Models
+namespace UserManager
 {
     public class UserQualification
     {
@@ -12,7 +12,6 @@ namespace UserManager.Models
 
         [Required]
         public Guid? UserId { get; set; }
-
         public virtual User User_UserId { get; set; }
 
         [Required]
@@ -37,6 +36,11 @@ namespace UserManager.Models
 
         [StringLength(50)] 
         public string Percentage { get; set; }
+
+        [Required]
+        public DateTime DateCreated { get; set; }
+
+        public DateTime LastUpdated { get; set; }
 
     }
 }

@@ -23,7 +23,7 @@ namespace UserManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Countrys",
+                name: "Countries",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -33,7 +33,7 @@ namespace UserManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countrys", x => x.Id);
+                    table.PrimaryKey("PK_Countries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,7 +63,7 @@ namespace UserManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MaritalStatuss",
+                name: "MaritalStatuses",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -72,7 +72,7 @@ namespace UserManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MaritalStatuss", x => x.Id);
+                    table.PrimaryKey("PK_MaritalStatuses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,18 +118,18 @@ namespace UserManager.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CountryId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 100, nullable: true)
+                    CountryId = table.Column<int>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_States", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_States_Countrys_CountryId",
+                        name: "FK_States_Countries_CountryId",
                         column: x => x.CountryId,
-                        principalTable: "Countrys",
+                        principalTable: "Countries",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -166,9 +166,9 @@ namespace UserManager.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Users_MaritalStatuss_MaritalStatusId",
+                        name: "FK_Users_MaritalStatuses_MaritalStatusId",
                         column: x => x.MaritalStatusId,
-                        principalTable: "MaritalStatuss",
+                        principalTable: "MaritalStatuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -244,7 +244,7 @@ namespace UserManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserAddresss",
+                name: "UserAddresses",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -255,15 +255,112 @@ namespace UserManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserAddresss", x => x.Id);
+                    table.PrimaryKey("PK_UserAddresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserAddresss_AddressTypes_AddressTypeId",
+                        name: "FK_UserAddresses_AddressTypes_AddressTypeId",
                         column: x => x.AddressTypeId,
                         principalTable: "AddressTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserAddresss_Users_UserId",
+                        name: "FK_UserAddresses_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserAttachments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Path = table.Column<string>(nullable: true),
+                    ReferringDocument = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAttachments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserAttachments_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserAttributes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    Key = table.Column<string>(maxLength: 100, nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    Value = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAttributes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserAttributes_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserComments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Comment = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    Format = table.Column<string>(maxLength: 20, nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserComments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserComments_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserDerogatories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ApprovalDate = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    Justification = table.Column<string>(nullable: true),
+                    NominationDate = table.Column<string>(nullable: true),
+                    NominatorGroup = table.Column<string>(nullable: true),
+                    Region = table.Column<string>(maxLength: 100, nullable: true),
+                    Source = table.Column<string>(nullable: true),
+                    Status = table.Column<string>(maxLength: 100, nullable: true),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserDerogatories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserDerogatories_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -284,6 +381,103 @@ namespace UserManager.Migrations
                     table.PrimaryKey("PK_UserEmails", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserEmails_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserEncounters",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    EncounterDate = table.Column<DateTime>(nullable: false),
+                    Format = table.Column<string>(maxLength: 20, nullable: true),
+                    Location = table.Column<string>(nullable: true),
+                    Reason = table.Column<string>(nullable: true),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserEncounters", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserEncounters_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserGeoLocations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Latitude = table.Column<string>(maxLength: 50, nullable: false),
+                    Longitude = table.Column<string>(maxLength: 50, nullable: false),
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserGeoLocations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserGeoLocations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserKnownAssociates",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Address = table.Column<string>(maxLength: 100, nullable: true),
+                    Address1 = table.Column<string>(maxLength: 100, nullable: true),
+                    BusinessPhone = table.Column<string>(maxLength: 15, nullable: true),
+                    City = table.Column<string>(maxLength: 50, nullable: true),
+                    Company = table.Column<string>(maxLength: 50, nullable: true),
+                    CountryId = table.Column<int>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    Email = table.Column<string>(maxLength: 100, nullable: true),
+                    FaxNumber = table.Column<string>(maxLength: 15, nullable: true),
+                    FirstName = table.Column<string>(maxLength: 30, nullable: true),
+                    HomePhone = table.Column<string>(maxLength: 15, nullable: true),
+                    JobTitle = table.Column<string>(maxLength: 50, nullable: true),
+                    LastName = table.Column<string>(maxLength: 30, nullable: true),
+                    LastUpdated = table.Column<DateTime>(nullable: false),
+                    MobilePhone = table.Column<string>(maxLength: 15, nullable: true),
+                    Notes = table.Column<string>(nullable: true),
+                    Province = table.Column<string>(maxLength: 50, nullable: true),
+                    StateId = table.Column<int>(nullable: true),
+                    Type = table.Column<string>(maxLength: 20, nullable: true),
+                    UserId = table.Column<Guid>(nullable: false),
+                    WebPage = table.Column<string>(nullable: true),
+                    ZipCode = table.Column<string>(maxLength: 20, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserKnownAssociates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserKnownAssociates_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserKnownAssociates_States_StateId",
+                        column: x => x.StateId,
+                        principalTable: "States",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserKnownAssociates_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -317,20 +511,89 @@ namespace UserManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserMapLocations",
+                name: "UserNames",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Latitude = table.Column<string>(maxLength: 50, nullable: false),
-                    Longitude = table.Column<string>(maxLength: 50, nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    FullName = table.Column<string>(maxLength: 50, nullable: true),
+                    GivenName = table.Column<string>(maxLength: 50, nullable: true),
+                    Surname = table.Column<string>(maxLength: 50, nullable: true),
                     UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserMapLocations", x => x.Id);
+                    table.PrimaryKey("PK_UserNames", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserMapLocations_Users_UserId",
+                        name: "FK_UserNames_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserNationalities",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Citizenship = table.Column<string>(maxLength: 100, nullable: true),
+                    CountryId = table.Column<int>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    Ethnicity = table.Column<string>(maxLength: 100, nullable: true),
+                    Nationality = table.Column<string>(maxLength: 100, nullable: true),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserNationalities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserNationalities_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserNationalities_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserOrigins",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    City = table.Column<string>(maxLength: 100, nullable: true),
+                    CountryId = table.Column<int>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    DoB = table.Column<DateTime>(nullable: true),
+                    Format = table.Column<string>(maxLength: 20, nullable: true),
+                    StateId = table.Column<int>(nullable: true),
+                    Street = table.Column<string>(maxLength: 100, nullable: true),
+                    Type = table.Column<string>(maxLength: 10, nullable: true),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserOrigins", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserOrigins_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserOrigins_States_StateId",
+                        column: x => x.StateId,
+                        principalTable: "States",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserOrigins_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -358,6 +621,29 @@ namespace UserManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserPhysicalDescriptions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(maxLength: 15, nullable: true),
+                    Format = table.Column<string>(maxLength: 15, nullable: true),
+                    LastUpdated = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(maxLength: 30, nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserPhysicalDescriptions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserPhysicalDescriptions_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserQualifications",
                 columns: table => new
                 {
@@ -377,6 +663,30 @@ namespace UserManager.Migrations
                     table.PrimaryKey("PK_UserQualifications", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserQualifications_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRelationships",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Justification = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(maxLength: 100, nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRelationships", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserRelationships_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -419,6 +729,28 @@ namespace UserManager.Migrations
                     table.PrimaryKey("PK_UserSkills", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserSkills_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserSocialMedias",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    About = table.Column<string>(maxLength: 200, nullable: true),
+                    ProfileImage = table.Column<string>(maxLength: 50, nullable: true),
+                    ProfileUrl = table.Column<string>(maxLength: 50, nullable: true),
+                    SocialMediaName = table.Column<string>(maxLength: 50, nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserSocialMedias", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserSocialMedias_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -485,18 +817,63 @@ namespace UserManager.Migrations
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserAddresss_AddressTypeId",
-                table: "UserAddresss",
+                name: "IX_UserAddresses_AddressTypeId",
+                table: "UserAddresses",
                 column: "AddressTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserAddresss_UserId",
-                table: "UserAddresss",
+                name: "IX_UserAddresses_UserId",
+                table: "UserAddresses",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAttachments_UserId",
+                table: "UserAttachments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAttributes_UserId",
+                table: "UserAttributes",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserComments_UserId",
+                table: "UserComments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserDerogatories_UserId",
+                table: "UserDerogatories",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserEmails_UserId",
                 table: "UserEmails",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserEncounters_UserId",
+                table: "UserEncounters",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserGeoLocations_UserId",
+                table: "UserGeoLocations",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserKnownAssociates_CountryId",
+                table: "UserKnownAssociates",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserKnownAssociates_StateId",
+                table: "UserKnownAssociates",
+                column: "StateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserKnownAssociates_UserId",
+                table: "UserKnownAssociates",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -510,8 +887,33 @@ namespace UserManager.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserMapLocations_UserId",
-                table: "UserMapLocations",
+                name: "IX_UserNames_UserId",
+                table: "UserNames",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserNationalities_CountryId",
+                table: "UserNationalities",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserNationalities_UserId",
+                table: "UserNationalities",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserOrigins_CountryId",
+                table: "UserOrigins",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserOrigins_StateId",
+                table: "UserOrigins",
+                column: "StateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserOrigins_UserId",
+                table: "UserOrigins",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -520,8 +922,18 @@ namespace UserManager.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserPhysicalDescriptions_UserId",
+                table: "UserPhysicalDescriptions",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserQualifications_UserId",
                 table: "UserQualifications",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRelationships_UserId",
+                table: "UserRelationships",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -550,6 +962,11 @@ namespace UserManager.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserSocialMedias_UserId",
+                table: "UserSocialMedias",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserWorkExperiences_UserId",
                 table: "UserWorkExperiences",
                 column: "UserId");
@@ -564,31 +981,64 @@ namespace UserManager.Migrations
                 name: "RoleUsers");
 
             migrationBuilder.DropTable(
-                name: "States");
+                name: "UserAddresses");
 
             migrationBuilder.DropTable(
-                name: "UserAddresss");
+                name: "UserAttachments");
+
+            migrationBuilder.DropTable(
+                name: "UserAttributes");
+
+            migrationBuilder.DropTable(
+                name: "UserComments");
+
+            migrationBuilder.DropTable(
+                name: "UserDerogatories");
 
             migrationBuilder.DropTable(
                 name: "UserEmails");
 
             migrationBuilder.DropTable(
+                name: "UserEncounters");
+
+            migrationBuilder.DropTable(
+                name: "UserGeoLocations");
+
+            migrationBuilder.DropTable(
+                name: "UserKnownAssociates");
+
+            migrationBuilder.DropTable(
                 name: "UserLanguages");
 
             migrationBuilder.DropTable(
-                name: "UserMapLocations");
+                name: "UserNames");
+
+            migrationBuilder.DropTable(
+                name: "UserNationalities");
+
+            migrationBuilder.DropTable(
+                name: "UserOrigins");
 
             migrationBuilder.DropTable(
                 name: "UserPhones");
 
             migrationBuilder.DropTable(
+                name: "UserPhysicalDescriptions");
+
+            migrationBuilder.DropTable(
                 name: "UserQualifications");
+
+            migrationBuilder.DropTable(
+                name: "UserRelationships");
 
             migrationBuilder.DropTable(
                 name: "UserSettings");
 
             migrationBuilder.DropTable(
                 name: "UserSkills");
+
+            migrationBuilder.DropTable(
+                name: "UserSocialMedias");
 
             migrationBuilder.DropTable(
                 name: "UserWorkExperiences");
@@ -600,22 +1050,25 @@ namespace UserManager.Migrations
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "Countrys");
-
-            migrationBuilder.DropTable(
                 name: "AddressTypes");
 
             migrationBuilder.DropTable(
                 name: "Languages");
 
             migrationBuilder.DropTable(
+                name: "States");
+
+            migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Countries");
 
             migrationBuilder.DropTable(
                 name: "Genders");
 
             migrationBuilder.DropTable(
-                name: "MaritalStatuss");
+                name: "MaritalStatuses");
         }
     }
 }

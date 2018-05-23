@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace UserManager.Models
+namespace UserManager
 {
     public class State
     {
@@ -9,12 +9,7 @@ namespace UserManager.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
-        public int? CountryId { get; set; }
-
-        public virtual Country Country_CountryId { get; set; }
-
-        [StringLength(100)] 
+        [StringLength(50)] 
         public string Name { get; set; }
 
     }

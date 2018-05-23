@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace UserManager.Models
+namespace UserManager
 {
     public class UserSkill
     {
@@ -17,6 +17,11 @@ namespace UserManager.Models
         [Required]
         [StringLength(100)] 
         public string SkillName { get; set; }
+
+        [Required]
+        public DateTime DateCreated { get; set; }
+
+        public DateTime LastUpdated { get; set; }
 
     }
 }

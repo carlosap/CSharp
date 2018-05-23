@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 
-namespace UserManager.Models
+namespace UserManager
 {
     public class Country
     {
@@ -16,6 +16,7 @@ namespace UserManager.Models
 
         [StringLength(10)] 
         public string CountryCode { get; set; }
+
         public virtual ICollection<State> State_CountryIds { get; set; }
 
     }

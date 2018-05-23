@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-namespace UserManager.Models
+namespace UserManager
 {
     public class UserContext : DbContext
     {
@@ -12,22 +12,33 @@ namespace UserManager.Models
 		public virtual DbSet<Menu> Menus { get; set; }
 		public virtual DbSet<MenuPermission> MenuPermissions { get; set; }
 		public virtual DbSet<Gender> Genders { get; set; }
-		public virtual DbSet<MaritalStatus> MaritalStatuss { get; set; }
+		public virtual DbSet<MaritalStatus> MaritalStatuses { get; set; }
 		public virtual DbSet<UserQualification> UserQualifications { get; set; }
 		public virtual DbSet<UserLanguage> UserLanguages { get; set; }
 		public virtual DbSet<UserSkill> UserSkills { get; set; }
 		public virtual DbSet<UserWorkExperience> UserWorkExperiences { get; set; }
 		public virtual DbSet<UserEmail> UserEmails { get; set; }
 		public virtual DbSet<UserPhone> UserPhones { get; set; }
-		public virtual DbSet<UserAddress> UserAddresss { get; set; }
+		public virtual DbSet<UserAddress> UserAddresses { get; set; }
 		public virtual DbSet<Language> Languages { get; set; }
 		public virtual DbSet<AddressType> AddressTypes { get; set; }
 		public virtual DbSet<UserSetting> UserSettings { get; set; }
-		public virtual DbSet<Country> Countrys { get; set; }
+		public virtual DbSet<Country> Countries { get; set; }
 		public virtual DbSet<State> States { get; set; }
-		public virtual DbSet<UserMapLocation> UserMapLocations { get; set; }
+		public virtual DbSet<UserName> UserNames { get; set; }
+        public virtual DbSet<UserAttachment> UserAttachments { get; set; }
+        public virtual DbSet<UserAttribute> UserAttributes { get; set; }
+        public virtual DbSet<UserComment> UserComments { get; set; }
+        public virtual DbSet<UserDerogatory> UserDerogatories { get; set; }
+        public virtual DbSet<UserEncounter> UserEncounters { get; set; }
+        public virtual DbSet<UserGeoLocation> UserGeoLocations { get; set; }
+        public virtual DbSet<UserKnownAssociate> UserKnownAssociates { get; set; }
+        public virtual DbSet<UserNationality> UserNationalities { get; set; }
+        public virtual DbSet<UserOrigin> UserOrigins { get; set; }
+        public virtual DbSet<UserPhysicalDescription> UserPhysicalDescriptions { get; set; }
+        public virtual DbSet<UserRelationship> UserRelationships { get; set; }
+        public virtual DbSet<UserSocialMedia> UserSocialMedias { get; set; }
 
-        
 
         //
         protected override void OnModelCreating(ModelBuilder modelBuilder)
