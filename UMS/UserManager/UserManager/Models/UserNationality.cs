@@ -11,6 +11,10 @@ namespace UserManager
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid? Id { get; set; }
 
+        [Required]
+        public Guid? UserId { get; set; }
+        public virtual User User_UserId { get; set; }
+
         [StringLength(100)]  
         public string Nationality { get; set; }
 
@@ -20,12 +24,8 @@ namespace UserManager
         [StringLength(100)]
         public string Ethnicity { get; set; }
 
-        [Required]
-        public Guid? UserId { get; set; }
-        public virtual User User_UserId { get; set; }
-
-        public int? CountryId { get; set; }
-        public virtual Country Country_CountryId { get; set; }
+        [StringLength(50)]
+        public string Country { get; set; }
 
         [Required]
         public DateTime DateCreated { get; set; }

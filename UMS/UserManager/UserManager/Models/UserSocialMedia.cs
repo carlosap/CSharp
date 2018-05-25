@@ -11,6 +11,10 @@ namespace UserManager
         public Guid Id { get; set; }
 
         [Required]
+        public Guid? UserId { get; set; }
+        public virtual User User_IdentityId { get; set; }
+
+        [Required]
         [StringLength(50)]  
         public string SocialMediaName { get; set; }
 
@@ -20,12 +24,8 @@ namespace UserManager
         [StringLength(50)]
         public string ProfileImage { get; set; }
 
-        [StringLength(200)]
+        [StringLength(400)]
         public string About { get; set; }
-
-        [Required]
-        public Guid? UserId { get; set; }
-        public virtual User User_IdentityId { get; set; }
 
         [Required]
         public DateTime DateCreated { get; set; }

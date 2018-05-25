@@ -8,7 +8,7 @@ namespace UserManager
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid? Id { get; set; }
 
         [Required]
         public Guid? UserId { get; set; }
@@ -17,6 +17,9 @@ namespace UserManager
         [Required]
         [StringLength(100)] 
         public string SkillName { get; set; }
+
+        [StringLength(400)]
+        public string Description { get; set; }
 
         [Required]
         public DateTime DateCreated { get; set; }

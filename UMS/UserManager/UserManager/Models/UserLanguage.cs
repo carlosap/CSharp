@@ -7,15 +7,14 @@ namespace UserManager
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid? Id { get; set; }
 
         [Required]
         public Guid? UserId { get; set; }
         public virtual User User_UserId { get; set; }
 
-        [Required]
-        public int? LanguageId { get; set; }
-        public virtual Language Language_LanguageId { get; set; }
+        [StringLength(50)]
+        public string Name { get; set; }
 
         [Required]
         public DateTime DateCreated { get; set; }

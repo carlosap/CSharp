@@ -1,90 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace UserManager.Migrations
 {
-    public partial class _0001_InitTables : Migration
+    public partial class _001_InitTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AddressTypes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AddressTypes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Countries",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CountryCode = table.Column<string>(maxLength: 10, nullable: true),
-                    Name = table.Column<string>(maxLength: 100, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Countries", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Genders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 30, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Genders", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Languages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Languages", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MaritalStatuses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 30, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MaritalStatuses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Menus",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Menu2Id = table.Column<int>(nullable: true),
+                    Id = table.Column<Guid>(nullable: false),
+                    ParentId = table.Column<Guid>(nullable: true),
+                    Menu2Id = table.Column<Guid>(nullable: true),
                     MenuText = table.Column<string>(maxLength: 100, nullable: false),
                     MenuURL = table.Column<string>(maxLength: 400, nullable: false),
-                    ParentId = table.Column<int>(nullable: true),
                     SortOrder = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -102,10 +34,9 @@ namespace UserManager.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    IsActive = table.Column<bool>(nullable: false),
-                    RoleName = table.Column<string>(maxLength: 50, nullable: false)
+                    Id = table.Column<Guid>(nullable: false),
+                    RoleName = table.Column<string>(maxLength: 50, nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,67 +44,53 @@ namespace UserManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "States",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CountryId = table.Column<int>(nullable: true),
-                    Name = table.Column<string>(maxLength: 50, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_States", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_States_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    About = table.Column<string>(nullable: true),
-                    DateOfBirth = table.Column<DateTime>(nullable: true),
-                    Dated = table.Column<DateTime>(nullable: false),
-                    Email = table.Column<string>(maxLength: 50, nullable: true),
-                    EmailSignature = table.Column<string>(nullable: true),
-                    FirstName = table.Column<string>(maxLength: 100, nullable: false),
-                    GenderId = table.Column<int>(nullable: false),
+                    AppName = table.Column<string>(maxLength: 30, nullable: true),
+                    UserName = table.Column<string>(maxLength: 10, nullable: true),
+                    PasswordHash = table.Column<string>(nullable: false),
+                    Type = table.Column<string>(maxLength: 20, nullable: true),
+                    Company = table.Column<string>(maxLength: 50, nullable: true),
+                    FirstName = table.Column<string>(maxLength: 30, nullable: true),
+                    MiddleName = table.Column<string>(maxLength: 30, nullable: true),
+                    LastName = table.Column<string>(maxLength: 30, nullable: true),
+                    Gender = table.Column<string>(maxLength: 10, nullable: true),
+                    MaritalStatus = table.Column<string>(maxLength: 20, nullable: true),
+                    Email = table.Column<string>(maxLength: 50, nullable: false),
+                    EmailSignature = table.Column<string>(maxLength: 100, nullable: true),
+                    EmailProvider = table.Column<string>(maxLength: 20, nullable: true),
+                    JobTitle = table.Column<string>(maxLength: 50, nullable: true),
+                    BusinessPhone = table.Column<string>(maxLength: 15, nullable: true),
+                    HomePhone = table.Column<string>(maxLength: 15, nullable: true),
+                    MobilePhone = table.Column<string>(maxLength: 15, nullable: true),
+                    FaxNumber = table.Column<string>(maxLength: 15, nullable: true),
+                    Address = table.Column<string>(maxLength: 100, nullable: true),
+                    Address1 = table.Column<string>(maxLength: 100, nullable: true),
+                    City = table.Column<string>(maxLength: 20, nullable: true),
+                    State = table.Column<string>(maxLength: 20, nullable: true),
+                    Province = table.Column<string>(maxLength: 30, nullable: true),
+                    ZipCode = table.Column<string>(maxLength: 10, nullable: true),
+                    Country = table.Column<string>(maxLength: 50, nullable: true),
+                    WebPage = table.Column<string>(maxLength: 400, nullable: true),
+                    Avatar = table.Column<string>(maxLength: 400, nullable: true),
+                    About = table.Column<string>(maxLength: 400, nullable: true),
+                    DoB = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    LastName = table.Column<string>(maxLength: 100, nullable: false),
-                    MaritalStatusId = table.Column<int>(nullable: false),
-                    MiddleName = table.Column<string>(maxLength: 100, nullable: true),
-                    ParentId = table.Column<Guid>(nullable: true),
-                    Password = table.Column<string>(maxLength: 100, nullable: false),
-                    Phone = table.Column<string>(maxLength: 15, nullable: true),
-                    ProfilePicture = table.Column<string>(nullable: true),
-                    User2Id = table.Column<Guid>(nullable: true),
-                    UserName = table.Column<string>(maxLength: 100, nullable: false),
-                    Website = table.Column<string>(maxLength: 100, nullable: true)
+                    AccessFailedCount = table.Column<short>(nullable: false),
+                    LockEnabled = table.Column<bool>(nullable: false),
+                    LockoutDescription = table.Column<string>(maxLength: 400, nullable: true),
+                    ReportsToId = table.Column<Guid>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Genders_GenderId",
-                        column: x => x.GenderId,
-                        principalTable: "Genders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Users_MaritalStatuses_MaritalStatusId",
-                        column: x => x.MaritalStatusId,
-                        principalTable: "MaritalStatuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Users_Users_User2Id",
-                        column: x => x.User2Id,
+                        name: "FK_Users_Users_ReportsToId",
+                        column: x => x.ReportsToId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -183,16 +100,15 @@ namespace UserManager.Migrations
                 name: "MenuPermissions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    MenuId = table.Column<Guid>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false),
+                    SortOrder = table.Column<int>(nullable: true),
                     IsCreate = table.Column<bool>(nullable: true),
-                    IsDelete = table.Column<bool>(nullable: true),
                     IsRead = table.Column<bool>(nullable: true),
                     IsUpdate = table.Column<bool>(nullable: true),
-                    MenuId = table.Column<int>(nullable: true),
-                    RoleId = table.Column<int>(nullable: false),
-                    SortOrder = table.Column<int>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: true)
+                    IsDelete = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -202,7 +118,7 @@ namespace UserManager.Migrations
                         column: x => x.MenuId,
                         principalTable: "Menus",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_MenuPermissions_Roles_RoleId",
                         column: x => x.RoleId,
@@ -214,27 +130,27 @@ namespace UserManager.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "RoleUsers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     RoleId = table.Column<int>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    Role_RoleIdId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RoleUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RoleUsers_Roles_RoleId",
-                        column: x => x.RoleId,
+                        name: "FK_RoleUsers_Roles_Role_RoleIdId",
+                        column: x => x.Role_RoleIdId,
                         principalTable: "Roles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_RoleUsers_Users_UserId",
                         column: x => x.UserId,
@@ -247,21 +163,20 @@ namespace UserManager.Migrations
                 name: "UserAddresses",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Address = table.Column<string>(nullable: false),
-                    AddressTypeId = table.Column<int>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    Type = table.Column<string>(maxLength: 20, nullable: true),
+                    Address = table.Column<string>(maxLength: 100, nullable: true),
+                    Address1 = table.Column<string>(maxLength: 100, nullable: true),
+                    City = table.Column<string>(maxLength: 20, nullable: true),
+                    State = table.Column<string>(maxLength: 20, nullable: true),
+                    Province = table.Column<string>(maxLength: 30, nullable: true),
+                    ZipCode = table.Column<string>(maxLength: 10, nullable: true),
+                    Country = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserAddresses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserAddresses_AddressTypes_AddressTypeId",
-                        column: x => x.AddressTypeId,
-                        principalTable: "AddressTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserAddresses_Users_UserId",
                         column: x => x.UserId,
@@ -275,14 +190,14 @@ namespace UserManager.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    LastUpdated = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: false),
+                    FileName = table.Column<string>(nullable: true),
+                    FileType = table.Column<string>(nullable: true),
+                    FileData = table.Column<string>(nullable: true),
                     Path = table.Column<string>(nullable: true),
                     ReferringDocument = table.Column<string>(nullable: true),
-                    Type = table.Column<string>(nullable: true),
-                    UpdatedDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -300,11 +215,11 @@ namespace UserManager.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    Key = table.Column<string>(maxLength: 100, nullable: false),
-                    UpdatedDate = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
-                    Value = table.Column<string>(nullable: false)
+                    Key = table.Column<string>(maxLength: 100, nullable: false),
+                    Value = table.Column<string>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -322,12 +237,12 @@ namespace UserManager.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Comment = table.Column<string>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    Type = table.Column<string>(maxLength: 20, nullable: true),
                     Format = table.Column<string>(maxLength: 20, nullable: true),
-                    Type = table.Column<string>(nullable: true),
-                    UpdatedDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    Comment = table.Column<string>(maxLength: 400, nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -341,40 +256,16 @@ namespace UserManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserDerogatories",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    ApprovalDate = table.Column<string>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    Justification = table.Column<string>(nullable: true),
-                    NominationDate = table.Column<string>(nullable: true),
-                    NominatorGroup = table.Column<string>(nullable: true),
-                    Region = table.Column<string>(maxLength: 100, nullable: true),
-                    Source = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(maxLength: 100, nullable: true),
-                    UpdatedDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserDerogatories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserDerogatories_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserEmails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     Email = table.Column<string>(maxLength: 50, nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    EmailSignature = table.Column<string>(maxLength: 50, nullable: true),
+                    Provider = table.Column<string>(maxLength: 100, nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -388,39 +279,16 @@ namespace UserManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserEncounters",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    EncounterDate = table.Column<DateTime>(nullable: false),
-                    Format = table.Column<string>(maxLength: 20, nullable: true),
-                    Location = table.Column<string>(nullable: true),
-                    Reason = table.Column<string>(nullable: true),
-                    UpdatedDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserEncounters", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserEncounters_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserGeoLocations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 200, nullable: true),
                     Latitude = table.Column<string>(maxLength: 50, nullable: false),
                     Longitude = table.Column<string>(maxLength: 50, nullable: false),
-                    Name = table.Column<string>(maxLength: 200, nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -438,44 +306,37 @@ namespace UserManager.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    Type = table.Column<string>(maxLength: 20, nullable: true),
+                    Company = table.Column<string>(maxLength: 50, nullable: true),
+                    FirstName = table.Column<string>(maxLength: 30, nullable: true),
+                    MiddleName = table.Column<string>(maxLength: 30, nullable: true),
+                    LastName = table.Column<string>(maxLength: 30, nullable: true),
+                    Gender = table.Column<string>(maxLength: 10, nullable: true),
+                    MaritalStatus = table.Column<string>(maxLength: 20, nullable: true),
+                    Email = table.Column<string>(maxLength: 100, nullable: true),
+                    JobTitle = table.Column<string>(maxLength: 50, nullable: true),
+                    BusinessPhone = table.Column<string>(maxLength: 15, nullable: true),
+                    HomePhone = table.Column<string>(maxLength: 15, nullable: true),
+                    MobilePhone = table.Column<string>(maxLength: 15, nullable: true),
+                    FaxNumber = table.Column<string>(maxLength: 15, nullable: true),
                     Address = table.Column<string>(maxLength: 100, nullable: true),
                     Address1 = table.Column<string>(maxLength: 100, nullable: true),
-                    BusinessPhone = table.Column<string>(maxLength: 15, nullable: true),
-                    City = table.Column<string>(maxLength: 50, nullable: true),
-                    Company = table.Column<string>(maxLength: 50, nullable: true),
-                    CountryId = table.Column<int>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    Email = table.Column<string>(maxLength: 100, nullable: true),
-                    FaxNumber = table.Column<string>(maxLength: 15, nullable: true),
-                    FirstName = table.Column<string>(maxLength: 30, nullable: true),
-                    HomePhone = table.Column<string>(maxLength: 15, nullable: true),
-                    JobTitle = table.Column<string>(maxLength: 50, nullable: true),
-                    LastName = table.Column<string>(maxLength: 30, nullable: true),
-                    LastUpdated = table.Column<DateTime>(nullable: false),
-                    MobilePhone = table.Column<string>(maxLength: 15, nullable: true),
-                    Notes = table.Column<string>(nullable: true),
-                    Province = table.Column<string>(maxLength: 50, nullable: true),
-                    StateId = table.Column<int>(nullable: true),
-                    Type = table.Column<string>(maxLength: 20, nullable: true),
-                    UserId = table.Column<Guid>(nullable: false),
-                    WebPage = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<string>(maxLength: 20, nullable: true)
+                    City = table.Column<string>(maxLength: 20, nullable: true),
+                    State = table.Column<string>(maxLength: 20, nullable: true),
+                    Province = table.Column<string>(maxLength: 30, nullable: true),
+                    ZipCode = table.Column<string>(maxLength: 10, nullable: true),
+                    Country = table.Column<string>(maxLength: 50, nullable: true),
+                    WebPage = table.Column<string>(maxLength: 400, nullable: true),
+                    AvatarProfile = table.Column<string>(maxLength: 400, nullable: true),
+                    About = table.Column<string>(maxLength: 400, nullable: true),
+                    DoB = table.Column<DateTime>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserKnownAssociates", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserKnownAssociates_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UserKnownAssociates_States_StateId",
-                        column: x => x.StateId,
-                        principalTable: "States",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserKnownAssociates_Users_UserId",
                         column: x => x.UserId,
@@ -488,20 +349,15 @@ namespace UserManager.Migrations
                 name: "UserLanguages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    LanguageId = table.Column<int>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserLanguages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserLanguages_Languages_LanguageId",
-                        column: x => x.LanguageId,
-                        principalTable: "Languages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserLanguages_Users_UserId",
                         column: x => x.UserId,
@@ -515,10 +371,12 @@ namespace UserManager.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     FullName = table.Column<string>(maxLength: 50, nullable: true),
                     GivenName = table.Column<string>(maxLength: 50, nullable: true),
                     Surname = table.Column<string>(maxLength: 50, nullable: true),
-                    UserId = table.Column<Guid>(nullable: false)
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -536,23 +394,17 @@ namespace UserManager.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Citizenship = table.Column<string>(maxLength: 100, nullable: true),
-                    CountryId = table.Column<int>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    Ethnicity = table.Column<string>(maxLength: 100, nullable: true),
+                    UserId = table.Column<Guid>(nullable: false),
                     Nationality = table.Column<string>(maxLength: 100, nullable: true),
-                    UpdatedDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    Citizenship = table.Column<string>(maxLength: 100, nullable: true),
+                    Ethnicity = table.Column<string>(maxLength: 100, nullable: true),
+                    Country = table.Column<string>(maxLength: 50, nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserNationalities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserNationalities_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserNationalities_Users_UserId",
                         column: x => x.UserId,
@@ -566,32 +418,20 @@ namespace UserManager.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    City = table.Column<string>(maxLength: 100, nullable: true),
-                    CountryId = table.Column<int>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    DoB = table.Column<DateTime>(nullable: true),
-                    Format = table.Column<string>(maxLength: 20, nullable: true),
-                    StateId = table.Column<int>(nullable: true),
-                    Street = table.Column<string>(maxLength: 100, nullable: true),
+                    UserId = table.Column<Guid>(nullable: false),
                     Type = table.Column<string>(maxLength: 10, nullable: true),
-                    UpdatedDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    Format = table.Column<string>(maxLength: 20, nullable: true),
+                    DoB = table.Column<DateTime>(nullable: true),
+                    Street = table.Column<string>(maxLength: 100, nullable: true),
+                    City = table.Column<string>(maxLength: 100, nullable: true),
+                    State = table.Column<string>(maxLength: 20, nullable: true),
+                    Country = table.Column<string>(maxLength: 50, nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserOrigins", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserOrigins_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UserOrigins_States_StateId",
-                        column: x => x.StateId,
-                        principalTable: "States",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserOrigins_Users_UserId",
                         column: x => x.UserId,
@@ -606,8 +446,12 @@ namespace UserManager.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<Guid>(nullable: false),
+                    Type = table.Column<string>(maxLength: 15, nullable: true),
                     PhoneNumber = table.Column<string>(maxLength: 15, nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    Notes = table.Column<string>(maxLength: 400, nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -625,12 +469,12 @@ namespace UserManager.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(maxLength: 15, nullable: true),
-                    Format = table.Column<string>(maxLength: 15, nullable: true),
-                    LastUpdated = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 30, nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    Format = table.Column<string>(maxLength: 15, nullable: true),
+                    Description = table.Column<string>(maxLength: 15, nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -647,16 +491,17 @@ namespace UserManager.Migrations
                 name: "UserQualifications",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BoardUniversity = table.Column<string>(maxLength: 50, nullable: true),
-                    FromYear = table.Column<string>(maxLength: 10, nullable: true),
-                    OutOfMarks = table.Column<string>(maxLength: 50, nullable: true),
-                    Percentage = table.Column<string>(maxLength: 50, nullable: true),
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     Qualification = table.Column<string>(maxLength: 100, nullable: false),
-                    ToYear = table.Column<string>(maxLength: 10, nullable: true),
-                    TotalMarks = table.Column<string>(maxLength: 50, nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    FromYear = table.Column<DateTime>(nullable: true),
+                    ToYear = table.Column<DateTime>(nullable: true),
+                    BoardUniversity = table.Column<string>(maxLength: 100, nullable: true),
+                    TotalMarks = table.Column<string>(maxLength: 100, nullable: false),
+                    OutOfMarks = table.Column<string>(maxLength: 100, nullable: true),
+                    Percentage = table.Column<short>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -674,13 +519,13 @@ namespace UserManager.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Justification = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: false),
                     Type = table.Column<string>(maxLength: 100, nullable: false),
-                    UpdatedDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    Name = table.Column<string>(maxLength: 100, nullable: true),
+                    Justification = table.Column<string>(maxLength: 100, nullable: true),
+                    Description = table.Column<string>(maxLength: 400, nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -697,12 +542,13 @@ namespace UserManager.Migrations
                 name: "UserSettings",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    SettingGroup = table.Column<string>(maxLength: 100, nullable: true),
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     SettingKey = table.Column<string>(maxLength: 100, nullable: false),
                     SettingValue = table.Column<string>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    SettingGroup = table.Column<string>(maxLength: 100, nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -719,10 +565,12 @@ namespace UserManager.Migrations
                 name: "UserSkills",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     SkillName = table.Column<string>(maxLength: 100, nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    Description = table.Column<string>(maxLength: 400, nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -740,11 +588,13 @@ namespace UserManager.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    About = table.Column<string>(maxLength: 200, nullable: true),
-                    ProfileImage = table.Column<string>(maxLength: 50, nullable: true),
-                    ProfileUrl = table.Column<string>(maxLength: 50, nullable: true),
+                    UserId = table.Column<Guid>(nullable: false),
                     SocialMediaName = table.Column<string>(maxLength: 50, nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    ProfileUrl = table.Column<string>(maxLength: 50, nullable: true),
+                    ProfileImage = table.Column<string>(maxLength: 50, nullable: true),
+                    About = table.Column<string>(maxLength: 400, nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -761,14 +611,15 @@ namespace UserManager.Migrations
                 name: "UserWorkExperiences",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     CompanyName = table.Column<string>(maxLength: 100, nullable: false),
+                    RoleName = table.Column<string>(maxLength: 100, nullable: true),
                     From = table.Column<DateTime>(nullable: true),
-                    JobDescription = table.Column<string>(nullable: true),
-                    RoleName = table.Column<string>(maxLength: 100, nullable: false),
                     To = table.Column<DateTime>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: false)
+                    JobDescription = table.Column<string>(maxLength: 400, nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -802,24 +653,14 @@ namespace UserManager.Migrations
                 column: "Menu2Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleUsers_RoleId",
+                name: "IX_RoleUsers_Role_RoleIdId",
                 table: "RoleUsers",
-                column: "RoleId");
+                column: "Role_RoleIdId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleUsers_UserId",
                 table: "RoleUsers",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_States_CountryId",
-                table: "States",
-                column: "CountryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserAddresses_AddressTypeId",
-                table: "UserAddresses",
-                column: "AddressTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserAddresses_UserId",
@@ -842,18 +683,8 @@ namespace UserManager.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserDerogatories_UserId",
-                table: "UserDerogatories",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserEmails_UserId",
                 table: "UserEmails",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserEncounters_UserId",
-                table: "UserEncounters",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -862,24 +693,9 @@ namespace UserManager.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserKnownAssociates_CountryId",
-                table: "UserKnownAssociates",
-                column: "CountryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserKnownAssociates_StateId",
-                table: "UserKnownAssociates",
-                column: "StateId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserKnownAssociates_UserId",
                 table: "UserKnownAssociates",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserLanguages_LanguageId",
-                table: "UserLanguages",
-                column: "LanguageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserLanguages_UserId",
@@ -892,24 +708,9 @@ namespace UserManager.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserNationalities_CountryId",
-                table: "UserNationalities",
-                column: "CountryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserNationalities_UserId",
                 table: "UserNationalities",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserOrigins_CountryId",
-                table: "UserOrigins",
-                column: "CountryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserOrigins_StateId",
-                table: "UserOrigins",
-                column: "StateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserOrigins_UserId",
@@ -937,19 +738,9 @@ namespace UserManager.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_GenderId",
+                name: "IX_Users_ReportsToId",
                 table: "Users",
-                column: "GenderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_MaritalStatusId",
-                table: "Users",
-                column: "MaritalStatusId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_User2Id",
-                table: "Users",
-                column: "User2Id");
+                column: "ReportsToId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserSettings_UserId",
@@ -993,13 +784,7 @@ namespace UserManager.Migrations
                 name: "UserComments");
 
             migrationBuilder.DropTable(
-                name: "UserDerogatories");
-
-            migrationBuilder.DropTable(
                 name: "UserEmails");
-
-            migrationBuilder.DropTable(
-                name: "UserEncounters");
 
             migrationBuilder.DropTable(
                 name: "UserGeoLocations");
@@ -1050,25 +835,7 @@ namespace UserManager.Migrations
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "AddressTypes");
-
-            migrationBuilder.DropTable(
-                name: "Languages");
-
-            migrationBuilder.DropTable(
-                name: "States");
-
-            migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Countries");
-
-            migrationBuilder.DropTable(
-                name: "Genders");
-
-            migrationBuilder.DropTable(
-                name: "MaritalStatuses");
         }
     }
 }

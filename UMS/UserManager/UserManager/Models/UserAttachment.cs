@@ -11,6 +11,10 @@ namespace UserManager
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid? Id { get; set; }
 
+        [Required]
+        public Guid? UserId { get; set; }
+        public virtual User User_UserId { get; set; }
+
         public string FileName { get; set; }
 
         public string FileType { get; set; }
@@ -20,10 +24,6 @@ namespace UserManager
         public string Path { get; set; }
 
         public string ReferringDocument { get; set; }
-
-        [Required]
-        public Guid? UserId { get; set; }
-        public virtual User User_UserId { get; set; }
 
         [Required]
         public DateTime DateCreated { get; set; }

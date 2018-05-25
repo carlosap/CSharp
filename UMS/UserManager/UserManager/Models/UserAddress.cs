@@ -8,18 +8,37 @@ namespace UserManager
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid? Id { get; set; }
 
         [Required]
         public Guid? UserId { get; set; }
         public virtual User User_UserId { get; set; }
 
-        [Required]
+        [StringLength(20)]
+        public string Type { get; set; }
+
+
+        [StringLength(100)]
         public string Address { get; set; }
 
-        [Required]
-        public int? AddressTypeId { get; set; }
-        public virtual AddressType AddressType_AddressTypeId { get; set; }
+        [StringLength(100)]
+        public string Address1 { get; set; }
+
+        [StringLength(20)]
+        public string City { get; set; }
+
+        [StringLength(20)]
+        public string State { get; set; }
+
+        [StringLength(30)]
+        public string Province { get; set; }
+
+        [StringLength(10)]
+        public string ZipCode { get; set; }
+
+        [StringLength(50)]
+        public string Country { get; set; }
+
 
     }
 }

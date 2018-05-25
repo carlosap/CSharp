@@ -8,7 +8,7 @@ namespace UserManager
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid? Id { get; set; }
 
         [Required]
         public Guid? UserId { get; set; }
@@ -17,25 +17,22 @@ namespace UserManager
         [Required]
         [StringLength(100)] 
         public string Qualification { get; set; }
+ 
+        public DateTime? FromYear { get; set; }
 
-        [StringLength(10)] 
-        public string FromYear { get; set; }
+        public DateTime? ToYear { get; set; }
 
-        [StringLength(10)] 
-        public string ToYear { get; set; }
-
-        [StringLength(50)] 
+        [StringLength(100)] 
         public string BoardUniversity { get; set; }
 
         [Required]
-        [StringLength(50)] 
+        [StringLength(100)] 
         public string TotalMarks { get; set; }
 
-        [StringLength(50)] 
+        [StringLength(100)] 
         public string OutOfMarks { get; set; }
 
-        [StringLength(50)] 
-        public string Percentage { get; set; }
+        public short Percentage { get; set; }
 
         [Required]
         public DateTime DateCreated { get; set; }

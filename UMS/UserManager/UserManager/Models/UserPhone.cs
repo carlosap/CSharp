@@ -21,7 +21,7 @@ namespace UserManager
         [StringLength(15)] 
         public string PhoneNumber { get; set; }
 
-        [StringLength(50)]
+        [StringLength(400)]
         public string Notes { get; set; }
 
         [Required]

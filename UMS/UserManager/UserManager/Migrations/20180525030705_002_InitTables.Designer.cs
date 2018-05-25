@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UserManager;
 
 namespace UserManager.Migrations
 {
     [DbContext(typeof(UserContext))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [Migration("20180525030705_002_InitTables")]
+    partial class _002_InitTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,13 +34,15 @@ namespace UserManager.Migrations
                         .IsRequired()
                         .HasMaxLength(400);
 
-                    b.Property<Guid?>("ReportsToId");
+                    b.Property<Guid?>("Menu_ParentIdId");
+
+                    b.Property<Guid?>("ParentId");
 
                     b.Property<int?>("SortOrder");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ReportsToId");
+                    b.HasIndex("Menu_ParentIdId");
 
                     b.ToTable("Menus");
                 });
@@ -873,9 +877,9 @@ namespace UserManager.Migrations
 
             modelBuilder.Entity("UserManager.Menu", b =>
                 {
-                    b.HasOne("UserManager.Menu", "ReportsTo")
+                    b.HasOne("UserManager.Menu", "Menu_ParentId")
                         .WithMany("Menu_ParentIds")
-                        .HasForeignKey("ReportsToId");
+                        .HasForeignKey("Menu_ParentIdId");
                 });
 
             modelBuilder.Entity("UserManager.MenuPermission", b =>

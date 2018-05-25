@@ -15,6 +15,10 @@ namespace UserManager
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid? Id { get; set; }
 
+        [Required]
+        public Guid? UserId { get; set; }
+        public virtual User User_UserId { get; set; }
+
         [StringLength(50)]
         public string FullName { get; set; }
 
@@ -23,10 +27,6 @@ namespace UserManager
 
         [StringLength(50)]
         public string Surname { get; set; }
-
-        [Required]
-        public Guid? UserId { get; set; }
-        public virtual User User_UserId { get; set; }
 
         [Required]
         public DateTime DateCreated { get; set; }

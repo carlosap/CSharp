@@ -19,10 +19,13 @@ namespace UserManager
         [StringLength(100)]
         public string Type { get; set; }  //BUSINESS ASSOCIATE
 
+        [StringLength(100)]
         public string Name { get; set; }       //AHMAD IBRAHIM AL AHMAD
 
+        [StringLength(100)]
         public string Justification { get; set; }  //CEXC-IZ-CASE-7935-06"
 
+        [StringLength(400)]
         public string Description { get; set; }  //body tag
 
         [Required]

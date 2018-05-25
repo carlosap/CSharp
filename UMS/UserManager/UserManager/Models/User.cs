@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace UserManager
 {
-    public class User : Contact
+    public class User
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -20,16 +20,96 @@ namespace UserManager
         [Required]
         public string PasswordHash { get; set; }
 
+        [StringLength(20)]
+        public string Type { get; set; }
+
+        [StringLength(50)]
+        public string Company { get; set; }
+
+        [StringLength(30)]
+        public string FirstName { get; set; }
+
+        [StringLength(30)]
+        public string MiddleName { get; set; }
+
+        [StringLength(30)]
+        public string LastName { get; set; }
+
+        [StringLength(10)]
+        public string Gender { get; set; }
+
+        [StringLength(20)]
+        public string MaritalStatus { get; set; }
+
+        [Required]
+        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please enter correct email")]
+        [StringLength(50)]
+        public string Email { get; set; }
+
+        [StringLength(100)]
+        public string EmailSignature { get; set; }
+
+        [StringLength(20)]
+        public string EmailProvider { get; set; }
+    
+        [StringLength(50)]
+        public string JobTitle { get; set; }
+
+        [StringLength(15)]
+        public string BusinessPhone { get; set; }
+
+        [StringLength(15)]
+        public string HomePhone { get; set; }
+
+        [StringLength(15)]
+        public string MobilePhone { get; set; }
+
+        [StringLength(15)]
+        public string FaxNumber { get; set; }
+
+        [StringLength(100)]
+        public string Address { get; set; }
+
+        [StringLength(100)]
+        public string Address1 { get; set; }
+
+        [StringLength(20)]
+        public string City { get; set; }
+
+        [StringLength(20)]
+        public string State { get; set; }
+
+
+        [StringLength(30)]
+        public string Province { get; set; }
+
+        [StringLength(10)]
+        public string ZipCode { get; set; }
+
+        [StringLength(50)]
+        public string Country { get; set; }
+
+        [StringLength(400)]
+        public string WebPage { get; set; }
+
+        [StringLength(400)]
+        public string Avatar { get; set; }
+        
+        [StringLength(400)]
+        public string About { get; set; }
+
+        public DateTime? DoB { get; set; }
+
         [Required]
         public bool IsActive { get; set; }
 
-        public int AccessFailedCount { get; set; }
+        public short AccessFailedCount { get; set; }
 
         public bool LockEnabled { get; set; }
 
+        [StringLength(400)]
         public string LockoutDescription { get; set; }
 
-        public Guid? ParentId { get; set; }
         public virtual User ReportsTo { get; set; }
 
         [Required]

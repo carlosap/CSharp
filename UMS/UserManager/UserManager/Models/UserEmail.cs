@@ -8,7 +8,11 @@ namespace UserManager
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid? Id { get; set; }
+
+        [Required]
+        public Guid? UserId { get; set; }
+        public virtual User User_UserId { get; set; }
 
         [Required]
         [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please enter correct email")]
@@ -20,11 +24,6 @@ namespace UserManager
 
         [StringLength(100)]
         public string Provider { get; set; }
-
-
-        [Required]
-        public Guid? UserId { get; set; }
-        public virtual User User_UserId { get; set; }
 
         [Required]
         public DateTime DateCreated { get; set; }
