@@ -1,0 +1,8 @@
+﻿{
+  "batchAccountName": "ez203accbatch",
+  "batchAccountKey": "FmqdN5Kht16tfxT2icQ9Ta2g+gRpvts0U3Eisjg+icLeWU3OJdkVoyttYoOnA+fF5UtBSXadsxcO2mTt+3h1ig==",
+  "batchServiceUrl": "https://ez203accbatch.eastus.batch.azure.com",
+  "storageAccountName": "az203cperezbatchstorage",
+  "storageAccountKey": "a/ck0wE9D6AS/cDKwJB84eVnxubsWGdHzW8Zlg2tdFNxFoCkyC1wp2MJijld/nzGxWtRRkRWZimxN5TzhcxE+w==",
+  "storageServiceUrl": "core.windows.net"
+}
